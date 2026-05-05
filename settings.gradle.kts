@@ -33,4 +33,22 @@ plugins {
 }
 
 include(":composeApp")
-include(":shared")
+
+// Группа shared
+include(":shared:shared-core")
+include(":shared:shared-domain")
+include(":shared:shared-data")
+include(":shared:shared-navigation:api")
+include(":shared:shared-navigation:impl")
+
+// Группа shared features
+include(":shared:shared-feature:auth:api")
+include(":shared:shared-feature:auth:impl")
+include(":shared:shared-feature:profile:api")
+include(":shared:shared-feature:profile:impl")
+include(":shared:shared-feature:makeup-bag:api")
+include(":shared:shared-feature:makeup-bag:impl")
+include(":shared:shared-feature:skin-diary:api")
+include(":shared:shared-feature:skin-diary:impl")
+include(":shared:shared-feature:routine:api")
+include(":shared:shared-feature:routine:impl")

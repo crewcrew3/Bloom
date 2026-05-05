@@ -33,7 +33,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             //модули
-            implementation(projects.shared)
+            //...
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
