@@ -1,15 +1,10 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    //alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    //alias(libs.plugins.kotlin.android)
 }
 
 kotlin {
-//    androidLibrary {
-//        namespace = "ru.itis.bloom.shared.navigation.api"
-//        compileSdk = libs.versions.android.compileSdk.get().toInt()
-//        minSdk = libs.versions.android.minSdk.get().toInt()
-//    }
-
+    //androidTarget()
     jvm()
 
     sourceSets {

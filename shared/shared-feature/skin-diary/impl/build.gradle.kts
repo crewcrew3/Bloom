@@ -1,14 +1,20 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    alias(libs.plugins.androidLibrary)
+}
+
+android {
+    namespace = "ru.itis.bloom.shared.feature.skin.diary.impl"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+
+    defaultConfig {
+        minSdk = libs.versions.android.minSdk.get().toInt()
+    }
+
 }
 
 kotlin {
-    androidLibrary {
-        namespace = "ru.itis.bloom.shared.feature.skindiary.impl"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
+    androidTarget()
 
     jvm()
 
