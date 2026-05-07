@@ -1,20 +1,15 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidKotlinMultiplatformLibrary)
 }
 
-android {
-    namespace = "ru.itis.bloom.shared.feature.makeup.bag.impl"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-
-}
 
 kotlin {
-    androidTarget()
+    androidLibrary {
+        namespace = "ru.itis.bloom.shared.feature.makeupbag.impl"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+    }
 
     jvm()
 

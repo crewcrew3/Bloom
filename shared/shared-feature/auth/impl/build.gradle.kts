@@ -1,20 +1,14 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
-}
-
-android {
-    namespace = "ru.itis.bloom.shared.feature.auth.impl"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-
+    alias(libs.plugins.androidKotlinMultiplatformLibrary)
 }
 
 kotlin {
-    androidTarget()
+    androidLibrary {
+        namespace = "ru.itis.bloom.shared.feature.auth.impl"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+    }
 
     jvm()
 
