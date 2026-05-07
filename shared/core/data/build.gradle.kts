@@ -3,18 +3,22 @@ plugins {
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
 }
 
-
 kotlin {
     androidLibrary {
-        namespace = "ru.itis.bloom.shared.navigation.impl"
+        namespace = "ru.itis.bloom.shared.core.data"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
+
     }
+
     jvm()
 
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlin.stdlib)
+
+            //модули
+            implementation(projects.shared.core.domain)
         }
     }
 }
