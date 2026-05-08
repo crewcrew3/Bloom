@@ -8,7 +8,6 @@ kotlin {
         namespace = "ru.itis.bloom.shared.core.data"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
-
     }
 
     jvm()
