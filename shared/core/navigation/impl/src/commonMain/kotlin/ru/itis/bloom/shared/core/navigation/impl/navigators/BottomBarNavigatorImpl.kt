@@ -15,7 +15,7 @@ class BottomBarNavigatorImpl(
         //backStackHolder.backStack?.add(...)
     }
 
-    override fun toSkinMakeupBagSection() {
+    override fun toMakeupBagSection() {
         //backStackHolder.backStack?.add(...)
     }
 

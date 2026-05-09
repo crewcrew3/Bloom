@@ -1,6 +1,5 @@
 package ru.itis.bloom
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.EntryProviderScope
@@ -14,10 +13,11 @@ import ru.itis.bloom.shared.core.navigation.impl.BackStackHolder
 import ru.itis.bloom.shared.core.navigation.impl.navigationSavedStateConfig
 import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
 import ru.itis.bloom.shared.feature.auth.impl.navigation.authEntryBuilder
+import ru.itis.bloom.ui.theme.BloomTheme
 
 @Composable
 fun App() {
-    MaterialTheme {
+    BloomTheme {
         // Получаем все entry builders из графа Koin
         val entryBuilders: List<EntryProviderScope<NavKey>.() -> Unit> = listOf(
             EntryProviderScope<NavKey>::authEntryBuilder,
