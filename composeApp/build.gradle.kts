@@ -23,6 +23,20 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
+            //модули
+            implementation(projects.shared.core.navigation.impl)
+            implementation(projects.shared.feature.auth.api)
+            implementation(projects.shared.feature.auth.impl)
+
+            //DI
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+
+            //navigation
+            implementation(libs.compose.nav3)
+            implementation(libs.viewmodel.nav3)
+
+            //compose
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -31,9 +45,6 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-
-            //модули
-            //...
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)

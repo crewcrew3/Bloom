@@ -14,9 +14,10 @@ kotlin = "2.3.20"
 kotlinStdlib = "2.3.20"
 
 androidx-nav3 = "1.1.0-alpha04"
+compose-multiplatform-lifecycle = "2.10.0-alpha05"
 
 coroutines = "1.10.2"
-serialization = "1.10.0"
+serialization = "1.11.0"
 immutable = "0.4.0"
 datetime = "0.7.1"
 
@@ -53,6 +54,7 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
 
 compose-nav3 = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "androidx-nav3" }
+viewmodel-nav3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "compose-multiplatform-lifecycle" }
 
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
@@ -132,6 +134,7 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "performance" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [bundles]
 ktorClientCommon = [
