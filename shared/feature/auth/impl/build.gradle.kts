@@ -22,6 +22,7 @@ kotlin {
 
             //modules
             implementation(projects.shared.feature.auth.api)
+            implementation(projects.shared.core.data)
             implementation(projects.shared.core.navigation.api)
 
             //navigation
@@ -30,6 +31,7 @@ kotlin {
             //DI
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.vm)
 
             //compose
             implementation(libs.compose.runtime)
@@ -40,6 +42,11 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.content.negotiation)
         }
     }
 }
