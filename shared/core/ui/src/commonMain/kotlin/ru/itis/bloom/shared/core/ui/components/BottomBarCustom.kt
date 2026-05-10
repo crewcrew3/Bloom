@@ -1,4 +1,4 @@
-package ru.itis.bloom.ui.components
+package ru.itis.bloom.shared.core.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -12,10 +12,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ru.itis.bloom.ui.components.settings.BottomBarSettings
-import ru.itis.bloom.ui.theme.BloomTheme
-import ru.itis.bloom.ui.theme.DimensionsCustom
-import ru.itis.bloom.ui.theme.IconsCustom
+import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
+import ru.itis.bloom.shared.core.ui.theme.BloomTheme
+import ru.itis.bloom.shared.core.ui.theme.DimensionsCustom
+import ru.itis.bloom.shared.core.ui.theme.IconsCustom
 
 @Composable
 fun BottomBarCustom(

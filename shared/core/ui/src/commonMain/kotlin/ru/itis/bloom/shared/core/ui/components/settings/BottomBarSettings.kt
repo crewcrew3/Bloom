@@ -1,4 +1,4 @@
-package ru.itis.bloom.ui.components.settings
+package ru.itis.bloom.shared.core.ui.components.settings
 
 data class BottomBarSettings(
     val onRoutineSectionClick: () -> Unit,

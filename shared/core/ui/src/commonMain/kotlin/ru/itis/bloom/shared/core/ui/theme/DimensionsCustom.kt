@@ -1,4 +1,4 @@
-package ru.itis.bloom.ui.theme
+package ru.itis.bloom.shared.core.ui.theme
 
 import androidx.compose.ui.unit.dp
 

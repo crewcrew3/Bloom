@@ -1,4 +1,4 @@
-package ru.itis.bloom.ui.components
+package ru.itis.bloom.shared.core.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,12 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.itis.bloom.ui.components.settings.IconSettings
-import ru.itis.bloom.ui.components.settings.TopBarSettings
-import ru.itis.bloom.ui.theme.BloomTheme
-import ru.itis.bloom.ui.theme.DimensionsCustom
-import ru.itis.bloom.ui.theme.IconsCustom
-import ru.itis.bloom.ui.theme.StylesCustom
+import ru.itis.bloom.shared.core.ui.components.settings.IconSettings
+import ru.itis.bloom.shared.core.ui.components.settings.TopBarSettings
+import ru.itis.bloom.shared.core.ui.theme.BloomTheme
+import ru.itis.bloom.shared.core.ui.theme.DimensionsCustom
+import ru.itis.bloom.shared.core.ui.theme.IconsCustom
+import ru.itis.bloom.shared.core.ui.theme.StylesCustom
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

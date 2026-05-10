@@ -1,4 +1,4 @@
-package ru.itis.bloom.ui
+package ru.itis.bloom.shared.core.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import ru.itis.bloom.ui.components.BottomBarCustom
-import ru.itis.bloom.ui.components.TopBarCustom
-import ru.itis.bloom.ui.components.settings.BottomBarSettings
-import ru.itis.bloom.ui.components.settings.IconSettings
-import ru.itis.bloom.ui.components.settings.TopBarSettings
-import ru.itis.bloom.ui.theme.DimensionsCustom
+import ru.itis.bloom.shared.core.ui.components.BottomBarCustom
+import ru.itis.bloom.shared.core.ui.components.TopBarCustom
+import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
+import ru.itis.bloom.shared.core.ui.components.settings.IconSettings
+import ru.itis.bloom.shared.core.ui.components.settings.TopBarSettings
+import ru.itis.bloom.shared.core.ui.theme.DimensionsCustom
 
 @Composable
 fun BaseScreen(
