@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -20,6 +21,10 @@ kotlin {
             implementation(projects.shared.core.data)
 
             implementation(libs.kotlinx.serialization.json)
+
+            //navigation
+            implementation(libs.kotlinx.serialization.core)
+            implementation(libs.compose.nav3)
         }
     }
 }

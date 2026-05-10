@@ -6,11 +6,28 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext
+import org.koin.core.context.startKoin
+import ru.itis.bloom.shared.core.navigation.impl.di.navigationModule
+import ru.itis.bloom.shared.feature.auth.impl.di.authNavModule
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        // Инициализация Koin (при старте приложения)
+        if (GlobalContext.getOrNull() == null) {
+            startKoin {
+                androidContext(this@MainActivity.applicationContext)
+                modules(
+                    navigationModule,
+                    authNavModule,
+                    // ... другие модули фич
+                )
+            }
+        }
 
         setContent {
             App()
