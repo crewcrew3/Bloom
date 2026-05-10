@@ -8,88 +8,76 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import ru.itis.bloom.shared.core.navigation.api.AuthNavigator
+import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthIntent
+import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthState
 
 @Composable
 fun LoginScreen(
-    navigator: AuthNavigator,
+    state: AuthState,
+    onIntent: (AuthIntent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
+        modifier = modifier.fillMaxSize().padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "🔐 Вход",
-            style = MaterialTheme.typography.headlineMedium
-        )
+        Text("🔐 Вход", style = MaterialTheme.typography.headlineMedium)
+        Spacer(Modifier.height(32.dp))
 
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Email
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = state.email,
+            onValueChange = { onIntent(AuthIntent.EmailChanged(it)) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            isError = state.emailError != null,
+            supportingText = state.emailError?.let { { Text(it) } }
         )
+        Spacer(Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Password
         OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = state.password,
+            onValueChange = { onIntent(AuthIntent.PasswordChanged(it)) },
             label = { Text("Пароль") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            isError = state.passwordError != null,
+            supportingText = state.passwordError?.let { { Text(it) } }
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        state.generalError?.let {
+            Text(
+                it,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
 
-        // Кнопка "Войти"
+        Spacer(Modifier.height(24.dp))
+
         Button(
-            onClick = {
-                // Здесь будет логика входа, пока просто переходим
-            },
-            modifier = Modifier.fillMaxWidth()
+            onClick = { onIntent(AuthIntent.LoginClicked) },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = !state.isLoading && state.isLoginFormValid
         ) {
-            Text("Войти")
+            if (state.isLoading) CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
+            else Text("Войти")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Кнопка "Нет аккаунта?"
-        TextButton(onClick = { navigator.toSignUpScreen()}) {
+        TextButton(onClick = { onIntent(AuthIntent.NavigateToRegister) }) {
             Text("Нет аккаунта? Зарегистрироваться")
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Кнопка "Назад" (для тестов)
-        TextButton(onClick = { navigator.back() }) {
-            Text("← Назад")
         }
     }
 }
