@@ -5,8 +5,8 @@ import androidx.navigation3.runtime.NavKey
 import org.koin.compose.koinInject
 import ru.itis.bloom.shared.core.navigation.api.AuthNavigator
 import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
-import ru.itis.bloom.shared.feature.auth.impl.ui.LoginScreen
-import ru.itis.bloom.shared.feature.auth.impl.ui.SignUpScreen
+import ru.itis.bloom.shared.feature.auth.impl.presentation.LoginScreen
+import ru.itis.bloom.shared.feature.auth.impl.presentation.SignUpScreen
 
 fun EntryProviderScope<NavKey>.authEntryBuilder() {
     entry<AuthNavRoute.Login> {

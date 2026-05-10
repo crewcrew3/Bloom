@@ -22,8 +22,8 @@ fun BottomBarCustom(
     bottomBarSettings: BottomBarSettings,
 ) {
     BottomAppBar(
-        containerColor = MaterialTheme.colorScheme.surface,
-        contentColor = MaterialTheme.colorScheme.onSurface,
+        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
         modifier = Modifier
             .height(DimensionsCustom.bottomBarHeight)
     ) {
@@ -80,6 +80,7 @@ fun BottomBarCustom(
 fun BottomBarCustomPreview() {
     BloomTheme {
         BottomBarCustom(
-            bottomBarSettings = BottomBarSettings({}, {}, {}, {}))
+            bottomBarSettings = BottomBarSettings({}, {}, {}, {})
+        )
     }
 }

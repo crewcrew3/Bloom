@@ -1,8 +1,22 @@
-package ru.itis.bloom.shared.feature.auth.impl.ui
+package ru.itis.bloom.shared.feature.auth.impl.presentation
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -10,13 +24,12 @@ import androidx.compose.ui.unit.dp
 import ru.itis.bloom.shared.core.navigation.api.AuthNavigator
 
 @Composable
-fun SignUpScreen(
+fun LoginScreen(
     navigator: AuthNavigator,
     modifier: Modifier = Modifier
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -26,7 +39,7 @@ fun SignUpScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "📝 Регистрация",
+            text = "🔐 Вход",
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -53,41 +66,23 @@ fun SignUpScreen(
             singleLine = true
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Confirm Password
-        OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
-            label = { Text("Повторите пароль") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Кнопка "Зарегистрироваться"
+        // Кнопка "Войти"
         Button(
             onClick = {
-                // Простая валидация для теста
-                if (password == confirmPassword && password.length >= 6) {
-                    //navigator.toMain()
-                } else {
-                    // Можно показать Snackbar, но для теста просто игнорируем
-                }
+                // Здесь будет логика входа, пока просто переходим
             },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = password == confirmPassword && password.length >= 6
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Зарегистрироваться")
+            Text("Войти")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Кнопка "Уже есть аккаунт?"
-        TextButton(onClick = { navigator.toLoginScreen() }) {
-            Text("Уже есть аккаунт? Войти")
+        // Кнопка "Нет аккаунта?"
+        TextButton(onClick = { navigator.toSignUpScreen()}) {
+            Text("Нет аккаунта? Зарегистрироваться")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
