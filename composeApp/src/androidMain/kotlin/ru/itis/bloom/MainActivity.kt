@@ -9,7 +9,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
+import ru.itis.bloom.shared.core.data.di.networkModule
 import ru.itis.bloom.shared.core.navigation.impl.di.navigationModule
+import ru.itis.bloom.shared.feature.auth.impl.di.authModule
 import ru.itis.bloom.shared.feature.auth.impl.di.authNavModule
 
 class MainActivity : ComponentActivity() {
@@ -24,6 +26,8 @@ class MainActivity : ComponentActivity() {
                 modules(
                     navigationModule,
                     authNavModule,
+                    authModule,
+                    networkModule
                     // ... другие модули фич
                 )
             }

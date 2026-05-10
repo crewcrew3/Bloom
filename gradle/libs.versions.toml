@@ -80,6 +80,7 @@ ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json"
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-cio    = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-mock-jvm = { module = "io.ktor:ktor-client-mock-jvm", version.ref = "ktor" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
