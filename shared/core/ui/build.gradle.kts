@@ -29,25 +29,10 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.compose.components.resources)
 
-            // Lifecycle ViewModel (для интеграции с MVI/ViewModel)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
-
-            // Navigation 3 (если компоненты используют навигацию)
-            implementation(libs.compose.nav3)
-
             // Coil для изображений (если нужны иконки/аватары)
             implementation(libs.coil)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
-
-            // Koin (опционально, если компоненты зависят от DI)
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-
-            // Coroutines & Collections
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.immutable)
         }
     }
 }

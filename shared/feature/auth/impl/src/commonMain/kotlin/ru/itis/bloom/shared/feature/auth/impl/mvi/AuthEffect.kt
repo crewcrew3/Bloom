@@ -13,8 +13,7 @@ sealed class AuthEffect {
     data class ShowErrorMessage(val message: String) : AuthEffect()
 
     // Token management
-    data class TokensReceived(val accessToken: String, val refreshToken: String) : AuthEffect()
-    data object TokensCleared : AuthEffect()
+    data object Authenticated : AuthEffect()
 
     // Email verification
     data class VerificationEmailSent(val email: String) : AuthEffect()

@@ -5,8 +5,9 @@ import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthEffect
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AuthNavigationHandler : KoinComponent {
-    private val nav: AuthNavigator by inject()
+class AuthNavigationHandler(
+    private val nav: AuthNavigator
+) : KoinComponent {
 
     suspend fun handleEffect(effect: AuthEffect) {
         when (effect) {
@@ -28,14 +29,6 @@ class AuthNavigationHandler : KoinComponent {
 
             is AuthEffect.NavigateToForgotPasswordScreen -> {
                 /* TODO: nav.toForgotPasswordScreen() */
-            }
-
-            is AuthEffect.TokensReceived -> {
-                /* TODO: save tokens: effect.accessToken, effect.refreshToken */
-            }
-
-            is AuthEffect.TokensCleared -> {
-                /* TODO: clear tokens */
             }
 
             else -> {

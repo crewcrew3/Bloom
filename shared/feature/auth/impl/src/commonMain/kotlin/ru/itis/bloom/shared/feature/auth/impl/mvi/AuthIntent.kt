@@ -11,7 +11,6 @@ sealed class AuthIntent {
     data object LoginClicked : AuthIntent()
     data object RegisterClicked : AuthIntent()
     data class VerifyEmailClicked(val token: String) : AuthIntent()
-    data object LogoutClicked : AuthIntent()
     data object ForgotPasswordClicked : AuthIntent()
     data class ResetPasswordClicked(val email: String) : AuthIntent()
     data class ConfirmResetPasswordClicked(

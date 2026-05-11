@@ -5,7 +5,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import ru.itis.bloom.shared.feature.auth.api.AuthApi
 import ru.itis.bloom.shared.feature.auth.api.AuthRepository
-import ru.itis.bloom.shared.feature.auth.impl.AuthRepositoryImpl
+import ru.itis.bloom.shared.feature.auth.impl.data.AuthRepositoryImpl
 import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthViewModel
 import ru.itis.bloom.shared.feature.auth.impl.navigation.AuthNavigationHandler
 import ru.itis.bloom.shared.feature.auth.impl.network.AuthApiImpl
@@ -22,5 +22,5 @@ val authModule = module {
     viewModelOf(::AuthViewModel)
 
     // Navigation
-    factory { AuthNavigationHandler() }
+    factory { AuthNavigationHandler(get()) }
 }

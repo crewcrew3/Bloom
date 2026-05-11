@@ -45,19 +45,19 @@ class AuthApiImpl(private val httpClient: HttpClient) : AuthApi {
         }
     }
 
-    override suspend fun login(request: LoginRequest): Result<AuthTokensResponse> {
-        return try {
+    override suspend fun login(request: LoginRequest): Result<Unit> {
+        return apiCall {
             val response = httpClient.post("/auth/login") {
                 contentType(ContentType.Application.Json)
                 setBody(request)
-            }
-            when (response.status.value) {
-                401 -> Result.Error(AuthError.InvalidCredentials)
-                403 -> Result.Error(AuthError.EmailNotVerified)
-                else -> Result.Success(response.body())
-            }
-        } catch (e: Exception) {
-            Result.Error(mapToAuthError(e))
+            }.body<AuthTokensResponse>()
+
+            // Токены сохраняются ВНУТРИ репозитория
+//            tokenStorage.saveTokens(
+//                accessToken = response.accessToken,
+//                refreshToken = response.refreshToken,
+//                expiresIn = response.expiresIn
+//            )
         }
     }
 
@@ -73,15 +73,6 @@ class AuthApiImpl(private val httpClient: HttpClient) : AuthApi {
             }
         } catch (e: Exception) {
             Result.Error(mapToAuthError(e))
-        }
-    }
-
-    override suspend fun logout(request: RefreshTokenRequest): Result<MessageResponse> {
-        return apiCall {
-            httpClient.post("/auth/logout") {
-                contentType(ContentType.Application.Json)
-                setBody(request)
-            }.body()
         }
     }
 

@@ -12,9 +12,8 @@ import ru.itis.bloom.shared.feature.auth.api.model.response.MessageResponse
 interface AuthApi {
     suspend fun register(request: RegisterRequest): BloomResult<MessageResponse>
     suspend fun verifyEmail(token: String): BloomResult<MessageResponse>
-    suspend fun login(request: LoginRequest): BloomResult<AuthTokensResponse>
+    suspend fun login(request: LoginRequest): BloomResult<Unit>
     suspend fun refreshToken(request: RefreshTokenRequest): BloomResult<AuthTokensResponse>
-    suspend fun logout(request: RefreshTokenRequest): BloomResult<MessageResponse>
     suspend fun resetPassword(request: ResetPasswordRequest): BloomResult<MessageResponse>
     suspend fun confirmResetPassword(request: ConfirmResetPasswordRequest): BloomResult<MessageResponse>
 }

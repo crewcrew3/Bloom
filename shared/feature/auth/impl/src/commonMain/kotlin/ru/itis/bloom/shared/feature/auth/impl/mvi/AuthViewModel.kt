@@ -35,7 +35,6 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
                 is AuthIntent.LoginClicked -> handleLogin()
                 is AuthIntent.RegisterClicked -> handleRegister()
                 is AuthIntent.VerifyEmailClicked -> handleVerifyEmail(intent.token)
-                is AuthIntent.LogoutClicked -> handleLogout()
                 is AuthIntent.ForgotPasswordClicked -> _effect.emit(AuthEffect.NavigateToForgotPasswordScreen)
                 is AuthIntent.ResetPasswordClicked -> handleResetPassword(intent.email)
                 is AuthIntent.ConfirmResetPasswordClicked -> handleConfirmResetPassword(intent.token, intent.newPassword, intent.newPasswordConfirmation)
@@ -55,7 +54,7 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
 
         when (val result = repository.login(LoginRequest(s.email, s.password))) {
             is Result.Success -> {
-                _effect.emit(AuthEffect.TokensReceived(result.data.accessToken, result.data.refreshToken))
+                _effect.emit(AuthEffect.Authenticated)
                 _effect.emit(AuthEffect.NavigateToMain)
             }
             is Result.Error -> {
@@ -104,13 +103,6 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
             }
             is Result.Loading -> _state.update { it.copy(isLoading = true) }
         }
-    }
-
-    private suspend fun handleLogout() {
-        // TODO: get token from storage
-        _state.update { it.copy(isLoading = false, isLoggedIn = false, userProfile = null) }
-        _effect.emit(AuthEffect.TokensCleared)
-        _effect.emit(AuthEffect.NavigateToLoginScreen)
     }
 
     private suspend fun handleResetPassword(email: String) {
