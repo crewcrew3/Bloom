@@ -1,6 +1,6 @@
 package ru.itis.bloom.shared.feature.auth.impl.mvi
 
-sealed class AuthIntent {
+internal sealed class AuthIntent {
     // Form field changes
     data class EmailChanged(val email: String) : AuthIntent()
     data class PasswordChanged(val password: String) : AuthIntent()

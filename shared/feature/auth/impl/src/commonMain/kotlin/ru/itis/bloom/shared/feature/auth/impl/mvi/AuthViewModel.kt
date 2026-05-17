@@ -12,11 +12,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.data.Result
+import ru.itis.bloom.shared.core.data.error.BaseError
+import ru.itis.bloom.shared.core.data.error.CommonError
 import ru.itis.bloom.shared.feature.auth.api.AuthRepository
 import ru.itis.bloom.shared.feature.auth.api.model.request.LoginRequest
 import ru.itis.bloom.shared.feature.auth.api.model.request.RegisterRequest
+import ru.itis.bloom.shared.feature.auth.impl.utils.AuthMessageRes
 
-class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
+internal class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
 
     private val _state = MutableStateFlow(AuthState())
     val state: StateFlow<AuthState> = _state.asStateFlow()
@@ -58,9 +61,9 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
                 _effect.emit(AuthEffect.NavigateToMain)
             }
             is Result.Error -> {
-                val msg = mapErrorToMessage(result.error)
-                _state.update { it.copy(isLoading = false, generalError = msg) }
-                _effect.emit(AuthEffect.ShowErrorMessage(msg))
+                val messageRes = mapErrorToMessageRes(result.error)
+                _state.update { it.copy(isLoading = false, generalError = if (messageRes is AuthMessageRes.Error) messageRes.toResourceId() else null) }
+                _effect.emit(AuthEffect.ShowMessage(messageRes))
                 if (result.error is AuthError.EmailNotVerified) _effect.emit(AuthEffect.NavigateToVerifyEmailScreen)
             }
             is Result.Loading -> _state.update { it.copy(isLoading = true) }
@@ -76,13 +79,13 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
         when (val result = repository.register(RegisterRequest(s.name, s.email, s.password, s.passwordConfirmation))) {
             is Result.Success -> {
                 _effect.emit(AuthEffect.VerificationEmailSent(s.email))
-                _effect.emit(AuthEffect.ShowSuccessMessage("Проверьте email"))
+                _effect.emit(AuthEffect.ShowMessage(AuthMessageRes.Success.CheckEmail))
                 _effect.emit(AuthEffect.NavigateToLoginScreen)
             }
             is Result.Error -> {
-                val msg = mapErrorToMessage(result.error)
-                _state.update { it.copy(isLoading = false, generalError = msg) }
-                _effect.emit(AuthEffect.ShowErrorMessage(msg))
+                val messageRes = mapErrorToMessageRes(result.error)
+                _state.update { it.copy(isLoading = false, generalError =  if (messageRes is AuthMessageRes.Error) messageRes.toResourceId() else null) }
+                _effect.emit(AuthEffect.ShowMessage(messageRes))
             }
             is Result.Loading -> _state.update { it.copy(isLoading = true) }
         }
@@ -94,12 +97,12 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
             is Result.Success -> {
                 _state.update { it.copy(isLoading = false, isEmailVerified = true) }
                 _effect.emit(AuthEffect.EmailVerified)
-                _effect.emit(AuthEffect.ShowSuccessMessage("Аккаунт активирован"))
+                _effect.emit(AuthEffect.ShowMessage(AuthMessageRes.Success.AccountActivated))
             }
             is Result.Error -> {
-                val msg = mapErrorToMessage(result.error)
-                _state.update { it.copy(isLoading = false, generalError = msg) }
-                _effect.emit(AuthEffect.ShowErrorMessage(msg))
+                val messageRes = mapErrorToMessageRes(result.error)
+                _state.update { it.copy(isLoading = false, generalError = if (messageRes is AuthMessageRes.Error) messageRes.toResourceId() else null) }
+                _effect.emit(AuthEffect.ShowMessage(messageRes))
             }
             is Result.Loading -> _state.update { it.copy(isLoading = true) }
         }
@@ -107,13 +110,13 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
 
     private suspend fun handleResetPassword(email: String) {
         if (email.isBlank()) {
-            _state.update { it.copy(emailError = "Email обязателен") }
+            _state.update { it.copy(emailError = AuthMessageRes.Validation.EmailRequired.toResourceId()) }
             return
         }
         _state.update { it.copy(isLoading = true) }
         when (val result = repository.resetPassword(ru.itis.bloom.shared.feature.auth.api.model.request.ResetPasswordRequest(email))) {
-            is Result.Success -> _effect.emit(AuthEffect.ShowSuccessMessage("Ссылка отправлена"))
-            is Result.Error -> _effect.emit(AuthEffect.ShowErrorMessage(mapErrorToMessage(result.error)))
+            is Result.Success -> _effect.emit(AuthEffect.ShowMessage(AuthMessageRes.Success.LinkSent))
+            is Result.Error -> _effect.emit(AuthEffect.ShowMessage(mapErrorToMessageRes(result.error)))
             is Result.Loading -> _state.update { it.copy(isLoading = true) }
         }
         _state.update { it.copy(isLoading = false) }
@@ -121,16 +124,16 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
 
     private suspend fun handleConfirmResetPassword(token: String, pass: String, confirm: String) {
         if (pass != confirm) {
-            _state.update { it.copy(passwordConfirmationError = "Пароли не совпадают") }
+            _state.update { it.copy(passwordConfirmationError = AuthMessageRes.Validation.PasswordsMismatch.toResourceId()) }
             return
         }
         _state.update { it.copy(isLoading = true) }
         when (val result = repository.confirmResetPassword(ru.itis.bloom.shared.feature.auth.api.model.request.ConfirmResetPasswordRequest(token, pass, confirm))) {
             is Result.Success -> {
-                _effect.emit(AuthEffect.ShowSuccessMessage("Пароль изменён"))
+                _effect.emit(AuthEffect.ShowMessage(AuthMessageRes.Success.PasswordChanged))
                 _effect.emit(AuthEffect.NavigateToLoginScreen)
             }
-            is Result.Error -> _effect.emit(AuthEffect.ShowErrorMessage(mapErrorToMessage(result.error)))
+            is Result.Error -> _effect.emit(AuthEffect.ShowMessage(mapErrorToMessageRes(result.error)))
             is Result.Loading -> _state.update { it.copy(isLoading = true) }
         }
         _state.update { it.copy(isLoading = false) }
@@ -138,28 +141,35 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
 
     private fun validateLogin(email: String, pass: String): Boolean {
         var ok = true
-        if (email.isBlank()) { _state.update { it.copy(emailError = "Email обязателен") }; ok = false }
-        if (pass.length < 8) { _state.update { it.copy(passwordError = "Минимум 8 символов") }; ok = false }
+        if (email.isBlank()) { _state.update { it.copy(emailError =  AuthMessageRes.Validation.EmailRequired.toResourceId()) }; ok = false }
+        if (pass.length < 8) { _state.update { it.copy(passwordError = AuthMessageRes.Validation.PasswordMinLength.toResourceId()) }; ok = false }
         return ok
     }
 
     private fun validateRegister(name: String, email: String, pass: String, confirm: String): Boolean {
         var ok = true
-        if (name.isBlank()) { _state.update { it.copy(nameError = "Имя обязательно") }; ok = false }
-        if (email.isBlank()) { _state.update { it.copy(emailError = "Email обязателен") }; ok = false }
-        if (pass.length < 8) { _state.update { it.copy(passwordError = "Минимум 8 символов") }; ok = false }
-        if (pass != confirm) { _state.update { it.copy(passwordConfirmationError = "Пароли не совпадают") }; ok = false }
+        if (name.isBlank()) { _state.update { it.copy(nameError = AuthMessageRes.Validation.NameRequired.toResourceId()) }; ok = false }
+        if (email.isBlank()) { _state.update { it.copy(emailError = AuthMessageRes.Validation.EmailRequired.toResourceId()) }; ok = false }
+        if (pass.length < 8) { _state.update { it.copy(passwordError = AuthMessageRes.Validation.PasswordMinLength.toResourceId()) }; ok = false }
+        if (pass != confirm) { _state.update { it.copy(passwordConfirmationError = AuthMessageRes.Validation.PasswordsMismatch.toResourceId()) }; ok = false }
         return ok
     }
 
-    private fun mapErrorToMessage(error: ru.itis.bloom.shared.core.data.error.BaseError): String = when (error) {
-        is AuthError.InvalidCredentials -> "Неверный email или пароль"
-        is AuthError.EmailNotVerified -> "Подтвердите email перед входом"
-        is AuthError.EmailAlreadyExists -> "Этот email уже используется"
-        is AuthError.TokenInvalidOrExpired -> "Токен недействителен или истёк"
-        is AuthError.RefreshTokenInvalid -> "Необходима повторная авторизация"
-        is AuthError.WrongCurrentPassword -> "Текущий пароль неверен"
-        is AuthError.PasswordMismatch -> "Пароли не совпадают"
-        else -> "Ошибка сервера. Попробуйте позже"
+    private fun mapErrorToMessageRes(error: BaseError): AuthMessageRes {
+        return when (error) {
+            // Auth-specific errors
+            is AuthError -> AuthMessageRes.fromAuthError(error)
+
+            // Common errors
+            is CommonError -> when (error) {
+                is CommonError.ValidationError -> AuthMessageRes.Error.Validation
+                is CommonError.NetworkUnavailable -> AuthMessageRes.Error.Network
+                is CommonError.Timeout -> AuthMessageRes.Error.Timeout
+                else -> AuthMessageRes.Error.Unknown
+            }
+
+            // Fallback
+            else -> AuthMessageRes.Error.Unknown
+        }
     }
 }

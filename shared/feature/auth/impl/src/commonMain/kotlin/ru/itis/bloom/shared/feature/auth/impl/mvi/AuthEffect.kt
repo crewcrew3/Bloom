@@ -1,6 +1,8 @@
 package ru.itis.bloom.shared.feature.auth.impl.mvi
 
-sealed class AuthEffect {
+import ru.itis.bloom.shared.feature.auth.impl.utils.AuthMessageRes
+
+internal sealed class AuthEffect {
     // Navigation
     data object NavigateToMain : AuthEffect()
     data object NavigateToRegisterScreen : AuthEffect()
@@ -9,8 +11,7 @@ sealed class AuthEffect {
     data object NavigateToForgotPasswordScreen : AuthEffect()
 
     // Messages
-    data class ShowSuccessMessage(val message: String) : AuthEffect()
-    data class ShowErrorMessage(val message: String) : AuthEffect()
+    data class ShowMessage(val message: AuthMessageRes) : AuthEffect()
 
     // Token management
     data object Authenticated : AuthEffect()

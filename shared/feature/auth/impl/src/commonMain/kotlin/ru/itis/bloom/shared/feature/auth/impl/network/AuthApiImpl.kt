@@ -13,7 +13,7 @@ import ru.itis.bloom.shared.feature.auth.api.error.AuthError
 import ru.itis.bloom.shared.feature.auth.api.model.request.*
 import ru.itis.bloom.shared.feature.auth.api.model.response.*
 
-class AuthApiImpl(private val httpClient: HttpClient) : AuthApi {
+internal class AuthApiImpl(private val httpClient: HttpClient) : AuthApi {
 
     override suspend fun register(request: RegisterRequest): Result<MessageResponse> {
         return try {

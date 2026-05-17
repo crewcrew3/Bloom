@@ -11,7 +11,7 @@ import ru.itis.bloom.shared.feature.auth.api.model.request.ResetPasswordRequest
 import ru.itis.bloom.shared.feature.auth.api.model.response.AuthTokensResponse
 import ru.itis.bloom.shared.feature.auth.api.model.response.MessageResponse
 
-class AuthRepositoryImpl(
+internal class AuthRepositoryImpl(
     private val authApi: AuthApi
 ) : AuthRepository {
 

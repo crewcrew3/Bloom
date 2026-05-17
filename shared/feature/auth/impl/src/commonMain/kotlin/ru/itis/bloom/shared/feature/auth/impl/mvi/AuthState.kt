@@ -1,9 +1,9 @@
 package ru.itis.bloom.shared.feature.auth.impl.mvi
 
+import org.jetbrains.compose.resources.StringResource
 import ru.itis.bloom.shared.feature.auth.api.model.UserProfile
 
-
-data class AuthState(
+internal data class AuthState(
     // Form fields
     val email: String = "",
     val password: String = "",
@@ -11,11 +11,11 @@ data class AuthState(
     val passwordConfirmation: String = "",
 
     // Validation errors
-    val emailError: String? = null,
-    val passwordError: String? = null,
-    val nameError: String? = null,
-    val passwordConfirmationError: String? = null,
-    val generalError: String? = null,
+    val emailError: StringResource? = null,
+    val passwordError: StringResource? = null,
+    val nameError: StringResource? = null,
+    val passwordConfirmationError: StringResource? = null,
+    val generalError: StringResource? = null,
 
     // UI state
     val isLoading: Boolean = false,

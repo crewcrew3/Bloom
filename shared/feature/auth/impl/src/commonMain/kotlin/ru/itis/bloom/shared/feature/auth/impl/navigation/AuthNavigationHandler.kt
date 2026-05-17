@@ -5,7 +5,7 @@ import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthEffect
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AuthNavigationHandler(
+internal class AuthNavigationHandler(
     private val nav: AuthNavigator
 ) : KoinComponent {
 

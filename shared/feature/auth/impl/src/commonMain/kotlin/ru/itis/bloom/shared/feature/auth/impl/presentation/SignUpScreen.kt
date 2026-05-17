@@ -18,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import bloom.shared.feature.auth.impl.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthIntent
 import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthState
 
 @Composable
-fun SignUpScreen(
+internal fun SignUpScreen(
     state: AuthState,
     onIntent: (AuthIntent) -> Unit,
     modifier: Modifier = Modifier
@@ -36,7 +38,7 @@ fun SignUpScreen(
     ) {
         // Заголовок
         Text(
-            text = "📝 Регистрация",
+            text = stringResource(Res.string.auth_title_register),
             style = MaterialTheme.typography.headlineMedium
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -45,11 +47,11 @@ fun SignUpScreen(
         OutlinedTextField(
             value = state.name,
             onValueChange = { onIntent(AuthIntent.NameChanged(it)) },
-            label = { Text("Имя") },
+            label = { Text(stringResource(Res.string.auth_label_name)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             isError = state.nameError != null,
-            supportingText = state.nameError?.let { { Text(it) } }
+            supportingText = state.nameError?.let { { Text(stringResource(it)) } }
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -57,11 +59,11 @@ fun SignUpScreen(
         OutlinedTextField(
             value = state.email,
             onValueChange = { onIntent(AuthIntent.EmailChanged(it)) },
-            label = { Text("Email") },
+            label = { Text(stringResource(Res.string.auth_label_email)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             isError = state.emailError != null,
-            supportingText = state.emailError?.let { { Text(it) } }
+            supportingText = state.emailError?.let { { Text(stringResource(it)) } }
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -69,12 +71,12 @@ fun SignUpScreen(
         OutlinedTextField(
             value = state.password,
             onValueChange = { onIntent(AuthIntent.PasswordChanged(it)) },
-            label = { Text("Пароль") },
+            label = { Text(stringResource(Res.string.auth_label_password)) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             isError = state.passwordError != null,
-            supportingText = state.passwordError?.let { { Text(it) } }
+            supportingText = state.passwordError?.let { { Text(stringResource(it)) } }
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -82,18 +84,18 @@ fun SignUpScreen(
         OutlinedTextField(
             value = state.passwordConfirmation,
             onValueChange = { onIntent(AuthIntent.PasswordConfirmationChanged(it)) },
-            label = { Text("Повторите пароль") },
+            label = { Text(stringResource(Res.string.auth_label_password_confirm)) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             isError = state.passwordConfirmationError != null,
-            supportingText = state.passwordConfirmationError?.let { { Text(it) } }
+            supportingText = state.passwordConfirmationError?.let { { Text(stringResource(it)) } }
         )
 
         // Общая ошибка
         state.generalError?.let {
             Text(
-                text = it,
+                text = stringResource(it),
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(top = 12.dp)
@@ -114,7 +116,7 @@ fun SignUpScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             } else {
-                Text("Зарегистрироваться")
+                Text(stringResource(Res.string.auth_button_register))
             }
         }
 
@@ -122,7 +124,7 @@ fun SignUpScreen(
 
         // Переключение на вход
         TextButton(onClick = { onIntent(AuthIntent.NavigateToLogin) }) {
-            Text("Уже есть аккаунт? Войти")
+            Text(stringResource(Res.string.auth_link_to_login))
         }
     }
 }

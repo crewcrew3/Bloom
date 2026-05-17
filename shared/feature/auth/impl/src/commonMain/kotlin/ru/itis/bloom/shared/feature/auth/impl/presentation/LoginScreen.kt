@@ -18,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import bloom.shared.feature.auth.impl.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthIntent
 import ru.itis.bloom.shared.feature.auth.impl.mvi.AuthState
 
 @Composable
-fun LoginScreen(
+internal fun LoginScreen(
     state: AuthState,
     onIntent: (AuthIntent) -> Unit,
     modifier: Modifier = Modifier
@@ -32,34 +34,34 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("🔐 Вход", style = MaterialTheme.typography.headlineMedium)
+        Text(stringResource(Res.string.auth_title_login), style = MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(32.dp))
 
         OutlinedTextField(
             value = state.email,
             onValueChange = { onIntent(AuthIntent.EmailChanged(it)) },
-            label = { Text("Email") },
+            label = { Text(stringResource(Res.string.auth_label_email)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             isError = state.emailError != null,
-            supportingText = state.emailError?.let { { Text(it) } }
+            supportingText = state.emailError?.let { { Text(stringResource(it)) } }
         )
         Spacer(Modifier.height(16.dp))
 
         OutlinedTextField(
             value = state.password,
             onValueChange = { onIntent(AuthIntent.PasswordChanged(it)) },
-            label = { Text("Пароль") },
+            label = { Text(stringResource(Res.string.auth_label_password)) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             isError = state.passwordError != null,
-            supportingText = state.passwordError?.let { { Text(it) } }
+            supportingText = state.passwordError?.let { { Text(stringResource(it)) } }
         )
 
         state.generalError?.let {
             Text(
-                it,
+                stringResource(it),
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(top = 8.dp)
             )
@@ -73,11 +75,11 @@ fun LoginScreen(
             enabled = !state.isLoading && state.isLoginFormValid
         ) {
             if (state.isLoading) CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
-            else Text("Войти")
+            else Text(stringResource(Res.string.auth_button_login))
         }
 
         TextButton(onClick = { onIntent(AuthIntent.NavigateToRegister) }) {
-            Text("Нет аккаунта? Зарегистрироваться")
+            Text(stringResource(Res.string.auth_link_to_register))
         }
     }
 }

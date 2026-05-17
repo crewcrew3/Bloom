@@ -23,6 +23,7 @@ kotlin {
             //modules
             implementation(projects.shared.feature.auth.api)
             implementation(projects.shared.core.data)
+            implementation(projects.shared.core.ui)
             implementation(projects.shared.core.navigation.api)
 
             //navigation
