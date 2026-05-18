@@ -14,12 +14,12 @@ kotlin {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
     jvm()
 
     sourceSets {
         commonMain.dependencies {
-
             //modules
             implementation(projects.shared.feature.auth.api)
             implementation(projects.shared.core.data)
@@ -44,6 +44,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
+            //network
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.serialization)
             implementation(libs.ktor.client.logging)
