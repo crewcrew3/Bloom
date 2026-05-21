@@ -8,15 +8,23 @@ import androidx.navigation3.runtime.NavKey
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
+import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail.ProductDetailIntent
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail.ProductDetailViewModel
+import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productform.ProductFormIntent
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productform.ProductFormViewModel
+import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListIntent
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListViewModel
 
 fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
+
     entry<MakeupBagNavRoute.ProductList> {
         val vm: ProductListViewModel = koinViewModel()
         val navigationHandler: MakeupBagNavigationHandler = koinInject()
         val state by vm.state.collectAsState()
+
+        LaunchedEffect(Unit) {
+            vm.processIntent(ProductListIntent.LoadProducts)
+        }
 
         LaunchedEffect(vm) {
             vm.effect.collect(navigationHandler::handleListEffect)
@@ -31,7 +39,7 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
         val state by vm.state.collectAsState()
 
         LaunchedEffect(Unit) {
-            vm.processIntent(ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail.ProductDetailIntent.LoadProduct(route.productId))
+            vm.processIntent(ProductDetailIntent.LoadProduct(route.productId))
         }
         LaunchedEffect(vm) {
             vm.effect.collect(navigationHandler::handleDetailEffect)
@@ -58,7 +66,7 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
         val state by vm.state.collectAsState()
 
         LaunchedEffect(Unit) {
-            vm.processIntent(ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productform.ProductFormIntent.LoadProduct(route.productId))
+            vm.processIntent(ProductFormIntent.LoadProduct(route.productId))
         }
         LaunchedEffect(vm) {
             vm.effect.collect(navigationHandler::handleFormEffect)

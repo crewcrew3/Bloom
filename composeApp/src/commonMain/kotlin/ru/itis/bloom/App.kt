@@ -14,6 +14,7 @@ import ru.itis.bloom.shared.core.navigation.impl.navigationSavedStateConfig
 import ru.itis.bloom.shared.core.ui.theme.BloomTheme
 import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
 import ru.itis.bloom.shared.feature.auth.impl.navigation.authEntryBuilder
+import ru.itis.bloom.shared.feature.makeupbag.impl.navigation.makeupBagEntryBuilder
 
 @Composable
 fun App() {
@@ -21,7 +22,7 @@ fun App() {
         // Получаем все entry builders из графа Koin
         val entryBuilders: List<EntryProviderScope<NavKey>.() -> Unit> = listOf(
             EntryProviderScope<NavKey>::authEntryBuilder,
-            // EntryProviderScope<NavKey>::profileEntryBuilder,
+            EntryProviderScope<NavKey>::makeupBagEntryBuilder,
             // ... другие фичи
         )
 

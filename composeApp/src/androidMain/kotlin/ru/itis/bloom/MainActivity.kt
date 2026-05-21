@@ -13,6 +13,8 @@ import ru.itis.bloom.shared.core.data.di.networkModule
 import ru.itis.bloom.shared.core.navigation.impl.di.navigationModule
 import ru.itis.bloom.shared.feature.auth.impl.di.authModule
 import ru.itis.bloom.shared.feature.auth.impl.di.authNavModule
+import ru.itis.bloom.shared.feature.makeupbag.impl.di.makeupBagModule
+import ru.itis.bloom.shared.feature.makeupbag.impl.di.makeupBagNavModule
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +29,9 @@ class MainActivity : ComponentActivity() {
                     navigationModule,
                     authNavModule,
                     authModule,
-                    networkModule
+                    networkModule,
+                    makeupBagModule,
+                    makeupBagNavModule,
                     // ... другие модули фич
                 )
             }

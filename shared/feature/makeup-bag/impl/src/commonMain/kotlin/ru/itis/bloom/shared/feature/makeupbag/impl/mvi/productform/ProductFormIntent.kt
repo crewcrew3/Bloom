@@ -18,6 +18,6 @@ internal sealed class ProductFormIntent {
     data object Archive : ProductFormIntent()
     data object Delete : ProductFormIntent()
     data object NavigateBack : ProductFormIntent()
+
     data object ClearErrors : ProductFormIntent()
-    data object ClearForm : ProductFormIntent()
 }

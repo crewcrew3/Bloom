@@ -8,36 +8,42 @@ internal data class ProductFormState(
     val productId: String? = null,
     val product: Product? = null,
     val isLoading: Boolean = false,
-    val generalError: StringResource? = null,
     val form: FormFields = FormFields()
 ) {
     data class FormFields(
         val name: String = "",
-        val brand: String = "",
-        val category: ProductCategory? = ProductCategory.Other,
-        val inciComposition: String = "",
+        val brand: String? = null,
+        val category: ProductCategory = ProductCategory.Other,
+        val inciComposition: String? = null,
         val personalRating: Int? = null,
-        val personalReview: String = "",
+        val personalReview: String? = null,
         val openedDate: String? = null,
         val shelfLifeAfterOpening: Int? = null,
 
         // Ошибки валидации по полям
         val nameError: StringResource? = null,
         val brandError: StringResource? = null,
-        val categoryError: StringResource? = null,
-        val ratingError: StringResource? = null,
         val reviewError: StringResource? = null,
-        val openedDateError: StringResource? = null,
         val shelfLifeError: StringResource? = null
+        //val categoryError: StringResource? = null,
+        //val ratingError: StringResource? = null,
+        //val openedDateError: StringResource? = null,
     ) {
         val isValid: Boolean
             get() = name.isNotBlank() && name.length <= 200 &&
-                    brand.length <= 200 &&
-                    category != null &&
+                    (brand?.let {
+                        (it.isNotBlank() && it.length <= 200) || it.isBlank()
+                    } ?: true) &&
                     (personalRating == null || personalRating in 1..5) &&
-                    personalReview.length <= 1000 &&
+                    (personalReview?.let {
+                        (it.isNotBlank() && it.length <= 1000) || it.isBlank()
+                    } ?: true) &&
+                    //openedDate &&
+                    (shelfLifeAfterOpening?.let {
+                        it > 0
+                    } ?: true) &&
                     nameError == null && brandError == null &&
-                    categoryError == null && ratingError == null &&
+                    shelfLifeError == null &&
                     reviewError == null
     }
 }

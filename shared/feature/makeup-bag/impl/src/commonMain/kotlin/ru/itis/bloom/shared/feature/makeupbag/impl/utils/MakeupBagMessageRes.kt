@@ -56,17 +56,8 @@ internal sealed class MakeupBagMessageRes {
         data object BrandTooLong : Validation() {
             override fun toResourceId(): StringResource = Res.string.makeup_validation_brand_too_long
         }
-        data object CategoryRequired : Validation() {
-            override fun toResourceId(): StringResource = Res.string.makeup_validation_category_required
-        }
-        data object RatingInvalid : Validation() {
-            override fun toResourceId(): StringResource = Res.string.makeup_validation_rating_invalid
-        }
         data object ReviewTooLong : Validation() {
             override fun toResourceId(): StringResource = Res.string.makeup_validation_review_too_long
-        }
-        data object DateInvalid : Validation() {
-            override fun toResourceId(): StringResource = Res.string.makeup_validation_date_invalid
         }
         data object ShelfLifeInvalid : Validation() {
             override fun toResourceId(): StringResource = Res.string.makeup_validation_shelf_life_invalid

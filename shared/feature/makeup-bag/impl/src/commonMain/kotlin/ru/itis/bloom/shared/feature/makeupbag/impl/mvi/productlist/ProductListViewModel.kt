@@ -10,11 +10,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.data.Result
 import ru.itis.bloom.shared.core.data.error.BaseError
-import ru.itis.bloom.shared.core.data.error.CommonError
-import ru.itis.bloom.shared.feature.makeupbag.api.error.MakeupBagError
 import ru.itis.bloom.shared.feature.makeupbag.api.model.response.ProductStatus
 import ru.itis.bloom.shared.feature.makeupbag.impl.domain.usecase.GetProductsUseCase
-import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagMessageRes
+import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagErrorMapper
 
 internal class ProductListViewModel(
     private val getProductsUseCase: GetProductsUseCase
@@ -40,15 +38,12 @@ internal class ProductListViewModel(
                 is ProductListIntent.NavigateToCreate -> {
                     _effect.emit(ProductListEffect.NavigateToCreateScreen)
                 }
-                is ProductListIntent.ClearErrors -> {
-                    _state.update { it.copy(generalError = null) }
-                }
             }
         }
     }
 
     private suspend fun loadProducts() {
-        _state.update { it.copy(isLoading = true, generalError = null) }
+        _state.update { it.copy(isLoading = true) }
         when (val result = getProductsUseCase(
             category = _state.value.filterCategory,
             status = ProductStatus.Active
@@ -62,23 +57,10 @@ internal class ProductListViewModel(
     }
 
     private suspend fun handleError(error: BaseError) {
-        val messageRes = mapErrorToMessageRes(error)
+        val messageRes = MakeupBagErrorMapper.mapToMessageRes(error)
         _state.update {
-            it.copy(isLoading = false, generalError = if (messageRes is MakeupBagMessageRes.Error) messageRes.toResourceId() else null)
+            it.copy(isLoading = false)
         }
         _effect.emit(ProductListEffect.ShowMessage(messageRes))
-    }
-
-    private fun mapErrorToMessageRes(error: BaseError): MakeupBagMessageRes {
-        return when (error) {
-            is MakeupBagError -> MakeupBagMessageRes.fromMakeupBagError(error)
-            is CommonError -> when (error) {
-                is CommonError.ValidationError -> MakeupBagMessageRes.Error.Validation
-                is CommonError.NetworkUnavailable -> MakeupBagMessageRes.Error.Network
-                is CommonError.Timeout -> MakeupBagMessageRes.Error.Timeout
-                else -> MakeupBagMessageRes.Error.Unknown
-            }
-            else -> MakeupBagMessageRes.Error.Unknown
-        }
     }
 }

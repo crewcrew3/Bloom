@@ -29,6 +29,8 @@ kotlin {
             implementation(projects.shared.feature.auth.impl)
             implementation(projects.shared.core.ui)
             implementation(projects.shared.core.data)
+            implementation(projects.shared.feature.makeupBag.api)
+            implementation(projects.shared.feature.makeupBag.impl)
 
             //DI
             implementation(libs.koin.core)

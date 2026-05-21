@@ -7,5 +7,4 @@ internal sealed class ProductListIntent {
     data class FilterByCategory(val category: ProductCategory?) : ProductListIntent()
     data class SelectProduct(val productId: String) : ProductListIntent()
     data object NavigateToCreate : ProductListIntent()
-    data object ClearErrors : ProductListIntent()
 }

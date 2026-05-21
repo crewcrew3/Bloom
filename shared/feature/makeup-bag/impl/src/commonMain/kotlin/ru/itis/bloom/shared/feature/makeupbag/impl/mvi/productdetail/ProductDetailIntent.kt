@@ -6,5 +6,4 @@ internal sealed class ProductDetailIntent {
     data object Archive : ProductDetailIntent()
     data object Delete : ProductDetailIntent()
     data object NavigateBack : ProductDetailIntent()
-    data object ClearErrors : ProductDetailIntent()
 }

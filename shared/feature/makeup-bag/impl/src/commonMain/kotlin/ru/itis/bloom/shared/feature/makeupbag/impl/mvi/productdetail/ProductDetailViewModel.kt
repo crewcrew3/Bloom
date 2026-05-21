@@ -10,9 +10,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.data.Result
 import ru.itis.bloom.shared.core.data.error.BaseError
-import ru.itis.bloom.shared.core.data.error.CommonError
-import ru.itis.bloom.shared.feature.makeupbag.api.error.MakeupBagError
 import ru.itis.bloom.shared.feature.makeupbag.impl.domain.usecase.*
+import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagErrorMapper
 import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagMessageRes
 
 internal class ProductDetailViewModel(
@@ -37,7 +36,6 @@ internal class ProductDetailViewModel(
                 is ProductDetailIntent.Archive -> archive()
                 is ProductDetailIntent.Delete -> delete()
                 is ProductDetailIntent.NavigateBack -> _effect.emit(ProductDetailEffect.NavigateBack)
-                is ProductDetailIntent.ClearErrors -> _state.update { it.copy(generalError = null) }
             }
         }
     }
@@ -56,6 +54,7 @@ internal class ProductDetailViewModel(
         _state.update { it.copy(isLoading = true) }
         when (val result = archiveProductUseCase(id)) {
             is Result.Success -> {
+                _state.update { it.copy(isLoading = false) }
                 _effect.emit(ProductDetailEffect.NavigateBack)
                 _effect.emit(ProductDetailEffect.ShowMessage(MakeupBagMessageRes.Success.ProductArchived))
             }
@@ -69,6 +68,7 @@ internal class ProductDetailViewModel(
         _state.update { it.copy(isLoading = true) }
         when (val result = deleteProductUseCase(id)) {
             is Result.Success -> {
+                _state.update { it.copy(isLoading = false) }
                 _effect.emit(ProductDetailEffect.NavigateBack)
                 _effect.emit(ProductDetailEffect.ShowMessage(MakeupBagMessageRes.Success.ProductDeleted))
             }
@@ -78,26 +78,10 @@ internal class ProductDetailViewModel(
     }
 
     private suspend fun handleError(error: BaseError) {
-        val messageRes = mapErrorToMessageRes(error)
+        val messageRes = MakeupBagErrorMapper.mapToMessageRes(error)
         _state.update {
-            it.copy(isLoading = false, generalError = if (messageRes is MakeupBagMessageRes.Error) messageRes.toResourceId() else null)
+            it.copy(isLoading = false)
         }
         _effect.emit(ProductDetailEffect.ShowMessage(messageRes))
-        if (error is MakeupBagError.ProductLinkedToRoutine) {
-            _effect.emit(ProductDetailEffect.ShowMessage(MakeupBagMessageRes.Error.ProductLinkedToRoutine))
-        }
-    }
-
-    private fun mapErrorToMessageRes(error: BaseError): MakeupBagMessageRes {
-        return when (error) {
-            is MakeupBagError -> MakeupBagMessageRes.fromMakeupBagError(error)
-            is CommonError -> when (error) {
-                is CommonError.ValidationError -> MakeupBagMessageRes.Error.Validation
-                is CommonError.NetworkUnavailable -> MakeupBagMessageRes.Error.Network
-                is CommonError.Timeout -> MakeupBagMessageRes.Error.Timeout
-                else -> MakeupBagMessageRes.Error.Unknown
-            }
-            else -> MakeupBagMessageRes.Error.Unknown
-        }
     }
 }

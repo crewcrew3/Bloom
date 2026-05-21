@@ -1,6 +1,8 @@
 package ru.itis.bloom.shared.feature.makeupbag.impl.di
 
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.itis.bloom.shared.feature.makeupbag.api.MakeupBagApi
 import ru.itis.bloom.shared.feature.makeupbag.api.MakeupBagRepository
@@ -13,19 +15,19 @@ import ru.itis.bloom.shared.feature.makeupbag.impl.navigation.MakeupBagNavigatio
 import ru.itis.bloom.shared.feature.makeupbag.impl.network.MakeupBagApiImpl
 
 val makeupBagModule = module {
-    single<MakeupBagApi> { MakeupBagApiImpl(httpClient = get()) }
-    single<MakeupBagRepository> { MakeupBagRepositoryImpl(api = get()) }
+    singleOf(::MakeupBagApiImpl) bind MakeupBagApi::class
+    singleOf(::MakeupBagRepositoryImpl) bind MakeupBagRepository::class
 
-    factory { GetProductsUseCase(repository = get()) }
-    factory { GetProductByIdUseCase(repository = get()) }
-    factory { CreateProductUseCase(repository = get()) }
-    factory { UpdateProductUseCase(repository = get()) }
-    factory { DeleteProductUseCase(repository = get()) }
-    factory { ArchiveProductUseCase(repository = get()) }
+    singleOf(::GetProductsUseCase)
+    singleOf(::GetProductByIdUseCase)
+    singleOf(::CreateProductUseCase)
+    singleOf(::UpdateProductUseCase)
+    singleOf(::DeleteProductUseCase)
+    singleOf(::ArchiveProductUseCase)
+
+    singleOf(::MakeupBagNavigationHandler)
 
     viewModelOf(::ProductListViewModel)
     viewModelOf(::ProductFormViewModel)
     viewModelOf(::ProductDetailViewModel)
-
-    factory { MakeupBagNavigationHandler(get()) }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Ошибки (Error) -->
+    <string name="makeup_error_product_linked">Продукт привязан к активной рутине</string>
+    <string name="makeup_error_not_found">Продукт не найден</string>
+    <string name="makeup_error_invalid_category">Некорректная категория</string>
+    <string name="makeup_error_validation">Ошибка валидации</string>
+    <string name="makeup_error_network">Ошибка сети</string>
+    <string name="makeup_error_timeout">Превышено время ожидания</string>
+    <string name="makeup_error_unknown">Неизвестная ошибка</string>
+
+    <!-- Успешные действия (Success) -->
+    <string name="makeup_success_added">Продукт успешно добавлен</string>
+    <string name="makeup_success_updated">Продукт успешно обновлён</string>
+    <string name="makeup_success_deleted">Продукт успешно удалён</string>
+    <string name="makeup_success_archived">Продукт перемещён в архив</string>
+
+    <!-- Ошибки валидации полей (Validation) -->
+    <string name="makeup_validation_name_required">Введите название продукта</string>
+    <string name="makeup_validation_name_too_long">Название слишком длинное (макс. 200 символов)</string>
+    <string name="makeup_validation_brand_too_long">Название бренда слишком длинное (макс. 200 символов)</string>
+    <string name="makeup_validation_review_too_long">Отзыв слишком длинный (макс. 1000 символов)</string>
+    <string name="makeup_validation_shelf_life_invalid">Срок годности должен быть больше 0</string>
+</resources>

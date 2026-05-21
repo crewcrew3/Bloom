@@ -8,6 +8,8 @@ import ru.itis.bloom.shared.core.data.di.networkModule
 import ru.itis.bloom.shared.core.navigation.impl.di.navigationModule
 import ru.itis.bloom.shared.feature.auth.impl.di.authModule
 import ru.itis.bloom.shared.feature.auth.impl.di.authNavModule
+import ru.itis.bloom.shared.feature.makeupbag.impl.di.makeupBagModule
+import ru.itis.bloom.shared.feature.makeupbag.impl.di.makeupBagNavModule
 
 fun main() {
     initKoin()
@@ -29,7 +31,9 @@ private fun initKoin() {
                 navigationModule,
                 authNavModule,
                 authModule,
-                networkModule
+                networkModule,
+                makeupBagNavModule,
+                makeupBagModule,
                 // ... другие модули
             )
         }
