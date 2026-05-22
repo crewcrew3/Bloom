@@ -8,12 +8,11 @@ import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListEf
 internal class MakeupBagNavigationHandler(
     private val nav: MakeupBagNavigator,
 ) {
-
     fun handleListEffect(effect: ProductListEffect) {
         when (effect) {
             is ProductListEffect.NavigateToProductDetail -> { nav.toProductDetailScreen(effect.productId) }
             is ProductListEffect.NavigateToCreateScreen -> { nav.toCreateProductScreen() }
-            is ProductListEffect.ShowMessage -> { /* handled by UI snackbar */ }
+            is ProductListEffect.ShowMessage -> { /* обрабатывается в UI Toast-ом */ }
         }
     }
 
@@ -21,7 +20,7 @@ internal class MakeupBagNavigationHandler(
         when (effect) {
             is ProductFormEffect.NavigateBack -> { nav.back() }
             //is ProductFormEffect.NavigateBackAndRefresh -> { /* nav.backWithRefresh() */ }
-            is ProductFormEffect.ShowMessage -> { /* handled by UI snackbar */ }
+            is ProductFormEffect.ShowMessage -> { /* обрабатывается в UI Toast-ом */ }
         }
     }
 
@@ -29,7 +28,7 @@ internal class MakeupBagNavigationHandler(
         when (effect) {
             is ProductDetailEffect.NavigateBack -> { nav.back() }
             is ProductDetailEffect.NavigateToEdit -> { nav.toEditProductScreen(effect.productId) }
-            is ProductDetailEffect.ShowMessage -> { /* handled by UI snackbar */ }
+            is ProductDetailEffect.ShowMessage -> { /* обрабатывается в UI Toast-ом */ }
         }
     }
 }

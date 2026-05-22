@@ -21,4 +21,19 @@
     <string name="makeup_validation_brand_too_long">Название бренда слишком длинное (макс. 200 символов)</string>
     <string name="makeup_validation_review_too_long">Отзыв слишком длинный (макс. 1000 символов)</string>
     <string name="makeup_validation_shelf_life_invalid">Срок годности должен быть больше 0</string>
+
+    <!-- Надписи -->
+    <string name="makeup_title_my_bag">Моя косметичка</string>
+
+    <string name="makeup_chip_all">Все</string>
+    <string name="makeup_chip_cleanser">Очищение</string>
+    <string name="makeup_chip_toner">Тонер</string>
+    <string name="makeup_chip_serum">Сыворотка</string>
+    <string name="makeup_chip_moisturizer">Увлажнение</string>
+    <string name="makeup_chip_sunscreen">SPF-защита</string>
+    <string name="makeup_chip_mask">Маска</string>
+    <string name="makeup_chip_eye_cream">Крем для глаз</string>
+    <string name="makeup_chip_exfoliant">Пилинг</string>
+    <string name="makeup_chip_oil">Масло</string>
+    <string name="makeup_chip_other">Другое</string>
 </resources>

@@ -2,12 +2,7 @@ package ru.itis.bloom.shared.core.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import bloom.shared.core.ui.generated.resources.Res
-import bloom.shared.core.ui.generated.resources.ic_arrow_back
-import bloom.shared.core.ui.generated.resources.ic_makeup_bag
-import bloom.shared.core.ui.generated.resources.ic_profile
-import bloom.shared.core.ui.generated.resources.ic_routine
-import bloom.shared.core.ui.generated.resources.ic_skin_diary
+import bloom.shared.core.ui.generated.resources.*
 import org.jetbrains.compose.resources.vectorResource
 
 object IconsCustom {
@@ -26,4 +21,7 @@ object IconsCustom {
 
     @Composable
     fun iconArrowBack(): ImageVector = vectorResource(Res.drawable.ic_arrow_back)
+
+    @Composable
+    fun iconPlus(): ImageVector = vectorResource(Res.drawable.ic_plus)
 }

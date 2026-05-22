@@ -7,6 +7,7 @@ object ColorsCustom {
     val LightPrimary = Color(0xFFB0A5DE)
     val LightOnPrimary = Color(0xFF0A1128)
     val LightPrimaryContainer = Color(0xFFE8DEF8)
+    val LightOnPrimaryContainer = Color(0xFF4A4459)
 
     val LightSecondary = Color(0xFF80A1D4)
     val LightOnSecondary = Color(0xFFFFFFFF)

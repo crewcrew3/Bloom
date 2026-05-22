@@ -15,6 +15,7 @@ kotlinStdlib = "2.3.20"
 
 androidx-nav3 = "1.1.0-alpha04"
 compose-multiplatform-lifecycle = "2.10.0-alpha05"
+compose-toast = "3.0.0" # https://klibs.io/project/the-best-is-best/ComposeToast
 
 coroutines = "1.10.2"
 serialization = "1.11.0"
@@ -62,6 +63,7 @@ compose-material3 = { module = "org.jetbrains.compose.material3:material3", vers
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
+compose-toast = { module = "io.github.the-best-is-best:compose_toast", version.ref = "compose-toast" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }

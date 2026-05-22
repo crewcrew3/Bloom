@@ -12,4 +12,25 @@ object StylesCustom {
         fontWeight = FontWeight.Medium,
         textAlign = TextAlign.Start,
     )
+
+    val categoryChipText = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center
+    )
+
+    val productCardName = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold
+    )
+
+    val productCardBrand = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal
+    )
+
+    val productCardCategory = TextStyle(
+        fontSize = 13.sp,
+        fontWeight = FontWeight.Medium
+    )
 }
