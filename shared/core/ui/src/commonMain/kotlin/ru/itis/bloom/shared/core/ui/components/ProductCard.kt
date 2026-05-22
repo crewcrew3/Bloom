@@ -56,7 +56,7 @@ fun ProductCard(
                             Modifier
                         } else {
                             Modifier.background(
-                                settings.placeholderColor ?: MaterialTheme.colorScheme.secondaryContainer
+                                settings.placeholderColor ?: MaterialTheme.colorScheme.primaryContainer
                             )
                         }
                     )
@@ -71,9 +71,10 @@ fun ProductCard(
                 } else {
                     // можно заменить на локальный ресурс позже
                     Image(
-                        imageVector = IconsCustom.iconMakeupBag(),
+                        painter = IconsCustom.iconPlaceholderProduct(),
                         contentDescription = null,
                         modifier = Modifier
+                            .size(56.dp)
                             .padding(8.dp)
                             .align(Alignment.Center),
                         contentScale = ContentScale.Fit

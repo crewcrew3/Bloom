@@ -1,27 +1,30 @@
 package ru.itis.bloom.shared.core.ui.theme
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import bloom.shared.core.ui.generated.resources.*
-import org.jetbrains.compose.resources.vectorResource
+import org.jetbrains.compose.resources.painterResource
 
 object IconsCustom {
 
     @Composable
-    fun iconMakeupBag(): ImageVector = vectorResource(Res.drawable.ic_makeup_bag)
+    fun iconMakeupBag(): Painter = painterResource(Res.drawable.ic_makeup_bag)
 
     @Composable
-    fun iconRoutine(): ImageVector = vectorResource(Res.drawable.ic_routine)
+    fun iconRoutine(): Painter = painterResource(Res.drawable.ic_routine)
 
     @Composable
-    fun iconSkinDiary(): ImageVector = vectorResource(Res.drawable.ic_skin_diary)
+    fun iconSkinDiary(): Painter = painterResource(Res.drawable.ic_skin_diary)
 
     @Composable
-    fun iconProfile(): ImageVector = vectorResource(Res.drawable.ic_profile)
+    fun iconProfile(): Painter = painterResource(Res.drawable.ic_profile)
 
     @Composable
-    fun iconArrowBack(): ImageVector = vectorResource(Res.drawable.ic_arrow_back)
+    fun iconArrowBack(): Painter = painterResource(Res.drawable.ic_arrow_back)
 
     @Composable
-    fun iconPlus(): ImageVector = vectorResource(Res.drawable.ic_plus)
+    fun iconPlus(): Painter = painterResource(Res.drawable.ic_plus)
+
+    @Composable
+    fun iconPlaceholderProduct(): Painter = painterResource(Res.drawable.ic_placeholder_product)
 }

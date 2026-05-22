@@ -34,7 +34,7 @@ fun TopBarCustom(
             Text(
                 text = topBarSettings.text,
                 style = StylesCustom.topBarTitle,
-                color = topBarSettings.textColor ?: MaterialTheme.colorScheme.onBackground,
+                color = topBarSettings.textColor ?: MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp)
             )
@@ -48,7 +48,7 @@ fun TopBarCustom(
 
                 ) {
                     Icon(
-                        imageVector = iconSettings.icon ?: IconsCustom.iconArrowBack(),
+                        painter = iconSettings.iconPainter ?: IconsCustom.iconArrowBack(),
                         contentDescription = iconSettings.description,
                         tint = iconSettings.color ?: MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier

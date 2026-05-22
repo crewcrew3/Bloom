@@ -35,7 +35,7 @@ fun BottomBarCustom(
                 onClick = bottomBarSettings.onRoutineSectionClick
             ) {
                 Icon(
-                    imageVector = IconsCustom.iconRoutine(),
+                    painter = IconsCustom.iconRoutine(),
                     contentDescription = "",
                     modifier = Modifier
                         .size(DimensionsCustom.bottomBarIconSize)
@@ -45,7 +45,7 @@ fun BottomBarCustom(
                 onClick = bottomBarSettings.onSkinDiarySectionClick
             ) {
                 Icon(
-                    imageVector = IconsCustom.iconSkinDiary(),
+                    painter = IconsCustom.iconSkinDiary(),
                     contentDescription = "",
                     modifier = Modifier
                         .size(DimensionsCustom.bottomBarIconSize)
@@ -55,7 +55,7 @@ fun BottomBarCustom(
                 onClick = bottomBarSettings.onMakeupBagSectionClick
             ) {
                 Icon(
-                    imageVector = IconsCustom.iconMakeupBag(),
+                    painter = IconsCustom.iconMakeupBag(),
                     contentDescription = "",
                     modifier = Modifier
                         .size(DimensionsCustom.bottomBarIconSize)
@@ -65,7 +65,7 @@ fun BottomBarCustom(
                 onClick = bottomBarSettings.onProfileSectionClick
             ) {
                 Icon(
-                    imageVector = IconsCustom.iconProfile(),
+                    painter = IconsCustom.iconProfile(),
                     contentDescription = "",
                     modifier = Modifier
                         .size(DimensionsCustom.bottomBarIconSize)

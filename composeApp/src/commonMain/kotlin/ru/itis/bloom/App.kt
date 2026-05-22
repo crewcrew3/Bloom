@@ -14,6 +14,7 @@ import ru.itis.bloom.shared.core.navigation.impl.navigationSavedStateConfig
 import ru.itis.bloom.shared.core.ui.theme.BloomTheme
 import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
 import ru.itis.bloom.shared.feature.auth.impl.navigation.authEntryBuilder
+import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
 import ru.itis.bloom.shared.feature.makeupbag.impl.navigation.makeupBagEntryBuilder
 
 @Composable
@@ -29,7 +30,7 @@ fun App() {
         // Инициализируем BackStack с конфигурацией сериализации
         val backStack = rememberNavBackStack(
             navigationSavedStateConfig,
-            AuthNavRoute.Login //наверное должна быть логика по проверке авторизации и если юзер в акке то перенапрвлять его на экран какой-нибудь фичи, а не на логин
+            MakeupBagNavRoute.ProductList //наверное должна быть логика по проверке авторизации и если юзер в акке то перенапрвлять его на экран какой-нибудь фичи, а не на логин
         )
 
         val backStackHolder: BackStackHolder = koinInject()

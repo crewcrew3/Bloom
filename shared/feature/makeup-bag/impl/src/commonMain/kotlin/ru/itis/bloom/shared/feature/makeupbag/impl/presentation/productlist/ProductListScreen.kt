@@ -2,11 +2,9 @@ package ru.itis.bloom.shared.feature.makeupbag.impl.presentation.productlist
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,6 +26,8 @@ import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListIn
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListState
 import bloom.shared.feature.makeup_bag.impl.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
+import ru.itis.bloom.shared.core.ui.components.settings.FloatingActionButtonSettings
+import ru.itis.bloom.shared.core.ui.components.settings.IconSettings
 import ru.itis.bloom.shared.feature.makeupbag.api.model.response.ProductStatus
 
 @Composable
@@ -41,13 +41,18 @@ internal fun ProductListScreen(
         topBarSettings = TopBarSettings(
             text = stringResource(Res.string.makeup_title_my_bag)
         ),
+        floatActBtnSettings = FloatingActionButtonSettings(
+            onClick = { onIntent(ProductListIntent.NavigateToCreate) },
+            iconSettings = IconSettings(
+                iconPainter = IconsCustom.iconPlus()
+            )
+        ),
         bottomBarSettings = bottomBarSettings,
         content = { paddingValues ->
             Column(
                 modifier = modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(horizontal = DimensionsCustom.baseInsets)
             ) {
                 // Категория-чипы
                 CategoryChipsRow(
@@ -60,7 +65,7 @@ internal fun ProductListScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Список продуктов или индикатор загрузки
-                if (state.isLoading && state.products.isEmpty()) {
+                if (state.isLoading) {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
@@ -86,24 +91,6 @@ internal fun ProductListScreen(
                     }
                 }
             }
-
-            // FAB для добавления продукта
-            FloatingActionButton(
-                onClick = { onIntent(ProductListIntent.NavigateToCreate) },
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier
-                    .padding(
-                        end = DimensionsCustom.baseInsets + 8.dp,
-                        bottom = DimensionsCustom.baseInsets + 8.dp + DimensionsCustom.bottomBarHeight
-                    )
-            ) {
-                Icon(
-                    imageVector = IconsCustom.iconPlus(),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
         }
     )
 }
@@ -118,11 +105,13 @@ private fun CategoryChipsRow(
         listOf(null) + ProductCategory.entries
     }
 
-    Row(
+    LazyRow (
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        categories.forEach { category ->
+        items(
+            items = categories
+        ) { category ->
             CategoryChip(
                 settings = CategoryChipSettings(
                     text = category?.let { stringResource(category.toDisplayString()) }
