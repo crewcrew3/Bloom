@@ -12,10 +12,10 @@ import org.koin.compose.koinInject
 import ru.itis.bloom.shared.core.navigation.impl.BackStackHolder
 import ru.itis.bloom.shared.core.navigation.impl.navigationSavedStateConfig
 import ru.itis.bloom.shared.core.ui.theme.BloomTheme
-import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
 import ru.itis.bloom.shared.feature.auth.impl.navigation.authEntryBuilder
 import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
 import ru.itis.bloom.shared.feature.makeupbag.impl.navigation.makeupBagEntryBuilder
+import ru.itis.bloom.shared.feature.skindiary.impl.navigation.diaryEntryBuilder
 
 @Composable
 fun App() {
@@ -24,6 +24,7 @@ fun App() {
         val entryBuilders: List<EntryProviderScope<NavKey>.() -> Unit> = listOf(
             EntryProviderScope<NavKey>::authEntryBuilder,
             EntryProviderScope<NavKey>::makeupBagEntryBuilder,
+            EntryProviderScope<NavKey>::diaryEntryBuilder,
             // ... другие фичи
         )
 
