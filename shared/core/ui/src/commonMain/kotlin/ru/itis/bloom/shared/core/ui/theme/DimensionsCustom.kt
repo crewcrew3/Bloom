@@ -26,4 +26,13 @@ object DimensionsCustom {
     val productCardTextSpacing = 8.dp
 
     val roundShapeBtn = 80.dp
+
+    // Chips
+    val chipCornerRadius = 16.dp
+    val chipHorizontalPadding = 12.dp
+    val chipVerticalPadding = 8.dp
+
+    // Cards
+    val cardCornerRadius = 12.dp
+    val cardElevation = 1.dp
 }

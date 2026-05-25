@@ -2,6 +2,7 @@ package ru.itis.bloom.shared.core.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import bloom.shared.core.ui.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 
@@ -27,4 +28,7 @@ object IconsCustom {
 
     @Composable
     fun iconPlaceholderProduct(): Painter = painterResource(Res.drawable.ic_placeholder_product)
+
+    //@Composable
+    //fun iconCheck(): Painter = rememberVectorPainter(Res.drawable.)
 }
