@@ -9,6 +9,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
 import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
+import ru.itis.bloom.shared.feature.skindiary.api.navigation.DiaryNavRoute
 
 val navigationSavedStateConfig = SavedStateConfiguration {
     serializersModule = SerializersModule {
@@ -16,6 +17,7 @@ val navigationSavedStateConfig = SavedStateConfiguration {
             // Автоматически регистрирует все @Serializable подтипы
             subclassesOfSealed<AuthNavRoute>()
             subclassesOfSealed<MakeupBagNavRoute>()
+            subclassesOfSealed<DiaryNavRoute>()
         }
     }
 }
