@@ -19,12 +19,14 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.shared.core.data)
-
-            implementation(libs.kotlinx.serialization.json)
-
+            api(projects.shared.core.domain )
+            api(projects.shared.core.navigation.api )
             //navigation
             implementation(libs.kotlinx.serialization.core)
             implementation(libs.compose.nav3)
+
+            api(libs.kotlinx.serialization.json)
+            api(libs.kotlinx.datetime)
         }
     }
 }

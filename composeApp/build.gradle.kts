@@ -31,6 +31,8 @@ kotlin {
             implementation(projects.shared.core.data)
             implementation(projects.shared.feature.makeupBag.api)
             implementation(projects.shared.feature.makeupBag.impl)
+            implementation(projects.shared.feature.skinDiary.api)
+            implementation(projects.shared.feature.skinDiary.impl)
 
             //DI
             implementation(libs.koin.core)
