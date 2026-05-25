@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen & Navigation -->
+    <string name="diary_screen_title">Skin Diary</string>
+    <string name="diary_action_add">New Entry</string>
+    <string name="diary_action_edit">Edit</string>
+    <string name="diary_action_delete">Delete</string>
+    <string name="diary_action_save">Save</string>
+    <string name="diary_action_cancel">Cancel</string>
+
+    <!-- Date Range Filter (API: from_date, to_date) -->
+    <string name="diary_filter_dates">Date Range</string>
+    <string name="diary_filter_from">From</string>
+    <string name="diary_filter_to">To</string>
+    <string name="diary_filter_placeholder">Select dates</string>
+    <string name="diary_filter_clear">Clear filter</string>
+
+    <!-- Sort Filter (API: sort enum) -->
+    <string name="diary_sort_label">Sort by</string>
+    <string name="diary_sort_date_desc">Newest first</string>
+    <string name="diary_sort_date_asc">Oldest first</string>
+    <string name="diary_sort_skin_condition_desc">By skin condition</string>
+
+    <!-- Form Fields & Validation -->
+    <string name="diary_form_date">Date</string>
+    <string name="diary_form_date_required">Date is required</string>
+    <string name="diary_form_skin_condition">Skin Condition (1–10)</string>
+    <string name="diary_form_hydration">Hydration Level (1–5)</string>
+    <string name="diary_form_notes">Notes</string>
+    <string name="diary_form_notes_hint">Describe your skin today...</string>
+    <string name="diary_form_notes_max">Max 300 characters</string>
+    <string name="diary_form_photo">Photo</string>
+    <string name="diary_form_photo_hint">Tap to take or select photo (max 10 MB)</string>
+    <string name="diary_form_photo_too_large">Photo exceeds 10 MB limit</string>
+    <string name="diary_form_invalid_format">Unsupported format. Use JPEG or PNG.</string>
+
+    <!-- Problem Zones (API Enum: max 8 items) -->
+    <string name="diary_zones_title">Problem Zones</string>
+    <string name="diary_zone_forehead">Forehead</string>
+    <string name="diary_zone_nose">Nose</string>
+    <string name="diary_zone_chin">Chin</string>
+    <string name="diary_zone_left_cheek">Left Cheek</string>
+    <string name="diary_zone_right_cheek">Right Cheek</string>
+    <string name="diary_zone_t_zone">T-Zone</string>
+    <string name="diary_zone_jawline">Jawline</string>
+    <string name="diary_zone_neck">Neck</string>
+    <string name="diary_zone_under_eyes">Under Eyes</string>
+    <string name="diary_zones_max">Select up to 8 zones</string>
+
+    <!-- Sync Status (API: synced / pending) -->
+    <string name="diary_status_synced">Synced</string>
+    <string name="diary_status_pending">Pending sync</string>
+
+    <!-- Errors & Network -->
+    <string name="diary_error_network">No internet connection</string>
+    <string name="diary_error_server">Server error. Please try again later.</string>
+    <string name="diary_error_not_found">Entry not found</string>
+    <string name="diary_error_unauthorized">Authorization required</string>
+    <string name="diary_error_validation">Please check your input</string>
+    <string name="diary_error_unknown">Something went wrong</string>
+
+    <!-- Dialogs -->
+    <string name="diary_dialog_delete_title">Delete Entry?</string>
+    <string name="diary_dialog_delete_message">This action cannot be undone.</string>
+    <string name="diary_dialog_confirm">Confirm</string>
+
+    <!-- Empty State -->
+    <string name="diary_empty_title">No entries yet</string>
+    <string name="diary_empty_subtitle">Start tracking your skin journey</string>
+    <string name="diary_action_refresh">Refresh</string>
+    <string name="diary_zone_other">Other</string>
+</resources>
