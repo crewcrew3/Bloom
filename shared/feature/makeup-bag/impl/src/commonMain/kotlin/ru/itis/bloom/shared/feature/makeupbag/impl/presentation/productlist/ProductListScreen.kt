@@ -26,6 +26,7 @@ import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListIn
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListState
 import bloom.shared.feature.makeup_bag.impl.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
+import ru.itis.bloom.shared.core.ui.components.settings.BurgerMenuSettings
 import ru.itis.bloom.shared.core.ui.components.settings.FloatingActionButtonSettings
 import ru.itis.bloom.shared.core.ui.components.settings.IconSettings
 import ru.itis.bloom.shared.feature.makeupbag.api.model.response.ProductStatus
@@ -34,20 +35,21 @@ import ru.itis.bloom.shared.feature.makeupbag.api.model.response.ProductStatus
 internal fun ProductListScreen(
     state: ProductListState,
     onIntent: (ProductListIntent) -> Unit,
-    bottomBarSettings: BottomBarSettings,
+    bottomBarSettings: BottomBarSettings?,
+    topBarSettings: TopBarSettings?,
+    burgerMenuSettings: BurgerMenuSettings?,
     modifier: Modifier = Modifier
 ) {
     BaseScreen(
-        topBarSettings = TopBarSettings(
-            text = stringResource(Res.string.makeup_title_my_bag)
-        ),
+        topBarSettings = topBarSettings,
+        bottomBarSettings = bottomBarSettings,
+        burgerMenuSettings = burgerMenuSettings,
         floatActBtnSettings = FloatingActionButtonSettings(
             onClick = { onIntent(ProductListIntent.NavigateToCreate) },
             iconSettings = IconSettings(
                 iconPainter = IconsCustom.iconPlus()
             )
         ),
-        bottomBarSettings = bottomBarSettings,
         content = { paddingValues ->
             Column(
                 modifier = modifier
@@ -182,7 +184,9 @@ private fun ProductListScreenPreview() {
                 )
             ),
             onIntent = {},
-            bottomBarSettings = BottomBarSettings({}, {}, {}, {})
+            bottomBarSettings = BottomBarSettings({}, {}, {}, {}),
+            topBarSettings = TopBarSettings(text = stringResource(Res.string.makeup_title_my_bag)),
+            burgerMenuSettings = BurgerMenuSettings({},{},{},{})
         )
     }
 }

@@ -27,4 +27,7 @@ object IconsCustom {
 
     @Composable
     fun iconPlaceholderProduct(): Painter = painterResource(Res.drawable.ic_placeholder_product)
+
+    @Composable
+    fun iconBurgerMenu(): Painter = painterResource(Res.drawable.ic_menu)
 }

@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.itis.bloom.shared.core.ui.components.settings.IconSettings
+import bloom.shared.core.ui.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
+import ru.itis.bloom.shared.core.ui.components.settings.TopBarIconType
 import ru.itis.bloom.shared.core.ui.components.settings.TopBarSettings
 import ru.itis.bloom.shared.core.ui.theme.BloomTheme
 import ru.itis.bloom.shared.core.ui.theme.DimensionsCustom
@@ -27,7 +29,6 @@ import ru.itis.bloom.shared.core.ui.theme.StylesCustom
 @Composable
 fun TopBarCustom(
     topBarSettings: TopBarSettings,
-    iconSettings: IconSettings? = null,
 ) {
     TopAppBar(
         title = {
@@ -40,17 +41,23 @@ fun TopBarCustom(
             )
         },
         navigationIcon = {
-            iconSettings?.let {
+            if (topBarSettings.iconType != TopBarIconType.NONE) {
                 IconButton(
-                    onClick = iconSettings.onClick,
+                    onClick = topBarSettings.onIconClick,
                     modifier = Modifier
                         .padding(top = 8.dp, start = 16.dp)
 
                 ) {
                     Icon(
-                        painter = iconSettings.iconPainter ?: IconsCustom.iconArrowBack(),
-                        contentDescription = iconSettings.description,
-                        tint = iconSettings.color ?: MaterialTheme.colorScheme.onBackground,
+                        painter = when (topBarSettings.iconType) {
+                            TopBarIconType.BACK -> IconsCustom.iconArrowBack()
+                            TopBarIconType.BURGER -> IconsCustom.iconBurgerMenu()
+                        },
+                        contentDescription = when (topBarSettings.iconType) {
+                            TopBarIconType.BACK -> stringResource(Res.string.topbar_content_desc_icon_back)
+                            TopBarIconType.BURGER -> stringResource(Res.string.topbar_content_desc_icon_burger)
+                        },
+                        tint = topBarSettings.textColor ?: MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .height(DimensionsCustom.topBarIconSize)
                             .width(DimensionsCustom.topBarIconSize)
@@ -75,7 +82,6 @@ fun TopBarCustomPreview() {
             topBarSettings = TopBarSettings(
                 text = "Заголовок",
             ),
-            iconSettings = IconSettings()
         )
     }
 }

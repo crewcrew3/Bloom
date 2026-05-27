@@ -24,6 +24,7 @@
 
     <!-- Надписи -->
     <string name="makeup_title_my_bag">Моя косметичка</string>
+    <string name="makeup_title_product_detail">Информация о продукте</string>
 
     <string name="makeup_chip_all">Все</string>
     <string name="makeup_chip_cleanser">Очищение</string>

@@ -26,4 +26,7 @@ object DimensionsCustom {
     val productCardTextSpacing = 8.dp
 
     val roundShapeBtn = 80.dp
+
+    //BurgerMenu
+    val menuWidth = 280.dp
 }
