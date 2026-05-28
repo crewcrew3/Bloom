@@ -21,6 +21,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.shared.feature.makeupBag.api)
+
             // Compose Multiplatform
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

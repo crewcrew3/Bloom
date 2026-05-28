@@ -29,4 +29,14 @@ object DimensionsCustom {
 
     //BurgerMenu
     val menuWidth = 280.dp
+
+    // StarRating
+    val starSize = 20.dp
+
+    // ProductDetail
+    val productDetailImageSize = 200.dp
+    val productDetailImageRadius = 16.dp
+    val productDetailContentPadding = 16.dp
+    val productDetailTopIconSize = 24.dp
+    val productDetailExpandIconSize = 24.dp
 }

@@ -30,6 +30,7 @@ import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productform.ProductFormVi
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListEffect
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListIntent
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListViewModel
+import ru.itis.bloom.shared.feature.makeupbag.impl.presentation.productdetail.ProductDetailScreen
 import ru.itis.bloom.shared.feature.makeupbag.impl.presentation.productlist.ProductListScreen
 
 fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
@@ -139,12 +140,13 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
             onIconClick = { vm.processIntent(ProductDetailIntent.NavigateBack) }
         )
 
-//        ProductDetailScreen(
-//            state = state,
-//            onIntent = vm::processIntent,
-//            topBarSettings = topBarSettings
-//            // bottomBarSettings = null, burgerMenuSettings = null
-//        )
+        ProductDetailScreen(
+            state = state,
+            onIntent = vm::processIntent,
+            topBarSettings = topBarSettings,
+            bottomBarSettings = null,
+            burgerMenuSettings = null,
+        )
     }
 
     entry<MakeupBagNavRoute.CreateProduct> {

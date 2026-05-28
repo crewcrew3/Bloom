@@ -2,6 +2,7 @@ package ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -13,6 +14,7 @@ import ru.itis.bloom.shared.core.data.error.BaseError
 import ru.itis.bloom.shared.feature.makeupbag.impl.domain.usecase.*
 import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagErrorMapper
 import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagMessageRes
+import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MockProducts
 
 internal class ProductDetailViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
@@ -42,11 +44,18 @@ internal class ProductDetailViewModel(
 
     private suspend fun loadProduct(id: String) {
         _state.update { it.copy(isLoading = true) }
-        when (val result = getProductByIdUseCase(id)) {
-            is Result.Success -> _state.update { it.copy(product = result.data, isLoading = false) }
-            is Result.Error -> handleError(result.error)
-            is Result.Loading -> _state.update { it.copy(isLoading = true) }
-        }
+
+        //для теста
+        delay(3000)
+        val result = MockProducts.getById(id)
+        _state.update { it.copy(product = result, isLoading = false) }
+
+        //раскомментировать
+//        when (val result = getProductByIdUseCase(id)) {
+//            is Result.Success -> _state.update { it.copy(product = result.data, isLoading = false) }
+//            is Result.Error -> handleError(result.error)
+//            is Result.Loading -> _state.update { it.copy(isLoading = true) }
+//        }
     }
 
     private suspend fun archive() {

@@ -37,4 +37,23 @@
     <string name="makeup_chip_exfoliant">Пилинг</string>
     <string name="makeup_chip_oil">Масло</string>
     <string name="makeup_chip_other">Другое</string>
+
+    <string name="product_detail_action_edit">Редактировать</string>
+    <string name="product_detail_action_delete">Удалить</string>
+
+    <string name="product_detail_brand_unknown">Неизвестно</string>
+    <string name="product_detail_category_format">Категория: %1$s</string>
+    <string name="product_detail_opened_label">Вскрыт:</string>
+    <string name="product_detail_opened_not_opened">Не вскрыт</string>
+    <string name="product_detail_shelf_life_label">Срок после вскрытия:</string>
+    <string name="product_detail_shelf_life_format">%1$d мес.</string>
+    <string name="product_detail_expiry_label">Срок годности:</string>
+    <string name="product_detail_status_label">Статус:</string>
+    <string name="product_detail_status_active">Активен</string>
+    <string name="product_detail_status_archived">В архиве</string>
+    <string name="product_detail_value_unknown">Неизвестно</string>
+    <string name="product_detail_section_composition">Состав</string>
+    <string name="product_detail_section_rating">Рейтинг</string>
+    <string name="product_detail_section_review">Отзыв</string>
+    <string name="product_detail_button_archive">Отметить как закончившийся</string>
 </resources>

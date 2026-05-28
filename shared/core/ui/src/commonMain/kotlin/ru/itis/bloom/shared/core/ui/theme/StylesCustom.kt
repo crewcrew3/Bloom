@@ -39,4 +39,37 @@ object StylesCustom {
         fontSize = 13.sp,
         fontWeight = FontWeight.Medium
     )
+
+    //collaps text section
+    val sectionTitle = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold
+    )
+
+    val sectionContent = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 20.sp
+    )
+
+    //product detail
+    val productDetailTitle = TextStyle(
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold
+    )
+
+    val productDetailSubtitle = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal
+    )
+
+    val productDetailLabel = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold
+    )
+
+    val productDetailValue = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal
+    )
 }
