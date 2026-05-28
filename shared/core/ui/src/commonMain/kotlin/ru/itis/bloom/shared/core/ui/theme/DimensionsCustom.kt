@@ -5,8 +5,8 @@ import androidx.compose.ui.unit.dp
 object DimensionsCustom {
     val baseInsets = 16.dp
 
-    val bottomBarIconSize = 32.dp
-    val bottomBarHeight = 76.dp
+    val bottomBarIconSize = 24.dp //32
+    val bottomBarHeight = 88.dp //76
 
     val topBarIconSize = 32.dp
 

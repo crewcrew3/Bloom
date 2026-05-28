@@ -13,6 +13,12 @@ object StylesCustom {
         textAlign = TextAlign.Start,
     )
 
+    val bottomBarLabel = TextStyle(
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center
+    )
+
     val categoryChipText = TextStyle(
         fontSize = 14.sp,
         fontWeight = FontWeight.Medium,
