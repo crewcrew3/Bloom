@@ -25,12 +25,14 @@ import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail.ProductDetailEffect
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail.ProductDetailIntent
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail.ProductDetailViewModel
+import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productform.ProductFormEffect
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productform.ProductFormIntent
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productform.ProductFormViewModel
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListEffect
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListIntent
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListViewModel
 import ru.itis.bloom.shared.feature.makeupbag.impl.presentation.productdetail.ProductDetailScreen
+import ru.itis.bloom.shared.feature.makeupbag.impl.presentation.productform.ProductFormScreen
 import ru.itis.bloom.shared.feature.makeupbag.impl.presentation.productlist.ProductListScreen
 
 fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
@@ -152,27 +154,88 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
     entry<MakeupBagNavRoute.CreateProduct> {
         val vm: ProductFormViewModel = koinViewModel()
         val navigationHandler: MakeupBagNavigationHandler = koinInject()
+
         val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+
+        val stateToast = rememberAdvToastStates()
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.INFO,
+            paddingBottom = 50
+        )
 
         LaunchedEffect(vm) {
-            vm.effect.collect(navigationHandler::handleFormEffect)
+            vm.effect.collect { effect ->
+                when (effect) {
+                    is ProductFormEffect.NavigateBack -> navigationHandler.handleFormEffect(effect)
+                    is ProductFormEffect.ShowMessage -> {
+                        scope.launch {
+                            val text = getString(effect.message.toResourceId())
+                            stateToast.show(text)
+                        }
+                    }
+                }
+            }
         }
 
-        /* ProductFormScreen(state = state, onIntent = vm::processIntent, isEditMode = false) */
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.makeup_title_product_add),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.processIntent(ProductFormIntent.NavigateBack) }
+        )
+
+        ProductFormScreen(
+            state = state,
+            onIntent = vm::processIntent,
+            topBarSettings = topBarSettings,
+            isEditMode = false
+        )
     }
 
     entry<MakeupBagNavRoute.EditProduct> { route ->
         val vm: ProductFormViewModel = koinViewModel()
         val navigationHandler: MakeupBagNavigationHandler = koinInject()
+
         val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+
+        val stateToast = rememberAdvToastStates()
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.INFO,
+            paddingBottom = 50
+        )
 
         LaunchedEffect(Unit) {
             vm.processIntent(ProductFormIntent.LoadProduct(route.productId))
         }
+
         LaunchedEffect(vm) {
-            vm.effect.collect(navigationHandler::handleFormEffect)
+            vm.effect.collect { effect ->
+                when (effect) {
+                    is ProductFormEffect.NavigateBack -> navigationHandler.handleFormEffect(effect)
+                    is ProductFormEffect.ShowMessage -> {
+                        scope.launch {
+                            val text = getString(effect.message.toResourceId())
+                            stateToast.show(text)
+                        }
+                    }
+                }
+            }
         }
 
-        /* ProductFormScreen(state = state, onIntent = vm::processIntent, isEditMode = true) */
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.makeup_title_product_edit),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.processIntent(ProductFormIntent.NavigateBack) }
+        )
+
+        ProductFormScreen(
+            state = state,
+            onIntent = vm::processIntent,
+            topBarSettings = topBarSettings,
+            isEditMode = true
+        )
     }
 }

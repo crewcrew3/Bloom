@@ -45,4 +45,7 @@ object IconsCustom {
 
     @Composable
     fun iconDelete(): Painter = painterResource(Res.drawable.ic_delete)
+
+    @Composable
+    fun iconCalendar(): Painter = painterResource(Res.drawable.ic_calendar)
 }

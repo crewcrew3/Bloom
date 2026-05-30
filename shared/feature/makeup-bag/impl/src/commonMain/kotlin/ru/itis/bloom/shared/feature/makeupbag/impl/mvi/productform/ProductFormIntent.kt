@@ -12,6 +12,8 @@ internal sealed class ProductFormIntent {
     data class ReviewChanged(val review: String) : ProductFormIntent()
     data class OpenedDateChanged(val date: String) : ProductFormIntent()
     data class ShelfLifeChanged(val months: Int) : ProductFormIntent()
+    data class FinishedChanged(val isFinished: Boolean) : ProductFormIntent()
+    data class FormPhotoSelected(val uri: String) : ProductFormIntent()
 
     data class LoadProduct(val productId: String) : ProductFormIntent()
     data object Submit : ProductFormIntent()
@@ -19,5 +21,5 @@ internal sealed class ProductFormIntent {
     data object Delete : ProductFormIntent()
     data object NavigateBack : ProductFormIntent()
 
-    data object ClearErrors : ProductFormIntent()
+    //data object ClearErrors : ProductFormIntent()
 }

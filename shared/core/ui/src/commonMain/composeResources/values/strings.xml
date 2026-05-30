@@ -12,4 +12,10 @@
     <string name="navigation_section_text_makeup_bag">Косметичка</string>
     <string name="navigation_section_text_profile">Профиль</string>
     <string name="navigation_burger_title">Меню</string>
+
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Отмена</string>
+
+    <string name="title_select_date">Выбрать дату</string>
+    <string name="title_select_image">Выберите изображение</string>
 </resources>

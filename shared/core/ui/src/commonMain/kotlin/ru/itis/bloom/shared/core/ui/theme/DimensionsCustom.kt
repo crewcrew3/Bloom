@@ -10,6 +10,8 @@ object DimensionsCustom {
 
     val topBarIconSize = 32.dp
 
+    val textFieldTrailingIconSize = 32.dp
+
     // CategoryChip
     val categoryChipRadius = 12.dp
     val categoryChipBorderWidth = 1.5.dp
@@ -39,4 +41,9 @@ object DimensionsCustom {
     val productDetailContentPadding = 16.dp
     val productDetailTopIconSize = 24.dp
     val productDetailExpandIconSize = 24.dp
+
+    // ProductForm
+    val productFormImageSize = 200.dp
+    val productFormImageRadius = 16.dp
+    val productFormContentPadding = 16.dp
 }

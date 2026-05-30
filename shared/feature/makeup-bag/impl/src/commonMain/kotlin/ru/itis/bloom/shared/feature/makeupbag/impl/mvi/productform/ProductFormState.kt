@@ -19,6 +19,8 @@ internal data class ProductFormState(
         val personalReview: String? = null,
         val openedDate: String? = null,
         val shelfLifeAfterOpening: Int? = null,
+        val photoUri: String? = null,
+        val isFinished: Boolean = false, //архив
 
         // Ошибки валидации по полям
         val nameError: StringResource? = null,

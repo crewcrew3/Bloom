@@ -2,6 +2,7 @@ package ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productform
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -11,9 +12,11 @@ import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.data.Result
 import ru.itis.bloom.shared.core.data.error.BaseError
 import ru.itis.bloom.shared.feature.makeupbag.api.model.request.CreateProductRequest
+import ru.itis.bloom.shared.feature.makeupbag.api.model.response.ProductStatus
 import ru.itis.bloom.shared.feature.makeupbag.impl.domain.usecase.*
 import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagErrorMapper
 import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagMessageRes
+import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MockProducts
 
 internal class ProductFormViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
@@ -42,42 +45,73 @@ internal class ProductFormViewModel(
                 is ProductFormIntent.ReviewChanged -> _state.update { it.copy(form = it.form.copy(personalReview = intent.review, reviewError = null)) }
                 is ProductFormIntent.OpenedDateChanged -> _state.update { it.copy(form = it.form.copy(openedDate = intent.date)) }
                 is ProductFormIntent.ShelfLifeChanged -> _state.update { it.copy(form = it.form.copy(shelfLifeAfterOpening = intent.months, shelfLifeError = null)) }
+                is ProductFormIntent.FinishedChanged -> _state.update { it.copy(form = it.form.copy(isFinished = intent.isFinished)) }
+                is ProductFormIntent.FormPhotoSelected -> _state.update { it.copy(form = it.form.copy(photoUri = intent.uri)) }
 
                 is ProductFormIntent.Submit -> submit()
                 is ProductFormIntent.Archive -> archive()
                 is ProductFormIntent.Delete -> delete()
                 is ProductFormIntent.NavigateBack -> _effect.emit(ProductFormEffect.NavigateBack)
-                is ProductFormIntent.ClearErrors -> _state.update { it.copy(form = it.form.copy(nameError = null, brandError = null, reviewError = null, shelfLifeError = null)) }
+                //is ProductFormIntent.ClearErrors -> _state.update { it.copy(form = it.form.copy(nameError = null, brandError = null, reviewError = null, shelfLifeError = null)) }
             }
         }
     }
 
     private suspend fun loadProduct(id: String) {
         _state.update { it.copy(isLoading = true) }
-        when (val result = getProductByIdUseCase(id)) {
-            is Result.Success -> {
-                val p = result.data
-                _state.update {
-                    it.copy( //TODO("оставить наллы где могут быть наллы(без дефолт значений), а в компоузе уже сеттить значения по умолчанию через строки")
-                        productId = p.id,
-                        product = p,
-                        isLoading = false,
-                        form = ProductFormState.FormFields(
-                            name = p.name,
-                            brand = p.brand ?: "",
-                            category = p.category,
-                            inciComposition = p.inciComposition ?: "",
-                            personalRating = p.personalRating ?: 0,
-                            personalReview = p.personalReview ?: "",
-                            openedDate = p.openedDate ?: "",
-                            shelfLifeAfterOpening = p.shelfLifeAfterOpening ?: 0
-                        )
+
+        //для теста
+        delay(3000)
+        val p = MockProducts.getById(id)
+        p?.let {
+            _state.update {
+                it.copy(
+                    productId = p.id,
+                    product = p,
+                    isLoading = false,
+                    form = ProductFormState.FormFields(
+                        name = p.name,
+                        brand = p.brand,
+                        category = p.category,
+                        inciComposition = p.inciComposition,
+                        personalRating = p.personalRating,
+                        personalReview = p.personalReview,
+                        openedDate = p.openedDate,
+                        shelfLifeAfterOpening = p.shelfLifeAfterOpening,
+                        photoUri = p.photoUrl,
+                        isFinished = p.status == ProductStatus.Archived,
                     )
-                }
+                )
             }
-            is Result.Error -> handleError(result.error)
-            is Result.Loading -> _state.update { it.copy(isLoading = true) }
         }
+
+        //раскомментировать
+//        when (val result = getProductByIdUseCase(id)) {
+//            is Result.Success -> {
+//                val p = result.data
+//                _state.update {
+//                    it.copy(
+//                        productId = p.id,
+//                        product = p,
+//                        isLoading = false,
+//                        form = ProductFormState.FormFields(
+//                            name = p.name,
+//                            brand = p.brand,
+//                            category = p.category,
+//                            inciComposition = p.inciComposition,
+//                            personalRating = p.personalRating,
+//                            personalReview = p.personalReview,
+//                            openedDate = p.openedDate,
+//                            shelfLifeAfterOpening = p.shelfLifeAfterOpening,
+//                            photoUri = p.photoUrl,
+//                            isFinished = p.status == ProductStatus.Archived,
+//                        )
+//                    )
+//                }
+//            }
+//            is Result.Error -> handleError(result.error)
+//            is Result.Loading -> _state.update { it.copy(isLoading = true) }
+//        }
     }
 
     private suspend fun submit() {
@@ -101,12 +135,18 @@ internal class ProductFormViewModel(
 
         when (result) {
             is Result.Success -> {
-                _state.update { it.copy(isLoading = false) }
-                //_effect.emit(ProductFormEffect.NavigateBackAndRefresh)
-                _effect.emit(ProductFormEffect.NavigateBack)
-                _effect.emit(ProductFormEffect.ShowMessage(
-                    if (_state.value.productId != null) MakeupBagMessageRes.Success.ProductUpdated else MakeupBagMessageRes.Success.ProductAdded
-                ))
+                if (form.isFinished && _state.value.productId != null) {
+                    archive()
+                } else {
+                    _effect.emit(
+                        ProductFormEffect.ShowMessage(
+                            if (_state.value.productId != null) MakeupBagMessageRes.Success.ProductUpdated else MakeupBagMessageRes.Success.ProductAdded
+                        )
+                    )
+                    _state.update { it.copy(isLoading = false) }
+                    //_effect.emit(ProductFormEffect.NavigateBackAndRefresh)
+                    _effect.emit(ProductFormEffect.NavigateBack)
+                }
             }
             is Result.Error -> handleError(result.error)
             is Result.Loading -> _state.update { it.copy(isLoading = true) }
@@ -120,8 +160,8 @@ internal class ProductFormViewModel(
             is Result.Success -> {
                 _state.update { it.copy(isLoading = false) }
                 //_effect.emit(ProductFormEffect.NavigateBackAndRefresh)
-                _effect.emit(ProductFormEffect.NavigateBack)
                 _effect.emit(ProductFormEffect.ShowMessage(MakeupBagMessageRes.Success.ProductArchived))
+                _effect.emit(ProductFormEffect.NavigateBack)
             }
             is Result.Error -> handleError(result.error)
             is Result.Loading -> _state.update { it.copy(isLoading = true) }

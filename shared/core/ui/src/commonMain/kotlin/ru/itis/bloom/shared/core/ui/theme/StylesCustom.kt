@@ -72,4 +72,9 @@ object StylesCustom {
         fontSize = 14.sp,
         fontWeight = FontWeight.Normal
     )
+
+    val formSectionTitle = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold
+    )
 }
