@@ -15,7 +15,7 @@ import ru.itis.bloom.shared.core.ui.theme.BloomTheme
 import ru.itis.bloom.shared.feature.auth.impl.navigation.authEntryBuilder
 import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
 import ru.itis.bloom.shared.feature.makeupbag.impl.navigation.makeupBagEntryBuilder
-import ru.itis.bloom.shared.feature.skindiary.impl.navigation.diaryEntryBuilder
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation.diaryEntryBuilder
 
 @Composable
 fun App() {

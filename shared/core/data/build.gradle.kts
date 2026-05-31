@@ -57,6 +57,9 @@ kotlin {
             implementation(libs.sqldelight.sqlite.driver)
         }
     }
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
 }
 
 sqldelight {
@@ -74,7 +77,7 @@ if (apiConfigFile.exists()) {
 } else {
     // Fallback значения, если файла нет (чтобы сборка не падала)
     apiConfig.setProperty("BLOOM_API_URL_PROD", "https://api.bloom-app.com/v1")
-    apiConfig.setProperty("BLOOM_API_URL_DEV", "http://localhost:8080/v1")
+    apiConfig.setProperty("BLOOM_API_URL_DEV", "http://localhost:3004/v1")
     apiConfig.setProperty("BLOOM_IS_DEBUG", "true")
 }
 
@@ -83,7 +86,7 @@ buildkonfig {
 
     defaultConfigs {
         buildConfigField(STRING, "API_BASE_URL", apiConfig.getProperty("BLOOM_API_URL_PROD"))
-        buildConfigField(BOOLEAN, "IS_DEBUG", "false")
+        buildConfigField(BOOLEAN, "IS_DEBUG", "true")
     }
     targetConfigs {
         create("debug") {
