@@ -35,6 +35,7 @@ import ru.itis.bloom.shared.core.ui.components.settings.FloatingActionButtonSett
 import ru.itis.bloom.shared.core.ui.components.settings.TopBarIconType
 import ru.itis.bloom.shared.core.ui.components.settings.TopBarSettings
 import ru.itis.bloom.shared.core.ui.theme.DimensionsCustom
+import ru.itis.bloom.shared.core.ui.theme.IconsCustom
 
 @Composable
 fun BaseScreen(
