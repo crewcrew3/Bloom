@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import bloom.shared.core.ui.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.vectorResource
 
 object IconsCustom {
 
@@ -29,6 +30,21 @@ object IconsCustom {
     @Composable
     fun iconPlaceholderProduct(): Painter = painterResource(Res.drawable.ic_placeholder_product)
 
-    //@Composable
-    //fun iconCheck(): Painter = rememberVectorPainter(Res.drawable.)
+    @Composable
+    fun iconCheck(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_check))
+
+    @Composable
+    fun iconFilter(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_filter_fill))
+
+    @Composable
+    fun iconSortAsc(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_sort_asc))
+
+    @Composable
+    fun iconSkinCondition(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_check))
+
+    @Composable
+    fun iconCamera(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_check))
+
+    @Composable
+    fun iconDiaryEmpty(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_check))
 }

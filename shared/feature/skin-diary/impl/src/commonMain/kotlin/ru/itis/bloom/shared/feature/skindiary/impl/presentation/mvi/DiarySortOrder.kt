@@ -1,4 +1,4 @@
-package ru.itis.bloom.shared.feature.skindiary.impl.mvi
+package ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi
 
 enum class DiarySortOrder(val apiValue: String) {
     DATE_DESC("date_desc"),

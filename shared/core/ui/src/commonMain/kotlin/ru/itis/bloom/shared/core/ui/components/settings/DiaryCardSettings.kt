@@ -17,6 +17,7 @@ data class DiaryCardSettings(
     val hydrationLevel: Int? = null,
     val problemZones: List<String> = emptyList(),
     val notes: String? = null,
+    val photoUrl: String? = null,
     val syncStatus: String? = null,
 ) {
     companion object {
