@@ -1,4 +1,4 @@
-package ru.itis.bloom.shared.feature.skindiary.impl.network
+package ru.itis.bloom.shared.feature.skindiary.impl.data.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -31,7 +31,7 @@ class SkinDiaryApiImpl(
         page: Int,
         size: Int
     ): DiaryEntriesPageResponse {
-        return httpClient.get("diary/entries") {
+        return httpClient.get("/diary/entries") {
             parameter("from_date", fromDate?.toString())
             parameter("to_date", toDate?.toString())
             parameter("sort", sort)

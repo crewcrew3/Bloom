@@ -35,14 +35,17 @@ class SkinDiaryRepositoryImpl(
     ): Flow<Result<DiaryEntriesPageResponse>> {
         return flow {
             try {
+                println("getEntriesFlow")
                 val networkResponse = api.getEntries(fromDate, toDate, sort, page, size)
 
                 networkResponse.content.forEach { entry ->
+                    println("entry")
                     queries.upsertEntry(entry.toDb(currentUserIdProvider()))
                 }
-
+                println("success networkResponse")
                 emit(Result.success(networkResponse))
             } catch (e: Exception) {
+                println(e.message)
                 val dbEntries = queries.getEntriesFiltered(
                     from_date = fromDate?.toString(),
                     to_date = toDate?.toString(),
@@ -61,6 +64,7 @@ class SkinDiaryRepositoryImpl(
                 emit(Result.success(dbPage))
             }
         }.catch { e ->
+            println(e.message)
             emit(Result.failure(DiaryError.NetworkError(e.message ?: "Unknown error")))
         }
     }

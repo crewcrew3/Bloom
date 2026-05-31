@@ -1,4 +1,4 @@
-package ru.itis.bloom.shared.feature.skindiary.impl.navigation
+package ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,8 +16,8 @@ import org.koin.compose.viewmodel.koinViewModel
 import ru.itis.bloom.shared.core.navigation.api.BottomBarNavigator
 import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
 import ru.itis.bloom.shared.feature.skindiary.api.navigation.DiaryNavRoute
-import ru.itis.bloom.shared.feature.skindiary.impl.mvi.DiaryListEffect
-import ru.itis.bloom.shared.feature.skindiary.impl.mvi.DiaryListViewModel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi.DiaryListEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi.DiaryListViewModel
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.DiaryListScreen
 
 fun EntryProviderScope<NavKey>.diaryEntryBuilder() {

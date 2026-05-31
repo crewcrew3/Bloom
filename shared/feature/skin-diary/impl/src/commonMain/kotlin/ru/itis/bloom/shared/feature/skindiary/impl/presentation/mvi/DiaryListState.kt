@@ -1,10 +1,12 @@
-package ru.itis.bloom.shared.feature.skindiary.impl.mvi
+package ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.LocalDate
 import ru.itis.bloom.shared.feature.skindiary.api.model.DiaryEntry
 
 data class DiaryListState(
-    val entries: List<DiaryEntry> = emptyList(),
+    val entries: ImmutableList<DiaryEntry> = persistentListOf(),
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val dateRange: Pair<LocalDate?, LocalDate?> = null to null,

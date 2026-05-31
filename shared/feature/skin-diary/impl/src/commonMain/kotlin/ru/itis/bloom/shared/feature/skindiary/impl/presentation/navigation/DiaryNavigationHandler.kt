@@ -1,7 +1,7 @@
-package ru.itis.bloom.shared.feature.skindiary.impl.navigation
+package ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation
 
 import ru.itis.bloom.shared.core.navigation.api.DiaryNavigator
-import ru.itis.bloom.shared.feature.skindiary.impl.mvi.DiaryListEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi.DiaryListEffect
 
 class DiaryNavigationHandler(
     private val navigator: DiaryNavigator

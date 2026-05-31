@@ -1,4 +1,4 @@
-package ru.itis.bloom.shared.feature.skindiary.impl.mvi
+package ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi
 
 import kotlinx.datetime.LocalDate
 

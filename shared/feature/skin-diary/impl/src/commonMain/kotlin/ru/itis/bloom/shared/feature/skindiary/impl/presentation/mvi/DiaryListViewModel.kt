@@ -1,9 +1,10 @@
-package ru.itis.bloom.shared.feature.skindiary.impl.mvi
+package ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bloom.shared.feature.skin_diary.impl.generated.resources.Res
 import bloom.shared.feature.skin_diary.impl.generated.resources.diary_error_network
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,10 +14,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.itis.bloom.shared.feature.skindiary.api.SkinDiaryRepository
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntriesUseCase
 
-class DiaryListViewModel(
-    private val repository: SkinDiaryRepository,
+internal class DiaryListViewModel(
+    private val getDiaryEntriesUseCase: GetDiaryEntriesUseCase,
     //private val analytics: AnalyticsTracker
 ) : ViewModel() {
 
@@ -58,7 +59,7 @@ class DiaryListViewModel(
                     )
                 )
 
-                DiaryListIntent.LoadInitial -> Unit
+                DiaryListIntent.LoadInitial -> loadEntries(resetPage = true)
                 else -> {}
             }
         }
@@ -78,7 +79,7 @@ class DiaryListViewModel(
             )
         }
 
-        repository.getEntriesFlow(
+        getDiaryEntriesUseCase(
             fromDate = currentState.dateRange.first,
             toDate = currentState.dateRange.second,
             sort = currentState.sort.apiValue,
@@ -90,9 +91,10 @@ class DiaryListViewModel(
         }.collect { result ->
             result.fold(
                 onSuccess = { response ->
+                    println(response.content.map { println(it.toString()) })
                     _state.update {
                         it.copy(
-                            entries = if (resetPage) response.content else it.entries + response.content,
+                            entries = (if (resetPage) response.content else it.entries + response.content).toImmutableList(),
                             isLoading = false,
                             isRefreshing = false,
                             currentPage = page,
