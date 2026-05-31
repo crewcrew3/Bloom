@@ -20,7 +20,12 @@ kotlin {
     jvm()
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+        }
         commonMain.dependencies {
+            implementation(projects.shared.feature.makeupBag.api)
+
             // Compose Multiplatform
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

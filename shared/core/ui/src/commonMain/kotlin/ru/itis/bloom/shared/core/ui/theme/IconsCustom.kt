@@ -47,4 +47,25 @@ object IconsCustom {
 
     @Composable
     fun iconDiaryEmpty(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_check))
+
+    @Composable
+    fun iconBurgerMenu(): Painter = painterResource(Res.drawable.ic_menu)
+
+    @Composable
+    fun iconStarFilled(): Painter = painterResource(Res.drawable.ic_star_filled)
+
+    @Composable
+    fun iconStarOutline(): Painter = painterResource(Res.drawable.ic_star_outline)
+
+    @Composable
+    fun iconExpand(): Painter = painterResource(Res.drawable.ic_expand)
+
+    @Composable
+    fun iconEdit(): Painter = painterResource(Res.drawable.ic_edit)
+
+    @Composable
+    fun iconDelete(): Painter = painterResource(Res.drawable.ic_delete)
+
+    @Composable
+    fun iconCalendar(): Painter = painterResource(Res.drawable.ic_calendar)
 }

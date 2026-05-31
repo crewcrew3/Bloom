@@ -47,6 +47,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.compose.toast)
 
+            // Coil для изображений
+            implementation(libs.coil)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
+
             //network
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.serialization)

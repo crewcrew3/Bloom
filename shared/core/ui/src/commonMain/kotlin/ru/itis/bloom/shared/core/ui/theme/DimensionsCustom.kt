@@ -5,10 +5,12 @@ import androidx.compose.ui.unit.dp
 object DimensionsCustom {
     val baseInsets = 16.dp
 
-    val bottomBarIconSize = 32.dp
-    val bottomBarHeight = 76.dp
+    val bottomBarIconSize = 24.dp //32
+    val bottomBarHeight = 88.dp //76
 
     val topBarIconSize = 32.dp
+
+    val textFieldTrailingIconSize = 32.dp
 
     // CategoryChip
     val categoryChipRadius = 12.dp
@@ -35,4 +37,22 @@ object DimensionsCustom {
     // Cards
     val cardCornerRadius = 12.dp
     val cardElevation = 1.dp
+
+    //BurgerMenu
+    val menuWidth = 280.dp
+
+    // StarRating
+    val starSize = 20.dp
+
+    // ProductDetail
+    val productDetailImageSize = 200.dp
+    val productDetailImageRadius = 16.dp
+    val productDetailContentPadding = 16.dp
+    val productDetailTopIconSize = 24.dp
+    val productDetailExpandIconSize = 24.dp
+
+    // ProductForm
+    val productFormImageSize = 200.dp
+    val productFormImageRadius = 16.dp
+    val productFormContentPadding = 16.dp
 }

@@ -13,7 +13,7 @@ object MockProducts {
             name = "Hydrating Facial Cleanser",
             brand = "CeraVe",
             category = ProductCategory.Cleanser,
-            inciComposition = "Aqua, Glycerin, Ceteth-20, Cetearyl Alcohol, Phenoxyethanol...",
+            inciComposition = "Aqua, Glycerin, Ceteth-20, Cetearyl Alcohol, Phenoxyethanol, Aqua, Glycerin, Ceteth-20, Cetearyl Alcohol, Phenoxyethanol...",
             personalRating = 5,
             personalReview = "Отлично увлажняет, не стягивает кожу. Идеально для утра.",
             photoUrl = "https://avatars.mds.yandex.net/i?id=2b336af39e9492bbea285c77f9916386_l-12428376-images-thumbs&n=13",
@@ -139,6 +139,12 @@ object MockProducts {
             sampleProducts
         } else {
             sampleProducts.filter { it.category == category }
+        }
+    }
+
+    fun getById(id: String): Product? {
+        return sampleProducts.find {
+            it.id == id
         }
     }
 }
