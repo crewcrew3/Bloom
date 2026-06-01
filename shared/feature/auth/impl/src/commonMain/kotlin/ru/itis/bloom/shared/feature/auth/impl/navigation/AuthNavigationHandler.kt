@@ -12,7 +12,7 @@ internal class AuthNavigationHandler(
     suspend fun handleEffect(effect: AuthEffect) {
         when (effect) {
             is AuthEffect.NavigateToMain -> {
-                /* TODO: nav.toMainScreen() */
+                nav.toMainScreen()
             }
 
             is AuthEffect.NavigateToRegisterScreen -> {

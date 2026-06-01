@@ -5,10 +5,10 @@ import ru.itis.bloom.shared.feature.auth.api.AuthApi
 import ru.itis.bloom.shared.feature.auth.api.AuthRepository
 import ru.itis.bloom.shared.feature.auth.api.model.request.ConfirmResetPasswordRequest
 import ru.itis.bloom.shared.feature.auth.api.model.request.LoginRequest
-import ru.itis.bloom.shared.feature.auth.api.model.request.RefreshTokenRequest
+import ru.itis.bloom.shared.core.data.model.RefreshTokenRequest
 import ru.itis.bloom.shared.feature.auth.api.model.request.RegisterRequest
 import ru.itis.bloom.shared.feature.auth.api.model.request.ResetPasswordRequest
-import ru.itis.bloom.shared.feature.auth.api.model.response.AuthTokensResponse
+import ru.itis.bloom.shared.core.data.model.AuthTokensResponse
 import ru.itis.bloom.shared.feature.auth.api.model.response.MessageResponse
 
 internal class AuthRepositoryImpl(
