@@ -2,10 +2,10 @@ package ru.itis.bloom.shared.core.data.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
-import ru.itis.bloom.shared.core.data.network.token.AndroidTokenStorage
+import ru.itis.bloom.shared.core.data.network.token.TokenStorage
 import java.util.concurrent.TimeUnit
 
-actual fun createHttpClient(tokenStorage: AndroidTokenStorage): HttpClient {
+actual fun createHttpClient(tokenStorage: TokenStorage): HttpClient {
     val engine = OkHttp.create {
         config {
             retryOnConnectionFailure(true)
@@ -14,5 +14,5 @@ actual fun createHttpClient(tokenStorage: AndroidTokenStorage): HttpClient {
             writeTimeout(30, TimeUnit.SECONDS)
         }
     }
-    return createCommonHttpClient(engine,tokenStorage)
+    return createCommonHttpClient(engine, tokenStorage)
 }
