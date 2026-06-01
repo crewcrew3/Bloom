@@ -3,13 +3,14 @@ package ru.itis.bloom.shared.core.data.network
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.engine.cio.endpoint
+import ru.itis.bloom.shared.core.data.network.token.DesktopTokenStorage
 
-actual fun createHttpClient(): HttpClient {
+actual fun createHttpClient(tokenStorage: DesktopTokenStorage): HttpClient {
     val engine = CIO.create {
         endpoint {
             connectTimeout = 30_000
             requestTimeout = 30_000
         }
     }
-    return createCommonHttpClient(engine)
+    return createCommonHttpClient(engine,tokenStorage)
 }
