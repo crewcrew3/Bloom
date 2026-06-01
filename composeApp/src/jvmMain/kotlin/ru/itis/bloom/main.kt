@@ -8,6 +8,7 @@ import ru.itis.bloom.shared.core.data.di.commonDatabaseModule
 import ru.itis.bloom.shared.core.data.di.networkModule
 import ru.itis.bloom.shared.core.data.di.platformModule
 import ru.itis.bloom.shared.core.data.di.qualifierModule
+import ru.itis.bloom.shared.core.domain.di.coreDomainModule
 import ru.itis.bloom.shared.core.navigation.impl.di.navigationModule
 import ru.itis.bloom.shared.feature.auth.impl.di.authModule
 import ru.itis.bloom.shared.feature.auth.impl.di.authNavModule
@@ -38,6 +39,7 @@ private fun initKoin() {
                 platformModule,
                 networkModule,
                 commonDatabaseModule,
+                coreDomainModule,
 
                 navigationModule,
                 authNavModule,

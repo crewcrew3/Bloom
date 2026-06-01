@@ -25,6 +25,7 @@ kotlin {
             implementation(projects.shared.feature.skinDiary.api)
             implementation(projects.shared.core.data)
             implementation(projects.shared.core.ui)
+            implementation(projects.shared.core.domain)
             implementation(projects.shared.core.navigation.api)
 
             //navigation

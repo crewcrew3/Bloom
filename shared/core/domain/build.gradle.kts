@@ -18,6 +18,17 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlin.stdlib)
+            implementation(libs.koin.core)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.koin.android)
+            implementation(libs.sqldelight.android.driver)
+        }
+
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutinesSwing)
         }
     }
 }

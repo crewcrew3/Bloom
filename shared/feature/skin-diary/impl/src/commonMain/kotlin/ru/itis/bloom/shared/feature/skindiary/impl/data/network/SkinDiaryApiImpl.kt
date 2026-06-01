@@ -31,7 +31,7 @@ class SkinDiaryApiImpl(
         page: Int,
         size: Int
     ): DiaryEntriesPageResponse {
-        return httpClient.get("/diary/entries") {
+        return httpClient.get("diary/entries") {
             parameter("from_date", fromDate?.toString())
             parameter("to_date", toDate?.toString())
             parameter("sort", sort)
@@ -63,7 +63,7 @@ class SkinDiaryApiImpl(
                         value = bytes,
                         headers = Headers.build {
                             append(HttpHeaders.ContentType, ContentType.Image.JPEG.toString())
-                            append(HttpHeaders.ContentDisposition, "form-data; name=\"photo\"; filename=\"diary.jpg\"")
+                            append(HttpHeaders.ContentDisposition, "filename=\"diary.jpg\"")
                         }
                     )
                 }
