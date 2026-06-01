@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ru.itis.bloom.shared.feature.skindiary.api.model.DiaryEntry
-import ru.itis.bloom.shared.feature.skindiary.impl.presentation.utils.toDiaryCardSettings
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.utils.toDiaryCardSettings
 
 @Composable
 fun DiaryEntriesList(
@@ -56,7 +56,6 @@ fun DiaryEntriesList(
             items = entries,
             key = { it.id }
         ) { entry ->
-            println("COMPOSE ITEM -> ${entry.id}")
             DiaryEntryCard(
                 settings = entry.toDiaryCardSettings(
                     onClick = { onEntryClick(entry.id) }

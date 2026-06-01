@@ -26,8 +26,8 @@ import ru.itis.bloom.shared.core.ui.components.settings.DiaryCardSettings
 import ru.itis.bloom.shared.core.ui.model.SyncStatus
 import ru.itis.bloom.shared.core.ui.theme.DimensionsCustom
 import ru.itis.bloom.shared.core.ui.theme.IconsCustom
-import ru.itis.bloom.shared.feature.skindiary.impl.presentation.utils.skinConditionLabel
-import ru.itis.bloom.shared.feature.skindiary.impl.presentation.utils.toZoneString
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.utils.skinConditionLabel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.utils.toZoneString
 
 @Composable
 fun DiaryEntryCard(
@@ -61,16 +61,10 @@ fun DiaryEntryCard(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
-                    text = settings.entryDate ?: "",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
                 settings.entryDate?.let { date ->
                     Text(
                         text = date,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
