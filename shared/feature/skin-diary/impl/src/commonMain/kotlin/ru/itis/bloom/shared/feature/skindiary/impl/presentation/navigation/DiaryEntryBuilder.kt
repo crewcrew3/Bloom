@@ -6,6 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
+import bloom.shared.feature.skin_diary.impl.generated.resources.Res
+import bloom.shared.feature.skin_diary.impl.generated.resources.msg_entry_saved
+import bloom.shared.feature.skin_diary.impl.generated.resources.msg_entry_updated
 import io.github.tbib.compose_toast.AdvToast
 import io.github.tbib.compose_toast.rememberAdvToastStates
 import io.github.tbib.compose_toast.toast_ui.EnumToastType
@@ -16,9 +19,12 @@ import org.koin.compose.viewmodel.koinViewModel
 import ru.itis.bloom.shared.core.navigation.api.BottomBarNavigator
 import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
 import ru.itis.bloom.shared.feature.skindiary.api.navigation.DiaryNavRoute
-import ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi.DiaryListEffect
-import ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi.DiaryListViewModel
-import ru.itis.bloom.shared.feature.skindiary.impl.presentation.DiaryListScreen
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.DiaryCreateEditScreen
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditViewModel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.DiaryListScreen
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryListEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryListViewModel
 
 fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
     entry<DiaryNavRoute.List> {
@@ -44,6 +50,7 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
                     DiaryListEffect.NavigateToCreate -> {
                         navigationHandler.handleEffect(effect)
                     }
+
                     is DiaryListEffect.ShowError -> {
                         scope.launch {
                             val text = getString(effect.messageRes)
@@ -68,6 +75,99 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
     }
 
     entry<DiaryNavRoute.Detail> { /* TODO */ }
-    entry<DiaryNavRoute.Create> { /* TODO */ }
-    entry<DiaryNavRoute.Edit> { /* TODO */ }
+
+    entry<DiaryNavRoute.Create> {
+        val vm: DiaryCreateEditViewModel = koinViewModel()
+        val navigationHandler: DiaryNavigationHandler = koinInject()
+
+        val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+        val stateToast = rememberAdvToastStates()
+
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.ERROR,
+            paddingBottom = 50
+        )
+
+        LaunchedEffect(Unit) {
+            vm.init(entryId = null)
+        }
+
+        LaunchedEffect(vm) {
+            vm.effects.collect { effect ->
+                when (effect) {
+                    is DiaryCreateEditEffect.NavigateBack -> navigationHandler.handleCreateEditEffect(
+                        effect
+                    )
+                    is DiaryCreateEditEffect.ShowSuccess -> {
+                        scope.launch {
+                            val text = getString(Res.string.msg_entry_saved)
+                            stateToast.show(text)
+                        }
+                    }
+
+                    is DiaryCreateEditEffect.ShowError -> {
+                        scope.launch { stateToast.show(effect.message) }
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
+        DiaryCreateEditScreen(
+            state = state,
+            onIntent = vm::onIntent
+        )
+    }
+
+    entry<DiaryNavRoute.Edit> { route ->
+        val vm: DiaryCreateEditViewModel = koinViewModel()
+        val navigationHandler: DiaryNavigationHandler = koinInject()
+
+        val entryId = route.entryId
+
+        val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+        val stateToast = rememberAdvToastStates()
+
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.ERROR,
+            paddingBottom = 50
+        )
+
+        LaunchedEffect(entryId) {
+            entryId.let { vm.init(entryId = it) }
+        }
+
+        LaunchedEffect(vm) {
+            vm.effects.collect { effect ->
+                when (effect) {
+                    is DiaryCreateEditEffect.NavigateBack -> navigationHandler.handleCreateEditEffect(
+                        effect
+                    )
+
+                    is DiaryCreateEditEffect.ShowSuccess -> {
+                        scope.launch {
+                            val text = getString(Res.string.msg_entry_updated)
+                            stateToast.show(text)
+                        }
+                    }
+
+                    is DiaryCreateEditEffect.ShowError -> {
+                        scope.launch { stateToast.show(effect.message) }
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
+        DiaryCreateEditScreen(
+            state = state,
+            onIntent = vm::onIntent
+        )
+    }
 }
