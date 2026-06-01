@@ -9,14 +9,15 @@ import ru.itis.bloom.shared.core.data.AppDatabase
 import ru.itis.bloom.shared.feature.skindiary.api.SkinDiaryApi
 import ru.itis.bloom.shared.feature.skindiary.api.SkinDiaryRepository
 import ru.itis.bloom.shared.feature.skindiary.impl.data.SkinDiaryRepositoryImpl
-import ru.itis.bloom.shared.feature.skindiary.impl.presentation.mvi.DiaryListViewModel
-import ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation.DiaryNavigationHandler
 import ru.itis.bloom.shared.feature.skindiary.impl.data.network.SkinDiaryApiImpl
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.DeleteDiaryEntryUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntriesUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntryByIdUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.SaveDiaryEntryUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.SyncPendingDiaryEntriesUseCase
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditViewModel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryListViewModel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation.DiaryNavigationHandler
 
 fun diaryModule(currentUserIdProvider: () -> String = { "demo-user-id" }): Module = module {
 
@@ -40,4 +41,6 @@ fun diaryModule(currentUserIdProvider: () -> String = { "demo-user-id" }): Modul
     singleOf(::DiaryNavigationHandler)
     // Presentation (MVI)
     viewModelOf(::DiaryListViewModel)
+    viewModelOf(::DiaryCreateEditViewModel)
+
 }
