@@ -55,4 +55,28 @@ object DimensionsCustom {
     val productFormImageSize = 200.dp
     val productFormImageRadius = 16.dp
     val productFormContentPadding = 16.dp
+
+    // Diary Create/Edit - новые значения
+    val diarySectionSpacing = 24.dp
+    val diaryFieldSpacing = 8.dp
+    val diarySliderLabelSpacing = 12.dp
+
+    val diaryPhotoHeight = 200.dp
+    val diaryPhotoPlaceholderHeight = 120.dp
+    val diaryPhotoRadius = 12.dp
+
+    val diaryDateFieldPadding = 16.dp
+    val diaryChipSpacing = 8.dp
+    val diaryButtonHeight = 56.dp
+
+    val diaryIconSizeSmall = 20.dp
+    val diaryIconSizeMedium = 24.dp
+    val diaryIconSizeLarge = 48.dp
+
+    val diaryCornerRadiusSmall = 8.dp
+    val diaryCornerRadiusMedium = 12.dp
+    val diaryCornerRadiusLarge = 16.dp
+
+    val diaryBadgeHorizontalPadding = 12.dp
+    val diaryBadgeVerticalPadding = 4.dp
 }

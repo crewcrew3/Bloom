@@ -1,5 +1,6 @@
 package ru.itis.bloom.shared.core.ui.theme
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -76,5 +77,36 @@ object StylesCustom {
     val formSectionTitle = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold
+    )
+
+    val diarySectionLabel = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium,
+        color = Color.Unspecified // будет переопределено onSurfaceVariant
+    )
+
+    val diarySliderValue = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold
+    )
+
+    val diarySliderLabel = TextStyle(
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Normal
+    )
+
+    val diaryDateText = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal
+    )
+
+    val diaryButtonText = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Medium
+    )
+
+    val diaryPhotoLabel = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium
     )
 }
