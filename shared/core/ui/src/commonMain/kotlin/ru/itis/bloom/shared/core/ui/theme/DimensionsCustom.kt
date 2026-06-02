@@ -61,7 +61,7 @@ object DimensionsCustom {
     val diaryFieldSpacing = 8.dp
     val diarySliderLabelSpacing = 12.dp
 
-    val diaryPhotoHeight = 200.dp
+    val diaryPhotoHeight = 360.dp
     val diaryPhotoPlaceholderHeight = 120.dp
     val diaryPhotoRadius = 12.dp
 

@@ -11,8 +11,8 @@ object ColorsCustom {
 
     val LightSecondary = Color(0xFF80A1D4)
     val LightOnSecondary = Color(0xFFFFFFFF)
-    val LightSecondaryContainer= Color(0xFFBBD0FF)
-    val LightOnSecondaryContainer= Color(0xFF4E6384)
+    val LightSecondaryContainer = Color(0xFFBBD0FF)
+    val LightOnSecondaryContainer = Color(0xFF4E6384)
 
     val LightTertiary = Color(0xFF75C9C8) //Акцент
     val LightOnTertiary = Color(0xFFFFFFFF)
@@ -27,4 +27,14 @@ object ColorsCustom {
 
     val LightSurface = Color(0xFFF7F4EA)
     val LightOnSurface = Color(0xFF0A1128)
+
+    val SkinConditionBad = Color(0xFFF44336)
+
+    val SkinConditionPoor = Color(0xFFFF9800)
+
+    val SkinConditionNormal = Color(0xFFFFC107)
+
+    val SkinConditionGood = Color(0xFF8BC34A)
+
+    val SkinConditionExcellent = Color(0xFF4CAF50)
 }

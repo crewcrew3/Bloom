@@ -40,17 +40,20 @@ object IconsCustom {
     @Composable
     fun iconSortAsc(): Painter =
         rememberVectorPainter(image = vectorResource(Res.drawable.ic_sort_asc))
+    @Composable
+    fun iconSortDesc(): Painter =
+        rememberVectorPainter(image = vectorResource(Res.drawable.ic_sort_desc))
 
     @Composable
     fun iconSkinCondition(): Painter =
-        rememberVectorPainter(image = vectorResource(Res.drawable.ic_check))
+        rememberVectorPainter(image = vectorResource(Res.drawable.ic_diary_24))
 
     @Composable
-    fun iconCamera(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_check))
+    fun iconCamera(): Painter = rememberVectorPainter(image = vectorResource(Res.drawable.ic_camera_24))
 
     @Composable
     fun iconDiaryEmpty(): Painter =
-        rememberVectorPainter(image = vectorResource(Res.drawable.ic_check))
+        rememberVectorPainter(image = vectorResource(Res.drawable.ic_list_24))
 
     @Composable
     fun iconBurgerMenu(): Painter = painterResource(Res.drawable.ic_menu)
@@ -78,4 +81,7 @@ object IconsCustom {
 
     @Composable
     fun iconClose(): Painter = painterResource(Res.drawable.ic_close_24)
+
+    @Composable
+    fun iconPerson(): Painter = painterResource(Res.drawable.ic_diary_24)
 }
