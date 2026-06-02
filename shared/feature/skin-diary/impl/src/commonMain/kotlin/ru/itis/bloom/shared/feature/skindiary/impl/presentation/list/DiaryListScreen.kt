@@ -32,6 +32,7 @@ import bloom.shared.feature.skin_diary.impl.generated.resources.diary_screen_tit
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import ru.itis.bloom.shared.core.ui.BaseScreen
+import ru.itis.bloom.shared.core.ui.components.DateRangePickerModal
 import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
 import ru.itis.bloom.shared.core.ui.components.settings.FloatingActionButtonSettings
 import ru.itis.bloom.shared.core.ui.components.settings.IconSettings
@@ -82,6 +83,18 @@ private fun DiaryListContent(
     modifier: Modifier = Modifier
 ) {
     var showSortDropdown by remember { mutableStateOf(false) }
+    var showDateRangePicker by remember { mutableStateOf(false) }
+
+    if (showDateRangePicker) {
+        DateRangePickerModal(
+            onDateRangeSelected = { range ->
+                onIntent(DiaryListIntent.ChangeDateRange(range.first, range.second))
+            },
+            onDismiss = { showDateRangePicker = false },
+            initialStartDate = state.dateRange.first,
+            initialEndDate = state.dateRange.second
+        )
+    }
 
     Column(
         modifier = modifier
@@ -92,9 +105,7 @@ private fun DiaryListContent(
             dateRange = state.dateRange,
             sort = state.sort,
             showSortDropdown = showSortDropdown,
-            onDateFilterClick = {
-                // TODO: открыть DatePicker диалог
-            },
+            onDateFilterClick = { showDateRangePicker = true },
             onSortIconClick = { showSortDropdown = true },
             onSortSelected = { order ->
                 showSortDropdown = false
@@ -103,33 +114,21 @@ private fun DiaryListContent(
             onSortDismiss = { showSortDropdown = false }
         )
 
-        when {
-            state.isLoading && state.entries.isEmpty() -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                }
-            }
-
-            state.entries.isEmpty() -> {
-                DiaryEmptyState(modifier = Modifier.weight(1f))
-            }
-
-            else -> {
-                PullToRefreshBox(
-                    isRefreshing = state.isRefreshing,
-                    onRefresh = { onIntent(DiaryListIntent.Refresh) },
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    DiaryEntriesList(
-                        entries = state.entries,
-                        hasMore = state.hasMore,
-                        onEntryClick = { id -> onIntent(DiaryListIntent.NavigateToDetail(id)) },
-                        onLoadMore = { onIntent(DiaryListIntent.LoadNextPage) }
-                    )
-                }
+        if (state.entries.isEmpty() && !state.isLoading) {
+            DiaryEmptyState(modifier = Modifier.weight(1f))
+        } else {
+            PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = { onIntent(DiaryListIntent.Refresh) },
+                modifier = Modifier.fillMaxSize()
+            ) {
+                DiaryEntriesList(
+                    entries = state.entries,
+                    hasMore = state.hasMore,
+                    isLoading = state.isLoading,
+                    onEntryClick = { id -> onIntent(DiaryListIntent.NavigateToDetail(id)) },
+                    onLoadMore = { onIntent(DiaryListIntent.LoadNextPage) }
+                )
             }
         }
     }

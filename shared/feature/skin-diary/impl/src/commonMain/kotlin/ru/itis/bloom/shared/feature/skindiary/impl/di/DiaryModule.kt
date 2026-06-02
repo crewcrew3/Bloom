@@ -16,6 +16,7 @@ import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntryB
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.SaveDiaryEntryUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.SyncPendingDiaryEntriesUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditViewModel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi.DiaryDetailViewModel
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryListViewModel
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation.DiaryNavigationHandler
 
@@ -42,5 +43,6 @@ fun diaryModule(currentUserIdProvider: () -> String = { "demo-user-id" }): Modul
     // Presentation (MVI)
     viewModelOf(::DiaryListViewModel)
     viewModelOf(::DiaryCreateEditViewModel)
+    viewModelOf(::DiaryDetailViewModel)
 
 }

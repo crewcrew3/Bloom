@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import bloom.shared.feature.skin_diary.impl.generated.resources.Res
 import bloom.shared.feature.skin_diary.impl.generated.resources.label_dry
 import bloom.shared.feature.skin_diary.impl.generated.resources.label_hydration_level
-import bloom.shared.feature.skin_diary.impl.generated.resources.label_oily
+import bloom.shared.feature.skin_diary.impl.generated.resources.label_moisturized
 import org.jetbrains.compose.resources.stringResource
 import ru.itis.bloom.shared.core.ui.theme.DimensionsCustom
 import ru.itis.bloom.shared.core.ui.theme.StylesCustom
@@ -81,7 +81,7 @@ internal fun HydrationLevelSection(
                 )
             )
             Text(
-                text = stringResource(Res.string.label_oily),
+                text = stringResource(Res.string.label_moisturized),
                 style = StylesCustom.diarySliderLabel.copy(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

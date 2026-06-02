@@ -91,7 +91,7 @@ class SkinDiaryApiImpl(
                         value = bytes,
                         headers = Headers.build {
                             append(HttpHeaders.ContentType, ContentType.Image.JPEG.toString())
-                            append(HttpHeaders.ContentDisposition, "form-data; name=\"photo\"; filename=\"diary.jpg\"")
+                            append(HttpHeaders.ContentDisposition, "filename=\"diary.jpg\"")
                         }
                     )
                 }

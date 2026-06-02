@@ -2,8 +2,14 @@ package ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import bloom.shared.feature.skin_diary.impl.generated.resources.Res
+import bloom.shared.feature.skin_diary.impl.generated.resources.error_saving_entry
+import bloom.shared.feature.skin_diary.impl.generated.resources.error_saving_photo
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,8 +29,9 @@ internal class DiaryCreateEditViewModel(
     private val _state = MutableStateFlow(DiaryCreateEditState())
     val state: StateFlow<DiaryCreateEditState> = _state.asStateFlow()
 
-    private val _effects = MutableStateFlow<DiaryCreateEditEffect?>(null)
-    val effects = _effects.asStateFlow()
+    private val _effects = MutableSharedFlow<DiaryCreateEditEffect>(extraBufferCapacity = 1)
+    val effects: SharedFlow<DiaryCreateEditEffect> = _effects.asSharedFlow()
+
 
     fun init(entryId: String? = null) {
         if (entryId != null) {
@@ -58,8 +65,9 @@ internal class DiaryCreateEditViewModel(
                             errorMessage = error.message
                         )
                     }
-                    _effects.value =
-                        DiaryCreateEditEffect.ShowError(error.message ?: "Ошибка загрузки")
+                    _effects.emit(
+                        DiaryCreateEditEffect.ShowError(Res.string.error_saving_entry)
+                    )
                 }
         }
     }
@@ -110,9 +118,11 @@ internal class DiaryCreateEditViewModel(
                     photoError = null
                 )
             }
+
             is DiaryCreateEditIntent.PhotoProcessingError -> _state.update {
                 it.copy(isPhotoProcessing = false, photoError = intent.message)
             }
+
             is DiaryCreateEditIntent.RemovePhoto -> {
                 _state.update { it.copy(photoBytes = null, photoUrl = null) }
             }
@@ -122,7 +132,9 @@ internal class DiaryCreateEditViewModel(
             }
 
             is DiaryCreateEditIntent.NavigateBack -> {
-                _effects.value = DiaryCreateEditEffect.NavigateBack
+                viewModelScope.launch {
+                    _effects.emit(DiaryCreateEditEffect.NavigateBack)
+                }
             }
         }
     }
@@ -144,8 +156,10 @@ internal class DiaryCreateEditViewModel(
                 }
                 .onFailure { error ->
                     _state.update { it.copy(isPhotoProcessing = false, photoError = error.message) }
-                    _effects.value = DiaryCreateEditEffect.ShowPhotoError(
-                        error.message ?: "Ошибка обработки фото"
+                    _effects.emit(
+                        DiaryCreateEditEffect.ShowPhotoError(
+                            Res.string.error_saving_photo
+                        )
                     )
                 }
         }
@@ -170,8 +184,7 @@ internal class DiaryCreateEditViewModel(
             )
                 .onSuccess { entry ->
                     _state.update { it.copy(isLoading = false) }
-                    _effects.value = DiaryCreateEditEffect.ShowSuccess
-                    _effects.value = DiaryCreateEditEffect.NavigateBack
+                    _effects.emit(DiaryCreateEditEffect.NavigateBack)
                 }
                 .onFailure { error ->
                     _state.update {
@@ -181,15 +194,10 @@ internal class DiaryCreateEditViewModel(
                             errorMessage = error.message
                         )
                     }
-                    _effects.value =
-                        DiaryCreateEditEffect.ShowError(error.message ?: "Ошибка сохранения")
+                    _effects.emit(
+                        DiaryCreateEditEffect.ShowError(Res.string.error_saving_entry)
+                    )
                 }
         }
-    }
-
-    fun consumeEffect(): DiaryCreateEditEffect? {
-        val effect = _effects.value
-        _effects.value = null
-        return effect
     }
 }

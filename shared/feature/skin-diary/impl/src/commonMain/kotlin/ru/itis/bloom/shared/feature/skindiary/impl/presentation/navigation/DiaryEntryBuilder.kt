@@ -22,6 +22,10 @@ import ru.itis.bloom.shared.feature.skindiary.api.navigation.DiaryNavRoute
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.DiaryCreateEditScreen
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditEffect
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditViewModel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.DiaryDetailScreen
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi.DiaryDetailEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi.DiaryDetailIntent
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi.DiaryDetailViewModel
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.DiaryListScreen
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryListEffect
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryListViewModel
@@ -74,7 +78,51 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
         )
     }
 
-    entry<DiaryNavRoute.Detail> { /* TODO */ }
+    entry<DiaryNavRoute.Detail> { route ->
+        val entryId = route.entryId
+        val vm: DiaryDetailViewModel = koinViewModel(
+            parameters = { org.koin.core.parameter.parametersOf(entryId) }
+        )
+        val navigationHandler: DiaryNavigationHandler = koinInject()
+
+        val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+        val stateToast = rememberAdvToastStates()
+
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.ERROR,
+            paddingBottom = 50
+        )
+        LaunchedEffect(entryId) {
+            vm.onIntent(DiaryDetailIntent.Reload)
+        }
+        LaunchedEffect(vm) {
+            vm.effects.collect { effect ->
+                when (effect) {
+                    is DiaryDetailEffect.NavigateToEdit -> {
+                        navigationHandler.handleDetailEffect(effect)
+                    }
+
+                    DiaryDetailEffect.NavigateBack -> {
+                        navigationHandler.handleDetailEffect(effect)
+                    }
+
+                    is DiaryDetailEffect.ShowError -> {
+                        scope.launch {
+                            stateToast.show(effect.message)
+                        }
+                    }
+
+                }
+            }
+        }
+
+        DiaryDetailScreen(
+            state = state,
+            onIntent = vm::onIntent
+        )
+    }
 
     entry<DiaryNavRoute.Create> {
         val vm: DiaryCreateEditViewModel = koinViewModel()
@@ -100,6 +148,7 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
                     is DiaryCreateEditEffect.NavigateBack -> navigationHandler.handleCreateEditEffect(
                         effect
                     )
+
                     is DiaryCreateEditEffect.ShowSuccess -> {
                         scope.launch {
                             val text = getString(Res.string.msg_entry_saved)
@@ -148,6 +197,10 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
                     is DiaryCreateEditEffect.NavigateBack -> navigationHandler.handleCreateEditEffect(
                         effect
                     )
+
+                    is DiaryCreateEditEffect.NavigateBackToDetail -> {
+                        navigationHandler.handleCreateEditEffect(effect)
+                    }
 
                     is DiaryCreateEditEffect.ShowSuccess -> {
                         scope.launch {

@@ -1,17 +1,22 @@
 package ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.filters
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import bloom.shared.feature.skin_diary.impl.generated.resources.Res
 import bloom.shared.feature.skin_diary.impl.generated.resources.diary_filter_placeholder
@@ -76,13 +81,23 @@ fun DiaryFiltersRow(
 
         // Иконка сортировки с Dropdown
         Box {
-            IconButton(
-                onClick = onSortIconClick,
-                modifier = Modifier.size(36.dp)
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(RoundedCornerShape(DimensionsCustom.cardCornerRadius))
+                    .clickable { onSortIconClick() },
+                contentAlignment = Alignment.Center
             ) {
+                val sortIcon = when (sort) {
+                    DiarySortOrder.DATE_DESC -> IconsCustom.iconSortDesc()
+                    DiarySortOrder.DATE_ASC -> IconsCustom.iconSortAsc()
+                    DiarySortOrder.SKIN_CONDITION_DESC -> IconsCustom.iconSkinCondition()
+                }
+
                 Icon(
-                    painter = IconsCustom.iconSortAsc(),
+                    painter = sortIcon,
                     contentDescription = stringResource(Res.string.diary_sort_label),
+                    modifier = Modifier.size(20.dp),
                     tint = if (sort != DiarySortOrder.DATE_DESC)
                         MaterialTheme.colorScheme.primary
                     else

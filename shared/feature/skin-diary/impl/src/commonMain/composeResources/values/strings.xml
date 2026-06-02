@@ -82,7 +82,7 @@
     <string name="label_poor">Плохо</string>
     <string name="label_excellent">Отлично</string>
     <string name="label_dry">Сухая</string>
-    <string name="label_oily">Жирная</string>
+    <string name="label_moisturized">Увлажненная</string>
     <string name="placeholder_notes">Введите заметку...</string>
     <string name="btn_save">Сохранить</string>
     <string name="btn_add_photo">Добавить фото</string>
@@ -94,4 +94,28 @@
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Отмена</string>
     <string name="title_select_date">Выберите дату</string>
+
+    <string name="hydration_very_dry">Очень сухая</string>
+    <string name="hydration_dry">Сухая</string>
+    <string name="hydration_normal">Нормальная</string>
+    <string name="hydration_moisturized">Увлажненная</string>
+    <string name="hydration_very_moisturized">Ультра напитанная</string>
+
+    <string name="error_loading_entry">Ошибка загрузки записи</string>
+    <string name="error_saving_entry">Ошибка сохранения</string>
+    <string name="error_saving_photo">Ошибка обработки фото</string>
+    <string name="retry">Повторить</string>
+    <string name="loading">Загрузка...</string>
+
+    <string name="diary_detail_title">Просмотр записи дневника</string>
+    <string name="diary_skin_condition_label">Состояние кожи</string>
+    <string name="diary_hydration_label">Уровень увлажнённости</string>
+    <string name="diary_problem_zones_label">Проблемные зоны</string>
+    <string name="diary_notes_label">Заметки</string>
+
+    <string name="skin_condition_excellent">Отличное состояние</string>
+    <string name="skin_condition_good">Хорошее состояние</string>
+    <string name="skin_condition_normal">Удовлетворительное</string>
+    <string name="skin_condition_poor">Есть проблемы</string>
+    <string name="skin_condition_bad">Требует внимания</string>
 </resources>
