@@ -1,6 +1,7 @@
 package ru.itis.bloom.shared.core.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import ru.itis.bloom.shared.core.ui.components.settings.CategoryChipSettings
@@ -36,15 +38,21 @@ fun CategoryChip(
     } else {
         settings.textColor ?: MaterialTheme.colorScheme.onSurface
     }
-
+    val shape = RoundedCornerShape(
+        DimensionsCustom.categoryChipRadius
+    )
     Surface(
-        shape = RoundedCornerShape(DimensionsCustom.categoryChipRadius),
         color = backgroundColor,
-        border = BorderStroke(DimensionsCustom.categoryChipBorderWidth, borderColor),
         modifier = modifier
-            .clickable(onClick = settings.onClick)
             .padding(horizontal = DimensionsCustom.categoryChipHorizontalPadding)
-    ) {
+            .clip(shape)
+            .clickable(onClick = settings.onClick)
+            .border(
+                width = DimensionsCustom.categoryChipBorderWidth,
+                color = borderColor,
+                shape = shape
+            )
+    )  {
         Text(
             text = settings.text,
             style = StylesCustom.categoryChipText,

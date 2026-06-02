@@ -2,6 +2,9 @@ package ru.itis.bloom.shared.core.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +29,7 @@ fun AsyncImageBox(
     shape: Shape = RoundedCornerShape(12.dp),
     placeholderTint: Color? = null,
 ) {
-    val background = MaterialTheme.colorScheme.surfaceVariant
+    val background = MaterialTheme.colorScheme.secondaryContainer.copy(0.5f)
     if (model != null) {
         AsyncImage(
             model = model,
@@ -44,9 +47,11 @@ fun AsyncImageBox(
             contentAlignment = Alignment.Center
         ) {
             Icon(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
                 painter = placeholderIcon,
                 contentDescription = placeholderDescription,
-                tint = placeholderTint ?: MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                tint = placeholderTint?.copy(0.5f)
+                    ?: MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
             )
         }
     }
