@@ -18,4 +18,10 @@
 
     <string name="title_select_date">Выбрать дату</string>
     <string name="title_select_image">Выберите изображение</string>
+
+    <string name="title_select_date_range">Выберите период</string>
+    <string name="title_select_start_date">Начальная дата</string>
+    <string name="title_select_end_date">Конечная дата</string>
+    <string name="diary_filter_placeholder">Выбрать даты</string>
+    <string name="diary_filter_to">—</string>
 </resources>
