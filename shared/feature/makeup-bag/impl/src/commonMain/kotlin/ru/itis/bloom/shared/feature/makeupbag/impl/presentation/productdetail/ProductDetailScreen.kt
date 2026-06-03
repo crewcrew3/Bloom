@@ -26,6 +26,7 @@ import bloom.shared.feature.makeup_bag.impl.generated.resources.*
 import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.stringResource
 import ru.itis.bloom.shared.core.ui.BaseScreen
+import ru.itis.bloom.shared.core.ui.components.AsyncImageBox
 import ru.itis.bloom.shared.core.ui.components.CollapsibleTextSection
 import ru.itis.bloom.shared.core.ui.components.StarRating
 import ru.itis.bloom.shared.core.ui.components.settings.*
@@ -139,30 +140,19 @@ private fun ProductDetailImage(
 ) {
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(DimensionsCustom.productDetailImageRadius))
-            .then(
-                if (imageUrl != null) Modifier else Modifier.background(
-                    MaterialTheme.colorScheme.primaryContainer
-                )
-            )
-        ,
+            .clip(RoundedCornerShape(DimensionsCustom.productDetailImageRadius)),
         contentAlignment = Alignment.Center
     ) {
-        if (imageUrl != null) {
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-        } else {
-            Image(
-                painter = IconsCustom.iconPlaceholderProduct(),
-                contentDescription = null,
-                modifier = Modifier.size(100.dp),
-                contentScale = ContentScale.Fit
-            )
-        }
+        AsyncImageBox(
+            model = imageUrl,
+            modifier = Modifier
+                .fillMaxSize(),
+            iconModifier = Modifier
+                .size(100.dp),
+            placeholderIcon = IconsCustom.iconPlaceholderProduct(),
+            placeholderTint = MaterialTheme.colorScheme.tertiary,
+            contentScale = ContentScale.Crop,
+        )
     }
 }
 

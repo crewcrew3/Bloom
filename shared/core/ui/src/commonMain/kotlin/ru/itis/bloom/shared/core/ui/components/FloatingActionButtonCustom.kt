@@ -27,7 +27,6 @@ fun FloatingActionButtonCustom(
             ?: RoundedCornerShape(DimensionsCustom.roundShapeBtn),
         modifier = Modifier
             .padding(
-                end = 8.dp,
                 bottom = 8.dp
             ),
     ) {

@@ -97,6 +97,7 @@
     <string name="form_button_save">Сохранить</string>
     <string name="form_button_delete">Удалить</string>
     <string name="form_button_remove_photo">Удалить фото</string>
+    <string name="form_button_add_photo">Добавить фото</string>
 
     <!-- Rating -->
     <string name="form_rating_star_desc">Звезда %1</string>

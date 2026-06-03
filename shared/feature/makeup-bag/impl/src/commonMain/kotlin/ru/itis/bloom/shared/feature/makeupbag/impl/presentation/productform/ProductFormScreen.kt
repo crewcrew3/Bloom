@@ -260,16 +260,25 @@ private fun ProductFormImageSection(
                 Box(
                     modifier = modifier
                         .clip(RoundedCornerShape(DimensionsCustom.productFormImageRadius))
-                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                         .clickable(onClick = onImageClick),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(
-                        painter = IconsCustom.iconPlaceholderProduct(),
-                        contentDescription = stringResource(Res.string.form_image_placeholder_desc),
-                        modifier = Modifier.size(80.dp),
-                        contentScale = ContentScale.Fit
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(DimensionsCustom.productFormSpacing)
+                    ) {
+                        Icon(
+                            painter = IconsCustom.iconCamera(),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            contentDescription = stringResource(Res.string.form_image_placeholder_desc),
+                            modifier = Modifier.size(80.dp),
+                        )
+                        Text(
+                            text = stringResource(Res.string.form_button_add_photo),
+                            style = StylesCustom.diaryPhotoLabel.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        )
+                    }
                 }
             }
         }
