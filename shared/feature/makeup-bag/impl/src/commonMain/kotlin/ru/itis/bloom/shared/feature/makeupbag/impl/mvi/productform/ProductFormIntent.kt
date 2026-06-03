@@ -13,7 +13,10 @@ internal sealed class ProductFormIntent {
     data class OpenedDateChanged(val date: String) : ProductFormIntent()
     data class ShelfLifeChanged(val months: Int) : ProductFormIntent()
     data class FinishedChanged(val isFinished: Boolean) : ProductFormIntent()
-    data class FormPhotoSelected(val uri: String) : ProductFormIntent()
+
+    // Photo
+    data class RequestPhotoSelection(val uri: String) : ProductFormIntent()
+    data object RemovePhoto : ProductFormIntent()
 
     data class LoadProduct(val productId: String) : ProductFormIntent()
     data object Submit : ProductFormIntent()

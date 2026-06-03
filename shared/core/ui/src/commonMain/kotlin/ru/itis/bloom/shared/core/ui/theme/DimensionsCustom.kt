@@ -53,8 +53,12 @@ object DimensionsCustom {
 
     // ProductForm
     val productFormImageSize = 200.dp
+    val productFormImagePlaceholderHeight = 120.dp
     val productFormImageRadius = 16.dp
+    val productFormCornerRadius = 16.dp
     val productFormContentPadding = 16.dp
+    val productFormSpacing = 8.dp
+    val productFormCircularProgressIndicatorSize = 48.dp
 
     // Diary Create/Edit - новые значения
     val diarySectionSpacing = 24.dp

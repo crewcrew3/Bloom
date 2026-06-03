@@ -9,9 +9,12 @@ internal object MakeupBagErrorMapper {
         return when (error) {
             is MakeupBagError -> MakeupBagMessageRes.fromMakeupBagError(error)
             is CommonError -> when (error) {
-                is CommonError.ValidationError -> MakeupBagMessageRes.Error.Validation
-                is CommonError.NetworkUnavailable -> MakeupBagMessageRes.Error.Network
-                is CommonError.Timeout -> MakeupBagMessageRes.Error.Timeout
+                CommonError.ValidationError -> MakeupBagMessageRes.Error.Validation
+                CommonError.NetworkUnavailable -> MakeupBagMessageRes.Error.Network
+                CommonError.Timeout -> MakeupBagMessageRes.Error.Timeout
+                CommonError.Unauthorized -> MakeupBagMessageRes.Error.Unauthorized
+                CommonError.Forbidden -> MakeupBagMessageRes.Error.Forbidden
+                CommonError.ServerError -> MakeupBagMessageRes.Error.ServerError
                 else -> MakeupBagMessageRes.Error.Unknown
             }
             else -> MakeupBagMessageRes.Error.Unknown

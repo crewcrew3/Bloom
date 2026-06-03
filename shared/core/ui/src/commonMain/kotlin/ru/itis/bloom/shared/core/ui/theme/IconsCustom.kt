@@ -56,6 +56,9 @@ object IconsCustom {
         rememberVectorPainter(image = vectorResource(Res.drawable.ic_list_24))
 
     @Composable
+    fun iconProductListEmpty(): Painter = painterResource(Res.drawable.ic_placeholder_product)
+
+    @Composable
     fun iconBurgerMenu(): Painter = painterResource(Res.drawable.ic_menu)
 
     @Composable

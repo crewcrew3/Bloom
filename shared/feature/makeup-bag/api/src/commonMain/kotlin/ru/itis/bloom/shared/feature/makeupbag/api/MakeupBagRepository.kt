@@ -14,9 +14,9 @@ interface MakeupBagRepository {
 
     suspend fun getProductById(id: String): BloomResult<Product>
 
-    suspend fun createProduct(request: CreateProductRequest): BloomResult<Product>
+    suspend fun createProduct(request: CreateProductRequest,  photoBytes: ByteArray?): BloomResult<Product>
 
-    suspend fun updateProduct(id: String, request: CreateProductRequest): BloomResult<Product>
+    suspend fun updateProduct(id: String, request: CreateProductRequest,  photoBytes: ByteArray?): BloomResult<Product>
 
     suspend fun deleteProduct(id: String): BloomResult<Unit>
 

@@ -14,5 +14,4 @@ data class CreateProductRequest(
     @SerialName("personal_review") val personalReview: String? = null,
     @SerialName("opened_date") val openedDate: String? = null,
     @SerialName("shelf_life_after_opening") val shelfLifeAfterOpening: Int? = null,
-    //@SerialName("photo") val photo: какой-то_тип_данных? = null //тут надо изменить
 )

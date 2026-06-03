@@ -19,11 +19,11 @@ internal class MakeupBagRepositoryImpl(
 
     override suspend fun getProductById(id: String): Result<Product> = api.getProductById(id)
 
-    override suspend fun createProduct(request: CreateProductRequest): Result<Product> =
-        api.createProduct(request)
+    override suspend fun createProduct(request: CreateProductRequest, photoBytes: ByteArray?): Result<Product> =
+        api.createProduct(request, photoBytes)
 
-    override suspend fun updateProduct(id: String, request: CreateProductRequest): Result<Product> =
-        api.updateProduct(id, request)
+    override suspend fun updateProduct(id: String, request: CreateProductRequest, photoBytes: ByteArray?): Result<Product> =
+        api.updateProduct(id, request, photoBytes)
 
     override suspend fun deleteProduct(id: String): Result<Unit> = api.deleteProduct(id)
 

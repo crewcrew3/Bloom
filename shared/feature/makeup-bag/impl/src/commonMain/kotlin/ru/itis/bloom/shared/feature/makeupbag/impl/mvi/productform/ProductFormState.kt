@@ -8,6 +8,7 @@ internal data class ProductFormState(
     val productId: String? = null,
     val product: Product? = null,
     val isLoading: Boolean = false,
+    val isPhotoProcessing: Boolean = false,
     val form: FormFields = FormFields()
 ) {
     data class FormFields(
@@ -20,13 +21,15 @@ internal data class ProductFormState(
         val openedDate: String? = null,
         val shelfLifeAfterOpening: Int? = null,
         val photoUri: String? = null,
+        val photoBytes: ByteArray? = null,
         val isFinished: Boolean = false, //архив
 
         // Ошибки валидации по полям
         val nameError: StringResource? = null,
         val brandError: StringResource? = null,
         val reviewError: StringResource? = null,
-        val shelfLifeError: StringResource? = null
+        val shelfLifeError: StringResource? = null,
+        val photoError: StringResource? = null,
         //val categoryError: StringResource? = null,
         //val ratingError: StringResource? = null,
         //val openedDateError: StringResource? = null,

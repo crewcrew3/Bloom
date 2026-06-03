@@ -7,4 +7,5 @@ sealed interface MakeupBagError : BaseError {
     data object ProductNotFound : MakeupBagError
     data object InvalidCategory : MakeupBagError
     data object InvalidRating : MakeupBagError
+    data object SavingPhotoError: MakeupBagError
 }

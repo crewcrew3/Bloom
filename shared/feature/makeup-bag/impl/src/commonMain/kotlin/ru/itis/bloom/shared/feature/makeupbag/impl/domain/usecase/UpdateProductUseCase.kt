@@ -8,6 +8,13 @@ import ru.itis.bloom.shared.feature.makeupbag.api.model.request.CreateProductReq
 internal class UpdateProductUseCase(
     private val repository: MakeupBagRepository
 ) {
-    suspend operator fun invoke(id: String, request: CreateProductRequest): Result<Product> =
-        repository.updateProduct(id, request)
+    suspend operator fun invoke(
+        id: String, request: CreateProductRequest,
+        photoBytes: ByteArray?
+    ): Result<Product> =
+        repository.updateProduct(
+            id = id,
+            request = request,
+            photoBytes = photoBytes
+        )
 }

@@ -168,7 +168,7 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
         LaunchedEffect(vm) {
             vm.effect.collect { effect ->
                 when (effect) {
-                    is ProductFormEffect.NavigateBack -> navigationHandler.handleFormEffect(effect)
+                    is ProductFormEffect.NavigateBack, ProductFormEffect.NavigateBackToRoot -> navigationHandler.handleFormEffect(effect)
                     is ProductFormEffect.ShowMessage -> {
                         scope.launch {
                             val text = getString(effect.message.toResourceId())
@@ -214,7 +214,7 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
         LaunchedEffect(vm) {
             vm.effect.collect { effect ->
                 when (effect) {
-                    is ProductFormEffect.NavigateBack -> navigationHandler.handleFormEffect(effect)
+                    is ProductFormEffect.NavigateBack, ProductFormEffect.NavigateBackToRoot -> navigationHandler.handleFormEffect(effect)
                     is ProductFormEffect.ShowMessage -> {
                         scope.launch {
                             val text = getString(effect.message.toResourceId())

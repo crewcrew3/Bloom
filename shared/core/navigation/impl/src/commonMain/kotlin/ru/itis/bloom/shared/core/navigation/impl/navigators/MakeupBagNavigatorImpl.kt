@@ -22,4 +22,13 @@ class MakeupBagNavigatorImpl(
     override fun back() {
         backStackHolder.backStack?.removeLastOrNull()
     }
+
+    override fun popToRoot() {
+        backStackHolder.backStack?.let { stack ->
+            // Удаляем все экраны, пока не останется только корень (обычно это первый элемент)
+            while (stack.size > 1) {
+                stack.removeLastOrNull()
+            }
+        }
+    }
 }

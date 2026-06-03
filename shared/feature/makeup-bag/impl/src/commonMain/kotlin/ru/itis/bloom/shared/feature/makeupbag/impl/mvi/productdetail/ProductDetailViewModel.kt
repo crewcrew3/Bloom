@@ -45,17 +45,14 @@ internal class ProductDetailViewModel(
     private suspend fun loadProduct(id: String) {
         _state.update { it.copy(isLoading = true) }
 
-        //для теста
-        delay(3000)
-        val result = MockProducts.getById(id)
-        _state.update { it.copy(product = result, isLoading = false) }
+        //mockTest(id)
 
-        //раскомментировать
-//        when (val result = getProductByIdUseCase(id)) {
-//            is Result.Success -> _state.update { it.copy(product = result.data, isLoading = false) }
-//            is Result.Error -> handleError(result.error)
-//            is Result.Loading -> _state.update { it.copy(isLoading = true) }
-//        }
+        //рабочий код
+        when (val result = getProductByIdUseCase(id)) {
+            is Result.Success -> _state.update { it.copy(product = result.data, isLoading = false) }
+            is Result.Error -> handleError(result.error)
+            is Result.Loading -> _state.update { it.copy(isLoading = true) }
+        }
     }
 
     private suspend fun archive() {
@@ -92,5 +89,12 @@ internal class ProductDetailViewModel(
             it.copy(isLoading = false)
         }
         _effect.emit(ProductDetailEffect.ShowMessage(messageRes))
+    }
+
+    private suspend fun mockTest(id: String) {
+        //для теста
+        delay(3000)
+        val result = MockProducts.getById(id)
+        _state.update { it.copy(product = result, isLoading = false) }
     }
 }

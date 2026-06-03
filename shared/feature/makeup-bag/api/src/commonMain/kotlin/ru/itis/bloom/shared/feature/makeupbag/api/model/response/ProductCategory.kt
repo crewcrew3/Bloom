@@ -11,7 +11,7 @@ enum class ProductCategory {
     @SerialName("moisturizer") Moisturizer,
     @SerialName("sunscreen") Sunscreen,
     @SerialName("mask") Mask,
-    @SerialName("eye_cream") EyeCream,
+    @SerialName("eyecream") EyeCream, //!!!
     @SerialName("exfoliant") Exfoliant,
     @SerialName("oil") Oil,
     @SerialName("other") Other
