@@ -25,6 +25,7 @@ kotlin {
             implementation(projects.shared.feature.skinDiary.api)
             implementation(projects.shared.core.data)
             implementation(projects.shared.core.ui)
+            implementation(projects.shared.core.domain)
             implementation(projects.shared.core.navigation.api)
 
             //navigation
@@ -42,6 +43,8 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.compose.toast)
+
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
@@ -50,6 +53,16 @@ kotlin {
             implementation(libs.ktor.client.serialization)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.kotlinx.datetime)
+
+            implementation(libs.sqldelight.coroutines.extensions)
+
+            implementation(libs.coil)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
+
+
+            implementation(libs.kotlinx.immutable)
         }
     }
 }

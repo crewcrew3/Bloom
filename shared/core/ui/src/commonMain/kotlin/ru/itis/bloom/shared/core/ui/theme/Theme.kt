@@ -14,6 +14,7 @@ private val LightColorScheme = lightColorScheme(
     primary = ColorsCustom.LightPrimary,
     onPrimary = ColorsCustom.LightOnPrimary,
     primaryContainer = ColorsCustom.LightPrimaryContainer,
+    onPrimaryContainer = ColorsCustom.LightOnPrimaryContainer,
     secondary = ColorsCustom.LightSecondary,
     onSecondary = ColorsCustom.LightOnSecondary,
     secondaryContainer = ColorsCustom.LightSecondaryContainer,

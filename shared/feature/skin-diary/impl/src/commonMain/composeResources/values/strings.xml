@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Экран и навигация -->
+    <string name="diary_screen_title">Дневник кожи</string>
+    <string name="diary_action_add">Новая запись</string>
+    <string name="diary_action_edit">Редактировать</string>
+    <string name="diary_action_delete">Удалить</string>
+    <string name="diary_action_save">Сохранить</string>
+    <string name="diary_action_cancel">Отмена</string>
+
+    <!-- Фильтр по датам -->
+    <string name="diary_filter_dates">Период</string>
+    <string name="diary_filter_from">С</string>
+    <string name="diary_filter_to">По</string>
+    <string name="diary_filter_placeholder">Выберите даты</string>
+    <string name="diary_filter_clear">Сбросить</string>
+
+    <!-- Сортировка -->
+    <string name="diary_sort_label">Сортировать</string>
+    <string name="diary_sort_date_desc">Сначала новые</string>
+    <string name="diary_sort_date_asc">Сначала старые</string>
+    <string name="diary_sort_skin_condition_desc">По состоянию кожи</string>
+
+    <!-- Поля формы -->
+    <string name="diary_form_date">Дата</string>
+    <string name="diary_form_date_required">Дата обязательна</string>
+    <string name="diary_form_skin_condition">Состояние кожи (1–10)</string>
+    <string name="diary_form_hydration">Увлажненность (1–5)</string>
+    <string name="diary_form_notes">Заметка</string>
+    <string name="diary_form_notes_hint">Опишите состояние кожи сегодня...</string>
+    <string name="diary_form_notes_max">Максимум 300 символов</string>
+    <string name="diary_form_photo">Фото</string>
+    <string name="diary_form_photo_hint">Нажмите, чтобы добавить фото (макс. 10 МБ)</string>
+    <string name="diary_form_photo_too_large">Фото превышает лимит 10 МБ</string>
+    <string name="diary_form_invalid_format">Неподдерживаемый формат. Используйте JPEG или PNG.</string>
+
+    <!-- Проблемные зоны -->
+    <string name="diary_zones_title">Проблемные зоны</string>
+    <string name="diary_zone_forehead">Лоб</string>
+    <string name="diary_zone_nose">Нос</string>
+    <string name="diary_zone_chin">Подбородок</string>
+    <string name="diary_zone_left_cheek">Левая щека</string>
+    <string name="diary_zone_right_cheek">Правая щека</string>
+    <string name="diary_zone_t_zone">T-зона</string>
+    <string name="diary_zone_jawline">Линия челюсти</string>
+    <string name="diary_zone_neck">Шея</string>
+    <string name="diary_zone_under_eyes">Под глазами</string>
+    <string name="diary_zone_other">Другое</string>
+    <string name="diary_zones_max">Можно выбрать до 8 зон</string>
+
+    <!-- Статус синхронизации -->
+    <string name="diary_status_synced">Синхронизировано</string>
+    <string name="diary_status_pending">Ожидает синхронизации</string>
+
+    <!-- Ошибки -->
+    <string name="diary_error_network">Нет подключения к интернету</string>
+    <string name="diary_error_server">Ошибка сервера. Попробуйте позже.</string>
+    <string name="diary_error_not_found">Запись не найдена</string>
+    <string name="diary_error_unauthorized">Требуется авторизация</string>
+    <string name="diary_error_validation">Проверьте корректность ввода</string>
+    <string name="diary_error_unknown">Что-то пошло не так</string>
+
+    <!-- Диалоги -->
+    <string name="diary_dialog_delete_title">Удалить запись?</string>
+    <string name="diary_dialog_delete_message">Это действие нельзя отменить.</string>
+    <string name="diary_dialog_confirm">Подтвердить</string>
+
+    <!-- Пустое состояние -->
+    <string name="diary_empty_title">Записей пока нет</string>
+    <string name="diary_empty_subtitle">Начните вести дневник ухода за кожей</string>
+    <string name="diary_action_refresh">Обновить</string>
+
+    <!-- Экран создания/редактирования -->
+    <string name="title_create_diary_entry">Новая запись</string>
+    <string name="title_edit_diary_entry">Редактировать запись</string>
+    <string name="label_date">Дата</string>
+    <string name="label_skin_condition">Состояние кожи</string>
+    <string name="label_hydration_level">Уровень увлажненности</string>
+    <string name="label_problem_zones">Проблемные зоны</string>
+    <string name="label_notes">Заметка</string>
+    <string name="label_photo">Фото</string>
+    <string name="label_poor">Плохо</string>
+    <string name="label_excellent">Отлично</string>
+    <string name="label_dry">Сухая</string>
+    <string name="label_moisturized">Увлажненная</string>
+    <string name="placeholder_notes">Введите заметку...</string>
+    <string name="btn_save">Сохранить</string>
+    <string name="btn_add_photo">Добавить фото</string>
+    <string name="btn_remove_photo">Удалить фото</string>
+    <string name="msg_entry_saved">Запись сохранена</string>
+    <string name="msg_entry_updated">Запись обновлена</string>
+
+    <!-- Общие -->
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Отмена</string>
+    <string name="title_select_date">Выберите дату</string>
+
+    <string name="hydration_very_dry">Очень сухая</string>
+    <string name="hydration_dry">Сухая</string>
+    <string name="hydration_normal">Нормальная</string>
+    <string name="hydration_moisturized">Увлажненная</string>
+    <string name="hydration_very_moisturized">Ультра напитанная</string>
+
+    <string name="error_loading_entry">Ошибка загрузки записи</string>
+    <string name="error_saving_entry">Ошибка сохранения</string>
+    <string name="error_saving_photo">Ошибка обработки фото</string>
+    <string name="retry">Повторить</string>
+    <string name="loading">Загрузка...</string>
+
+    <string name="diary_detail_title">Просмотр записи дневника</string>
+    <string name="diary_skin_condition_label">Состояние кожи</string>
+    <string name="diary_hydration_label">Уровень увлажнённости</string>
+    <string name="diary_problem_zones_label">Проблемные зоны</string>
+    <string name="diary_notes_label">Заметки</string>
+
+    <string name="skin_condition_excellent">Отличное состояние</string>
+    <string name="skin_condition_good">Хорошее состояние</string>
+    <string name="skin_condition_normal">Удовлетворительное</string>
+    <string name="skin_condition_poor">Есть проблемы</string>
+    <string name="skin_condition_bad">Требует внимания</string>
+</resources>

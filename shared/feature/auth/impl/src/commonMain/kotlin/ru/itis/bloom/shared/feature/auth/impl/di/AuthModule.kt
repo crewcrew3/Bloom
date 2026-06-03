@@ -13,7 +13,12 @@ import ru.itis.bloom.shared.feature.auth.impl.network.AuthApiImpl
 
 val authModule = module {
     // API
-    single<AuthApi> { AuthApiImpl(httpClient = get()) }
+    single<AuthApi> {
+        AuthApiImpl(
+            httpClient = get(),
+            tokenStorage = get()
+        )
+    }
 
     // Repository
     single<AuthRepository> { AuthRepositoryImpl(authApi = get()) }

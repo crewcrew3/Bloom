@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Ошибки (Error) -->
+    <string name="makeup_error_product_linked">Продукт привязан к активной рутине</string>
+    <string name="makeup_error_not_found">Продукт не найден</string>
+    <string name="makeup_error_invalid_category">Некорректная категория</string>
+    <string name="makeup_error_validation">Ошибка валидации</string>
+    <string name="makeup_error_network">Ошибка сети</string>
+    <string name="makeup_error_timeout">Превышено время ожидания</string>
+    <string name="makeup_error_unknown">Неизвестная ошибка</string>
+
+    <!-- Успешные действия (Success) -->
+    <string name="makeup_success_added">Продукт успешно добавлен</string>
+    <string name="makeup_success_updated">Продукт успешно обновлён</string>
+    <string name="makeup_success_deleted">Продукт успешно удалён</string>
+    <string name="makeup_success_archived">Продукт перемещён в архив</string>
+
+    <!-- Ошибки валидации полей (Validation) -->
+    <string name="makeup_validation_name_required">Введите название продукта</string>
+    <string name="makeup_validation_name_too_long">Название слишком длинное (макс. 200 символов)</string>
+    <string name="makeup_validation_brand_too_long">Название бренда слишком длинное (макс. 200 символов)</string>
+    <string name="makeup_validation_review_too_long">Отзыв слишком длинный (макс. 1000 символов)</string>
+    <string name="makeup_validation_shelf_life_invalid">Срок годности должен быть больше 0</string>
+
+    <!-- Заголовки экранов -->
+    <string name="makeup_title_my_bag">Моя косметичка</string>
+    <string name="makeup_title_product_detail">Информация о продукте</string>
+    <string name="makeup_title_product_add">Добавить продукт</string>
+    <string name="makeup_title_product_edit">Редактировать продукт</string>
+
+    <!-- Категории продуктов -->
+    <string name="makeup_chip_all">Все</string>
+    <string name="makeup_chip_cleanser">Очищение</string>
+    <string name="makeup_chip_toner">Тонер</string>
+    <string name="makeup_chip_serum">Сыворотка</string>
+    <string name="makeup_chip_moisturizer">Увлажнение</string>
+    <string name="makeup_chip_sunscreen">SPF-защита</string>
+    <string name="makeup_chip_mask">Маска</string>
+    <string name="makeup_chip_eye_cream">Крем для глаз</string>
+    <string name="makeup_chip_exfoliant">Пилинг</string>
+    <string name="makeup_chip_oil">Масло</string>
+    <string name="makeup_chip_other">Другое</string>
+
+    <!-- Product Detail -->
+    <string name="product_detail_action_edit">Редактировать</string>
+    <string name="product_detail_action_delete">Удалить</string>
+    <string name="product_detail_brand_unknown">Неизвестно</string>
+    <string name="product_detail_category_format">Категория: %1$s</string>
+    <string name="product_detail_opened_label">Вскрыт:</string>
+    <string name="product_detail_opened_not_opened">Не вскрыт</string>
+    <string name="product_detail_shelf_life_label">Срок после вскрытия:</string>
+    <string name="product_detail_shelf_life_format">%1$d мес.</string>
+    <string name="product_detail_expiry_label">Срок годности:</string>
+    <string name="product_detail_status_label">Статус:</string>
+    <string name="product_detail_status_active">Активен</string>
+    <string name="product_detail_status_archived">В архиве</string>
+    <string name="product_detail_value_unknown">Неизвестно</string>
+    <string name="product_detail_section_composition">Состав</string>
+    <string name="product_detail_section_rating">Рейтинг</string>
+    <string name="product_detail_section_review">Отзыв</string>
+    <string name="product_detail_button_archive">Отметить как закончившийся</string>
+
+    <!-- Product Form -->
+    <string name="form_title_add">Добавить продукт</string>
+    <string name="form_title_edit">Редактировать продукт</string>
+    <string name="form_image_placeholder_desc">Фото продукта</string>
+
+    <!-- Form labels -->
+    <string name="form_label_name">Название</string>
+    <string name="form_label_brand">Бренд</string>
+    <string name="form_label_opened_date">Дата вскрытия</string>
+    <string name="form_label_expiry_date">Истекает</string>
+    <string name="form_label_shelf_life">Срок после вскрытия (мес.)</string>
+    <string name="form_label_category">Категория</string>
+    <string name="form_label_composition">Состав</string>
+    <string name="form_label_rating">Рейтинг</string>
+    <string name="form_label_review">Отзыв</string>
+    <string name="form_label_finished">Закончился</string>
+
+    <!-- Placeholders -->
+    <string name="form_placeholder_name">Введите название</string>
+    <string name="form_placeholder_brand">Введите бренд</string>
+    <string name="form_placeholder_date">ДД.ММ.ГГГГ</string>
+    <string name="form_placeholder_months">Например: 12</string>
+    <string name="form_placeholder_composition">Введите состав...</string>
+    <string name="form_placeholder_review">Ваш отзыв...</string>
+
+    <!-- Buttons -->
+    <string name="form_button_save">Сохранить</string>
+    <string name="form_button_delete">Удалить</string>
+
+    <!-- Rating -->
+    <string name="form_rating_star_desc">Звезда %1</string>
+
+    <!-- Date picker -->
+    <string name="title_select_date">Выберите дату</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Отмена</string>
+</resources>

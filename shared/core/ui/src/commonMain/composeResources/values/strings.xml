@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="placeholder_text_unknown">Неизвестно</string>
+
+    <string name="topbar_content_desc_icon_back">Назад</string>
+    <string name="topbar_content_desc_icon_burger">Меню</string>
+    <string name="collaps_section_content_desc_icon_expand_less">Свернуть</string>
+    <string name="collaps_section_content_desc_icon_expand_more">Развернуть</string>
+
+    <string name="navigation_section_text_routine">Рутина</string>
+    <string name="navigation_section_text_skin_diary">Дневник кожи</string>
+    <string name="navigation_section_text_makeup_bag">Косметичка</string>
+    <string name="navigation_section_text_profile">Профиль</string>
+    <string name="navigation_burger_title">Меню</string>
+
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Отмена</string>
+
+    <string name="title_select_date">Выбрать дату</string>
+    <string name="title_select_image">Выберите изображение</string>
+
+    <string name="title_select_date_range">Выберите период</string>
+    <string name="title_select_start_date">Начальная дата</string>
+    <string name="title_select_end_date">Конечная дата</string>
+    <string name="diary_filter_placeholder">Выбрать даты</string>
+    <string name="diary_filter_to">—</string>
+</resources>
