@@ -55,7 +55,7 @@ fun ProductCard(
                 shape = RoundedCornerShape(DimensionsCustom.productCardImageRadius),
                 modifier = Modifier
                     .size(DimensionsCustom.productCardImageSize),
-                iconModifier = Modifier.size(56.dp)
+                iconModifier = Modifier.size(88.dp)
                             .padding(8.dp)
                             .align(Alignment.CenterVertically),
             )

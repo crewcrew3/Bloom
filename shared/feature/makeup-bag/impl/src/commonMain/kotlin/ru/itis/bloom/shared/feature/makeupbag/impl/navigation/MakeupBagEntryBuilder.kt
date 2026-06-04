@@ -10,6 +10,8 @@ import bloom.shared.feature.makeup_bag.impl.generated.resources.*
 import io.github.tbib.compose_toast.AdvToast
 import io.github.tbib.compose_toast.rememberAdvToastStates
 import io.github.tbib.compose_toast.toast_ui.EnumToastType
+import io.github.the_best_is_best.toast_kmp.KMPNativeShowToast
+import io.github.the_best_is_best.toast_kmp.KMPNativeToastType
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
@@ -21,6 +23,7 @@ import ru.itis.bloom.shared.core.ui.components.settings.TopBarIconType
 import ru.itis.bloom.shared.core.ui.utils.provideBottomBarSettings
 import ru.itis.bloom.shared.core.ui.utils.provideBurgerMenuSettings
 import ru.itis.bloom.shared.core.ui.utils.provideTopBarSettings
+import ru.itis.bloom.shared.core.ui.utils.useNativeToast
 import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail.ProductDetailEffect
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productdetail.ProductDetailIntent
@@ -42,6 +45,7 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
         val navigationHandler: MakeupBagNavigationHandler = koinInject()
         val bottomBarNav: BottomBarNavigator = koinInject()
         val burgerMenuNav: BurgerMenuNavigator = koinInject()
+        val useNativeToast = useNativeToast()
 
         val state by vm.state.collectAsState()
         val scope = rememberCoroutineScope()
@@ -68,7 +72,14 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
                     is ProductListEffect.ShowMessage -> {
                         scope.launch {
                             val text = getString(effect.message.toResourceId())
-                            stateToast.show(text)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
                         }
                     }
                 }
@@ -107,6 +118,7 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
     entry<MakeupBagNavRoute.ProductDetail> { route ->
         val vm: ProductDetailViewModel = koinViewModel()
         val navigationHandler: MakeupBagNavigationHandler = koinInject()
+        val useNativeToast = useNativeToast()
 
         val state by vm.state.collectAsState()
         val scope = rememberCoroutineScope()
@@ -129,7 +141,14 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
                     is ProductDetailEffect.ShowMessage -> {
                         scope.launch {
                             val text = getString(effect.message.toResourceId())
-                            stateToast.show(text)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
                         }
                     }
                 }
@@ -154,6 +173,7 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
     entry<MakeupBagNavRoute.CreateProduct> {
         val vm: ProductFormViewModel = koinViewModel()
         val navigationHandler: MakeupBagNavigationHandler = koinInject()
+        val useNativeToast = useNativeToast()
 
         val state by vm.state.collectAsState()
         val scope = rememberCoroutineScope()
@@ -172,7 +192,14 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
                     is ProductFormEffect.ShowMessage -> {
                         scope.launch {
                             val text = getString(effect.message.toResourceId())
-                            stateToast.show(text)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
                         }
                     }
                 }
@@ -196,6 +223,7 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
     entry<MakeupBagNavRoute.EditProduct> { route ->
         val vm: ProductFormViewModel = koinViewModel()
         val navigationHandler: MakeupBagNavigationHandler = koinInject()
+        val useNativeToast = useNativeToast()
 
         val state by vm.state.collectAsState()
         val scope = rememberCoroutineScope()
@@ -218,7 +246,14 @@ fun EntryProviderScope<NavKey>.makeupBagEntryBuilder() {
                     is ProductFormEffect.ShowMessage -> {
                         scope.launch {
                             val text = getString(effect.message.toResourceId())
-                            stateToast.show(text)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
                         }
                     }
                 }

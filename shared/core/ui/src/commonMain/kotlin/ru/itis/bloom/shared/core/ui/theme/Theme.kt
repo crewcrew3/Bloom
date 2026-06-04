@@ -7,7 +7,20 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 private val DarkColorScheme = darkColorScheme(
-    //TODO("Тёмная тема")
+    primary = ColorsCustom.DarkPrimary,
+    onPrimary = ColorsCustom.DarkOnPrimary,
+    primaryContainer = ColorsCustom.DarkPrimaryContainer,
+    secondary = ColorsCustom.DarkSecondary,
+    secondaryContainer = ColorsCustom.DarkSecondaryContainer,
+    onSecondaryContainer = ColorsCustom.DarkOnSecondaryContainer,
+    tertiary = ColorsCustom.DarkTertiary,
+    tertiaryContainer = ColorsCustom.DarkTertiaryContainer,
+    background = ColorsCustom.DarkBackground,
+    error = ColorsCustom.DarkError,
+    onError = ColorsCustom.DarkOnError,
+    onSurface = ColorsCustom.DarkOnSurface,
+    surfaceVariant = ColorsCustom.DarkSurfaceVariant,
+    onSurfaceVariant = ColorsCustom.DarkOnSurfaceVariant
 )
 
 private val LightColorScheme = lightColorScheme(

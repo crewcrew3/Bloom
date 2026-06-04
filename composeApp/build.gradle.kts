@@ -90,6 +90,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
 }
 
 dependencies {
@@ -104,8 +105,10 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "ru.itis.bloom"
             packageVersion = "1.0.0"
+
+            windows {
+                iconFile.set(project.file("src/jvmMain/resources/ic_launcher_bloom.ico"))
+            }
         }
     }
 }
-
-//apply(plugin = "com.google.gms.google-services")

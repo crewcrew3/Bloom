@@ -1,7 +1,5 @@
 package ru.itis.bloom.shared.feature.makeupbag.impl.presentation.productdetail
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +21,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import bloom.shared.feature.makeup_bag.impl.generated.resources.*
-import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.stringResource
 import ru.itis.bloom.shared.core.ui.BaseScreen
 import ru.itis.bloom.shared.core.ui.components.AsyncImageBox
@@ -55,6 +52,13 @@ internal fun ProductDetailScreen(
         topBarSettings = topBarSettings,
         bottomBarSettings = bottomBarSettings,
         burgerMenuSettings = burgerMenuSettings,
+        floatActBtnSettings = FloatingActionButtonSettings(
+            onClick = { onIntent(ProductDetailIntent.NavigateToEdit) },
+            iconSettings = IconSettings(
+                iconPainter = IconsCustom.iconEdit(),
+                description = stringResource(Res.string.product_detail_action_edit),
+            )
+        ),
         content = { paddingValues ->
             if (state.isLoading && state.product == null) {
                 Box(
@@ -70,7 +74,6 @@ internal fun ProductDetailScreen(
                     ProductDetailContent(
                         product = product,
                         useHorizontalLayout = useHorizontalLayout,
-                        onEditClick = { onIntent(ProductDetailIntent.NavigateToEdit) },
                         onDeleteClick = { onIntent(ProductDetailIntent.Delete) },
                         onArchiveClick = { onIntent(ProductDetailIntent.Archive) },
                         modifier = Modifier
@@ -89,7 +92,6 @@ internal fun ProductDetailScreen(
 private fun ProductDetailContent(
     product: Product,
     useHorizontalLayout: Boolean,
-    onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onArchiveClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -105,7 +107,6 @@ private fun ProductDetailContent(
             )
             ProductDetailInfo(
                 product = product,
-                onEditClick = onEditClick,
                 onDeleteClick = onDeleteClick,
                 onArchiveClick = onArchiveClick,
                 modifier = Modifier.weight(1.5f)
@@ -124,7 +125,6 @@ private fun ProductDetailContent(
             )
             ProductDetailInfo(
                 product = product,
-                onEditClick = onEditClick,
                 onDeleteClick = onDeleteClick,
                 onArchiveClick = onArchiveClick,
                 modifier = Modifier.fillMaxWidth()
@@ -159,7 +159,6 @@ private fun ProductDetailImage(
 @Composable
 private fun ProductDetailInfo(
     product: Product,
-    onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onArchiveClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -170,16 +169,6 @@ private fun ProductDetailInfo(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
-            IconButton(
-                onClick = onEditClick,
-            ) {
-                Icon(
-                    painter = IconsCustom.iconEdit(),
-                    contentDescription = stringResource(Res.string.product_detail_action_edit),
-                    tint = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.size(DimensionsCustom.productDetailTopIconSize)
-                )
-            }
             IconButton(
                 onClick = onDeleteClick,
             ) {
@@ -195,7 +184,7 @@ private fun ProductDetailInfo(
         // Main info card
         Surface(
             shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.primaryContainer,
+            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
             tonalElevation = 2.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
