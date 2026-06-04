@@ -1,3 +1,7 @@
+Состав команды: Дергунова Ирина, Перовская Ольга.
+Для работы аналитики необходимо добавить файл google-services.json в папку composeApp/.
+
+---
 This is a Kotlin Multiplatform project targeting Android, Desktop (JVM).
 
 * [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
