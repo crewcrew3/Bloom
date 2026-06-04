@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
-
 kotlin {
     androidLibrary {
         namespace = "ru.itis.bloom.shared.feature.makeupbag.impl"

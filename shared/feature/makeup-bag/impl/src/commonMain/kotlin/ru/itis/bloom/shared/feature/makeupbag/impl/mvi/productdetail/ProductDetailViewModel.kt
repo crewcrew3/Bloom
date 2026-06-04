@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.data.Result
 import ru.itis.bloom.shared.core.data.error.BaseError
+import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
+import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.makeupbag.impl.domain.usecase.*
 import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagErrorMapper
 import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MakeupBagMessageRes
@@ -21,6 +23,10 @@ internal class ProductDetailViewModel(
     private val deleteProductUseCase: DeleteProductUseCase,
     private val archiveProductUseCase: ArchiveProductUseCase
 ) : ViewModel() {
+
+    init {
+        AnalyticsHelper.logScreenOpen(ScreenName.PRODUCT_DETAIL)
+    }
 
     private val _state = MutableStateFlow(ProductDetailState())
     val state = _state.asStateFlow()

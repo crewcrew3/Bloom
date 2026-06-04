@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import ru.itis.bloom.shared.core.domain.usecase.ImageUriToByteArrayUseCase
+import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
+import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.skindiary.api.model.ProblemZone
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.model.SaveDiaryEntryCommand
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntryByIdUseCase
@@ -32,6 +34,9 @@ internal class DiaryCreateEditViewModel(
     private val _effects = MutableSharedFlow<DiaryCreateEditEffect>(extraBufferCapacity = 1)
     val effects: SharedFlow<DiaryCreateEditEffect> = _effects.asSharedFlow()
 
+    init {
+        AnalyticsHelper.logScreenOpen(ScreenName.SKIN_DIARY_CREATE_EDIT)
+    }
 
     fun init(entryId: String? = null) {
         if (entryId != null) {

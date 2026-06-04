@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.data.Result
 import ru.itis.bloom.shared.core.data.error.BaseError
 import ru.itis.bloom.shared.core.domain.usecase.ImageUriToByteArrayUseCase
+import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
+import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.makeupbag.api.error.MakeupBagError
 import ru.itis.bloom.shared.feature.makeupbag.api.model.request.CreateProductRequest
 import ru.itis.bloom.shared.feature.makeupbag.api.model.response.ProductStatus
@@ -31,6 +33,10 @@ internal class ProductFormViewModel(
     private val archiveProductUseCase: ArchiveProductUseCase,
     private val imageUriToByteArrayUseCase: ImageUriToByteArrayUseCase,
 ) : ViewModel() {
+
+    init {
+        AnalyticsHelper.logScreenOpen(ScreenName.PRODUCT_FORM)
+    }
 
     private val _state = MutableStateFlow(ProductFormState())
     val state = _state.asStateFlow()

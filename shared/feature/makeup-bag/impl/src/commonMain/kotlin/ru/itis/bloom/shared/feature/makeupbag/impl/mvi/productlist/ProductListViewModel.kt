@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.data.Result
 import ru.itis.bloom.shared.core.data.error.BaseError
+import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
+import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.makeupbag.api.model.response.ProductStatus
 import ru.itis.bloom.shared.feature.makeupbag.impl.domain.usecase.GetProductsUseCase
 import ru.itis.bloom.shared.feature.makeupbag.impl.mvi.productlist.ProductListEffect
@@ -20,6 +22,10 @@ import ru.itis.bloom.shared.feature.makeupbag.impl.utils.MockProducts
 internal class ProductListViewModel(
     private val getProductsUseCase: GetProductsUseCase
 ) : ViewModel() {
+
+    init {
+        AnalyticsHelper.logScreenOpen(ScreenName.PRODUCT_LIST)
+    }
 
     private val _state = MutableStateFlow(ProductListState())
     val state = _state.asStateFlow()

@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
+import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.skindiary.api.model.ProblemZone
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntryByIdUseCase
 
@@ -28,6 +30,7 @@ internal class DiaryDetailViewModel(
     val effects: SharedFlow<DiaryDetailEffect> = _effects.asSharedFlow()
 
     init {
+        AnalyticsHelper.logScreenOpen(ScreenName.SKIN_DIARY_DETAIL)
         loadEntry()
     }
 
