@@ -60,6 +60,8 @@ import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import ru.itis.bloom.shared.core.ui.BaseScreen
 import ru.itis.bloom.shared.core.ui.components.AsyncImageBox
+import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
+import ru.itis.bloom.shared.core.ui.components.settings.BurgerMenuSettings
 import ru.itis.bloom.shared.core.ui.components.settings.FloatingActionButtonSettings
 import ru.itis.bloom.shared.core.ui.components.settings.IconSettings
 import ru.itis.bloom.shared.core.ui.components.settings.TopBarIconType
@@ -83,15 +85,15 @@ private const val HEADER_HEIGHT_FRACTION = 0.5
 fun DiaryDetailScreen(
     state: DiaryDetailState,
     onIntent: (DiaryDetailIntent) -> Unit,
+    bottomBarSettings: BottomBarSettings?,
+    topBarSettings: TopBarSettings?,
+    burgerMenuSettings: BurgerMenuSettings?,
     modifier: Modifier = Modifier
 ) {
     BaseScreen(
-        topBarSettings = TopBarSettings(
-            text = stringResource(Res.string.diary_detail_title),
-            iconType = TopBarIconType.BACK,
-            onIconClick = { onIntent(DiaryDetailIntent.NavigateBack) },
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
-        ),
+        topBarSettings = topBarSettings?.copy(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+        bottomBarSettings = bottomBarSettings,
+        burgerMenuSettings = burgerMenuSettings,
         floatActBtnSettings = FloatingActionButtonSettings(
             onClick = { onIntent(DiaryDetailIntent.EditEntry) },
             iconSettings = IconSettings(
@@ -491,7 +493,14 @@ private fun DiaryDetailScreenPreview() {
                     ProblemZone.CHIN
                 )
             ),
-            onIntent = {}
+            onIntent = {},
+            bottomBarSettings = null,
+            topBarSettings = TopBarSettings(
+                text = stringResource(Res.string.diary_detail_title),
+                iconType = TopBarIconType.BACK,
+                onIconClick = {}
+            ),
+            burgerMenuSettings = null
         )
     }
 }

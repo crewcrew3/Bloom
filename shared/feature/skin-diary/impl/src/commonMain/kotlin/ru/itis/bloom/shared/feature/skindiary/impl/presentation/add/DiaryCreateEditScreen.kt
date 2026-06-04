@@ -51,19 +51,13 @@ import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCre
 fun DiaryCreateEditScreen(
     state: DiaryCreateEditState,
     onIntent: (DiaryCreateEditIntent) -> Unit,
+    topBarSettings: TopBarSettings?,
     modifier: Modifier = Modifier
 ) {
     var showDatePicker by remember { mutableStateOf(false) }
 
     BaseScreen(
-        topBarSettings = TopBarSettings(
-            text = stringResource(
-                if (state.entryId != null) Res.string.title_edit_diary_entry
-                else Res.string.title_create_diary_entry
-            ),
-            iconType = TopBarIconType.BACK,
-            onIconClick = { onIntent(DiaryCreateEditIntent.NavigateBack) }
-        )
+        topBarSettings = topBarSettings
     ) { paddingValues ->
         Column(
             modifier = modifier
@@ -170,7 +164,8 @@ private fun DiaryCreateEditScreenPreview() {
                 problemZones = listOf(ProblemZone.NOSE, ProblemZone.FOREHEAD),
                 notes = "Сегодня был хороший день"
             ),
-            onIntent = {}
+            onIntent = {},
+            topBarSettings = TopBarSettings(text = stringResource(Res.string.title_edit_diary_entry))
         )
     }
 }

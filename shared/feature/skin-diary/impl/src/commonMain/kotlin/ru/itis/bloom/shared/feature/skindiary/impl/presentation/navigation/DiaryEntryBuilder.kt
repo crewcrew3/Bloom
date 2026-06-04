@@ -1,5 +1,6 @@
 package ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -7,20 +8,32 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import bloom.shared.feature.skin_diary.impl.generated.resources.Res
+import bloom.shared.feature.skin_diary.impl.generated.resources.diary_detail_title
+import bloom.shared.feature.skin_diary.impl.generated.resources.diary_screen_title
 import bloom.shared.feature.skin_diary.impl.generated.resources.msg_entry_saved
 import bloom.shared.feature.skin_diary.impl.generated.resources.msg_entry_updated
+import bloom.shared.feature.skin_diary.impl.generated.resources.title_create_diary_entry
+import bloom.shared.feature.skin_diary.impl.generated.resources.title_edit_diary_entry
 import io.github.tbib.compose_toast.AdvToast
 import io.github.tbib.compose_toast.rememberAdvToastStates
 import io.github.tbib.compose_toast.toast_ui.EnumToastType
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import ru.itis.bloom.shared.core.navigation.api.BottomBarNavigator
+import ru.itis.bloom.shared.core.navigation.api.BurgerMenuNavigator
 import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
+import ru.itis.bloom.shared.core.ui.components.settings.BurgerMenuSettings
+import ru.itis.bloom.shared.core.ui.components.settings.TopBarIconType
+import ru.itis.bloom.shared.core.ui.utils.provideBottomBarSettings
+import ru.itis.bloom.shared.core.ui.utils.provideBurgerMenuSettings
+import ru.itis.bloom.shared.core.ui.utils.provideTopBarSettings
 import ru.itis.bloom.shared.feature.skindiary.api.navigation.DiaryNavRoute
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.DiaryCreateEditScreen
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditIntent
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditViewModel
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.DiaryDetailScreen
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi.DiaryDetailEffect
@@ -35,6 +48,7 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
         val vm: DiaryListViewModel = koinViewModel()
         val navigationHandler: DiaryNavigationHandler = koinInject()
         val bottomBarNav: BottomBarNavigator = koinInject()
+        val burgerMenuNav: BurgerMenuNavigator = koinInject()
 
         val state by vm.state.collectAsState()
         val scope = rememberCoroutineScope()
@@ -65,16 +79,33 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
             }
         }
 
+        val bottomBarSettings = provideBottomBarSettings(
+            onRoutine = bottomBarNav::toRoutineSection,
+            onSkinDiary = bottomBarNav::toSkinDiarySection,
+            onMakeupBag = bottomBarNav::toMakeupBagSection,
+            onProfile = bottomBarNav::toProfileSection
+        )
+
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.diary_screen_title),
+            iconType = TopBarIconType.BURGER,
+            onIconClick = { /* Открывается Drawer через BaseScreen */ }
+        )
+
+        val burgerMenuSettings = provideBurgerMenuSettings(
+            onRoutine = burgerMenuNav::toRoutineSection,
+            onSkinDiary = burgerMenuNav::toSkinDiarySection,
+            onMakeupBag = burgerMenuNav::toMakeupBagSection,
+            onProfile = burgerMenuNav::toProfileSection
+        )
+
         // UI
         DiaryListScreen(
             state = state,
             onIntent = vm::onIntent,
-            bottomBarSettings = BottomBarSettings(
-                onRoutineSectionClick = bottomBarNav::toRoutineSection,
-                onSkinDiarySectionClick = bottomBarNav::toSkinDiarySection,
-                onMakeupBagSectionClick = bottomBarNav::toMakeupBagSection,
-                onProfileSectionClick = bottomBarNav::toProfileSection,
-            )
+            bottomBarSettings = bottomBarSettings,
+            burgerMenuSettings = burgerMenuSettings,
+            topBarSettings = topBarSettings
         )
     }
 
@@ -118,9 +149,18 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
             }
         }
 
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.diary_detail_title),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.onIntent(DiaryDetailIntent.NavigateBack) }
+        )
+
         DiaryDetailScreen(
             state = state,
-            onIntent = vm::onIntent
+            onIntent = vm::onIntent,
+            topBarSettings = topBarSettings,
+            bottomBarSettings = null,
+            burgerMenuSettings = null,
         )
     }
 
@@ -165,9 +205,16 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
             }
         }
 
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.title_create_diary_entry),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.onIntent(DiaryCreateEditIntent.NavigateBack) }
+        )
+
         DiaryCreateEditScreen(
             state = state,
-            onIntent = vm::onIntent
+            onIntent = vm::onIntent,
+            topBarSettings = topBarSettings
         )
     }
 
@@ -218,9 +265,16 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
             }
         }
 
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.title_edit_diary_entry),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.onIntent(DiaryCreateEditIntent.NavigateBack) }
+        )
+
         DiaryCreateEditScreen(
             state = state,
-            onIntent = vm::onIntent
+            onIntent = vm::onIntent,
+            topBarSettings = topBarSettings
         )
     }
 }

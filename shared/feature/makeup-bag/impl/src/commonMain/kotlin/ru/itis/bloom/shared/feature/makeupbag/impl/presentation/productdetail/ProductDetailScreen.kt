@@ -101,7 +101,7 @@ private fun ProductDetailContent(
         ) {
             ProductDetailImage(
                 imageUrl = product.photoUrl,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(DimensionsCustom.productDetailImageSize)
             )
             ProductDetailInfo(
                 product = product,

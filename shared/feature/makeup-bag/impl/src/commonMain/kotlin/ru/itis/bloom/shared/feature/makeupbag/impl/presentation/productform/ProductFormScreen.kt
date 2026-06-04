@@ -143,7 +143,7 @@ private fun ProductFormContent(
                 error = state.form.photoError?.let { stringResource(it) },
                 onIntent = onIntent,
                 onImageClick = onImageClick,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(DimensionsCustom.productFormImageSize)
             )
             ProductFormFieldsSection(
                 state = state,
@@ -190,7 +190,10 @@ private fun ProductFormImageSection(
     onImageClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(DimensionsCustom.productFormSpacing)) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(DimensionsCustom.productFormSpacing)
+    ) {
         // Ошибка обработки фото
         error?.let { errMsg ->
             Text(
@@ -220,10 +223,12 @@ private fun ProductFormImageSection(
                 }
             }
 
-            photoBytes != null || imageUrl != null -> {
+            photoBytes != null || !imageUrl.isNullOrBlank() -> {
                 //показываем фото
                 Box(
-                    modifier = modifier
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                         .clip(RoundedCornerShape(DimensionsCustom.productFormImageRadius))
                         .background(MaterialTheme.colorScheme.primaryContainer)
                         .clickable(onClick = onImageClick),
@@ -258,7 +263,9 @@ private fun ProductFormImageSection(
             else -> {
                 // Placeholder для добавления фото
                 Box(
-                    modifier = modifier
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                         .clip(RoundedCornerShape(DimensionsCustom.productFormImageRadius))
                         .background(MaterialTheme.colorScheme.surfaceVariant)
                         .clickable(onClick = onImageClick),
