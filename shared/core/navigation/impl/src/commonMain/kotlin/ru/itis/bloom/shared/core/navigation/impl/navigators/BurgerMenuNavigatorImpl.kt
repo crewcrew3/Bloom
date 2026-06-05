@@ -3,6 +3,7 @@ package ru.itis.bloom.shared.core.navigation.impl.navigators
 import ru.itis.bloom.shared.core.navigation.api.BurgerMenuNavigator
 import ru.itis.bloom.shared.core.navigation.impl.BackStackHolder
 import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
+import ru.itis.bloom.shared.feature.profile.api.navigation.ProfileNavRoute
 import ru.itis.bloom.shared.feature.skindiary.api.navigation.DiaryNavRoute
 
 class BurgerMenuNavigatorImpl(
@@ -14,14 +15,14 @@ class BurgerMenuNavigatorImpl(
     }
 
     override fun toSkinDiarySection() {
-        backStackHolder.backStack?.add(DiaryNavRoute.List)
+        backStackHolder.navigateToRoot(DiaryNavRoute.List)
     }
 
     override fun toMakeupBagSection() {
-        backStackHolder.backStack?.add(MakeupBagNavRoute.ProductList)
+        backStackHolder.navigateToRoot(MakeupBagNavRoute.ProductList)
     }
 
     override fun toProfileSection() {
-        // TODO: добавить маршрут профиля
+        backStackHolder.navigateToRoot(ProfileNavRoute.Profile)
     }
 }

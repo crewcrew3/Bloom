@@ -8,12 +8,14 @@ import ru.itis.bloom.shared.core.navigation.api.BottomBarNavigator
 import ru.itis.bloom.shared.core.navigation.api.DiaryNavigator
 import ru.itis.bloom.shared.core.navigation.api.BurgerMenuNavigator
 import ru.itis.bloom.shared.core.navigation.api.MakeupBagNavigator
+import ru.itis.bloom.shared.core.navigation.api.ProfileNavigator
 import ru.itis.bloom.shared.core.navigation.impl.BackStackHolder
 import ru.itis.bloom.shared.core.navigation.impl.navigators.AuthNavigatorImpl
 import ru.itis.bloom.shared.core.navigation.impl.navigators.BottomBarNavigatorImpl
 import ru.itis.bloom.shared.core.navigation.impl.navigators.DiaryNavigatorImpl
 import ru.itis.bloom.shared.core.navigation.impl.navigators.BurgerMenuNavigatorImpl
 import ru.itis.bloom.shared.core.navigation.impl.navigators.MakeupBagNavigatorImpl
+import ru.itis.bloom.shared.core.navigation.impl.navigators.ProfileNavigatorImpl
 
 val navigationModule = module {
     // Singleton: один BackStackHolder на всё приложение
@@ -25,4 +27,5 @@ val navigationModule = module {
     singleOf(::AuthNavigatorImpl) bind AuthNavigator::class
     singleOf(::MakeupBagNavigatorImpl) bind MakeupBagNavigator::class
     singleOf(::DiaryNavigatorImpl) bind DiaryNavigator::class
+    singleOf(::ProfileNavigatorImpl) bind ProfileNavigator::class
 }

@@ -24,6 +24,7 @@ import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
 import ru.itis.bloom.shared.feature.auth.impl.navigation.authEntryBuilder
 import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
 import ru.itis.bloom.shared.feature.makeupbag.impl.navigation.makeupBagEntryBuilder
+import ru.itis.bloom.shared.feature.profile.impl.navigation.profileEntryBuilder
 import ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation.diaryEntryBuilder
 
 @Composable
@@ -34,7 +35,7 @@ fun App() {
             EntryProviderScope<NavKey>::authEntryBuilder,
             EntryProviderScope<NavKey>::makeupBagEntryBuilder,
             EntryProviderScope<NavKey>::diaryEntryBuilder,
-            // ... другие фичи
+            EntryProviderScope<NavKey>::profileEntryBuilder,
         )
         var isAuthChecked by remember { mutableStateOf(false) }
         var initialRoute by remember { mutableStateOf<NavKey>(AuthNavRoute.Login) }
@@ -71,7 +72,7 @@ fun App() {
         // Инициализируем BackStack с конфигурацией сериализации
         val backStack = rememberNavBackStack(
             navigationSavedStateConfig,
-            initialRoute //наверное должна быть логика по проверке авторизации и если юзер в акке то перенапрвлять его на экран какой-нибудь фичи, а не на логин
+            initialRoute
         )
 
         val backStackHolder: BackStackHolder = koinInject()

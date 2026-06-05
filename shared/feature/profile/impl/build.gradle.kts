@@ -22,6 +22,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             //modules
+            implementation(projects.shared.feature.auth.api)
             implementation(projects.shared.feature.profile.api)
             implementation(projects.shared.core.data)
             implementation(projects.shared.core.ui)
@@ -44,6 +45,12 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.compose.toast)
+
+            // Coil для изображений
+            implementation(libs.coil)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
 
             //network
             implementation(libs.ktor.client.core)

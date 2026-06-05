@@ -83,4 +83,7 @@ object DimensionsCustom {
 
     val diaryBadgeHorizontalPadding = 12.dp
     val diaryBadgeVerticalPadding = 4.dp
+
+    val profileContentPadding = 24.dp
+    val profileAvatarSize = 160.dp
 }

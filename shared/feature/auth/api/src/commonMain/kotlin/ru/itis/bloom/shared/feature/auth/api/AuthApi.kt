@@ -16,4 +16,5 @@ interface AuthApi {
     suspend fun refreshToken(request: RefreshTokenRequest): BloomResult<AuthTokensResponse>
     suspend fun resetPassword(request: ResetPasswordRequest): BloomResult<MessageResponse>
     suspend fun confirmResetPassword(request: ConfirmResetPasswordRequest): BloomResult<MessageResponse>
+    suspend fun logout(): BloomResult<MessageResponse>
 }

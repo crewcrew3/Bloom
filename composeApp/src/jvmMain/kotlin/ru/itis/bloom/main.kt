@@ -16,6 +16,8 @@ import ru.itis.bloom.shared.feature.auth.impl.di.authModule
 import ru.itis.bloom.shared.feature.auth.impl.di.authNavModule
 import ru.itis.bloom.shared.feature.makeupbag.impl.di.makeupBagModule
 import ru.itis.bloom.shared.feature.makeupbag.impl.di.makeupBagNavModule
+import ru.itis.bloom.shared.feature.profile.impl.di.profileModule
+import ru.itis.bloom.shared.feature.profile.impl.di.profileNavModule
 import ru.itis.bloom.shared.feature.skindiary.impl.di.diaryModule
 import ru.itis.bloom.shared.feature.skindiary.impl.di.diaryNavModule
 
@@ -50,8 +52,10 @@ private fun initKoin() {
                 makeupBagNavModule,
                 makeupBagModule,
                 diaryModule(),
-                diaryNavModule
-                // ... другие модули
+                diaryNavModule,
+
+                profileModule,
+                profileNavModule,
             )
         }
     }

@@ -25,6 +25,9 @@ object IconsCustom {
     fun iconArrowBack(): Painter = painterResource(Res.drawable.ic_arrow_back)
 
     @Composable
+    fun iconLogout(): Painter = painterResource(Res.drawable.ic_logout)
+
+    @Composable
     fun iconPlus(): Painter = painterResource(Res.drawable.ic_plus)
 
     @Composable

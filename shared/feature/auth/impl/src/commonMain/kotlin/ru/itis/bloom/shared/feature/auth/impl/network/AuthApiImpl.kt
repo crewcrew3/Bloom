@@ -208,6 +208,31 @@ internal class AuthApiImpl(
         }
     }
 
+    override suspend fun logout(): Result<MessageResponse> {
+        return try {
+            val refreshToken = tokenStorage.getRefreshToken()
+                ?: return Result.Error(CommonError.Unauthorized)
+
+            val response = httpClient.post("auth/logout") {
+                contentType(ContentType.Application.Json)
+                setBody(RefreshTokenRequest(refreshToken))
+            }
+            when (response.status.value) {
+                200 -> {
+                    tokenStorage.clearTokens()
+                    Result.Success(response.body())
+                }
+                401 -> {
+                    tokenStorage.clearTokens()
+                    Result.Error(AuthError.RefreshTokenInvalid)
+                }
+                else -> Result.Error(CommonError.Unknown)
+            }
+        } catch (e: Exception) {
+            Result.Error(mapToAuthError(e))
+        }
+    }
+
     private fun mapToAuthError(e: Exception): BaseError {
         return when (e) {
             is ClientRequestException -> when (e.response.status.value) {

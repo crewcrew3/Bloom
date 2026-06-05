@@ -1,0 +1,15 @@
+<resources>
+    <!-- Profile -->
+    <string name="profile_title">Профиль</string>
+    <string name="profile_avatar_desc">Аватар пользователя</string>
+    <string name="profile_action_logout">Выйти</string>
+
+    <!-- Profile messages -->
+    <string name="profile_error_not_found">Профиль не найден</string>
+    <string name="profile_error_unauthorized">Необходима авторизация</string>
+    <string name="profile_error_network">Ошибка сети</string>
+    <string name="profile_error_server">Ошибка сервера</string>
+    <string name="profile_error_timeout">Превышено время ожидания</string>
+    <string name="profile_error_unknown">Неизвестная ошибка</string>
+    <string name="profile_success_logged_out">Выход выполнен</string>
+</resources>
