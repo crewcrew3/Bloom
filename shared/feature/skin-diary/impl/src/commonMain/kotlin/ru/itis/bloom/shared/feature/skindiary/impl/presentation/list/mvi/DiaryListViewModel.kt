@@ -16,11 +16,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
 import ru.itis.bloom.shared.core.ui.analytics.ScreenName
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.DiaryEvent
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.DiaryEventBus
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntriesUseCase
 
 internal class DiaryListViewModel(
     private val getDiaryEntriesUseCase: GetDiaryEntriesUseCase,
-    //private val analytics: AnalyticsTracker
+    private val diaryEventBus: DiaryEventBus,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DiaryListState())
@@ -32,6 +34,21 @@ internal class DiaryListViewModel(
     init {
         AnalyticsHelper.logScreenOpen(ScreenName.SKIN_DIARY_LIST)
         onIntent(DiaryListIntent.LoadInitial)
+        observeDiaryEvents()
+    }
+
+    private fun observeDiaryEvents() {
+        viewModelScope.launch {
+            diaryEventBus.events.collect { event ->
+                when (event) {
+                    is DiaryEvent.EntryCreated,
+                    is DiaryEvent.EntryUpdated,
+                    is DiaryEvent.EntryDeleted -> {
+                        onIntent(DiaryListIntent.Refresh)
+                    }
+                }
+            }
+        }
     }
 
     fun onIntent(intent: DiaryListIntent) {

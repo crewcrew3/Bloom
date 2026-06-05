@@ -4,7 +4,6 @@
     <string name="diary_screen_title">Дневник кожи</string>
     <string name="diary_action_add">Новая запись</string>
     <string name="diary_action_edit">Редактировать</string>
-    <string name="diary_action_delete">Удалить</string>
     <string name="diary_action_save">Сохранить</string>
     <string name="diary_action_cancel">Отмена</string>
 
@@ -118,4 +117,11 @@
     <string name="skin_condition_normal">Удовлетворительное</string>
     <string name="skin_condition_poor">Есть проблемы</string>
     <string name="skin_condition_bad">Требует внимания</string>
+
+    <string name="diary_action_delete">Удалить</string>
+    <string name="diary_delete_title">Удалить запись?</string>
+    <string name="diary_delete_confirmation">Вы уверены, что хотите удалить эту запись? Это действие нельзя отменить.</string>
+    <string name="btn_delete">Удалить</string>
+    <string name="msg_entry_deleted">Запись успешно удалена</string>
+    <string name="error_deleting_entry">Ошибка при удалении записи</string>
 </resources>

@@ -3,7 +3,9 @@ package ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bloom.shared.feature.skin_diary.impl.generated.resources.Res
+import bloom.shared.feature.skin_diary.impl.generated.resources.error_deleting_entry
 import bloom.shared.feature.skin_diary.impl.generated.resources.error_loading_entry
+import bloom.shared.feature.skin_diary.impl.generated.resources.msg_entry_deleted
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,11 +18,16 @@ import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
 import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.skindiary.api.model.ProblemZone
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.DiaryEvent
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.DiaryEventBus
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.DeleteDiaryEntryUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntryByIdUseCase
 
 internal class DiaryDetailViewModel(
     private val entryId: String,
-    private val getDiaryEntryByIdUseCase: GetDiaryEntryByIdUseCase
+    private val getDiaryEntryByIdUseCase: GetDiaryEntryByIdUseCase,
+    private val deleteDiaryEntryUseCase: DeleteDiaryEntryUseCase,
+    private val eventBus: DiaryEventBus
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DiaryDetailState())
@@ -41,6 +48,9 @@ internal class DiaryDetailViewModel(
             is DiaryDetailIntent.EditEntry -> editEntry()
             is DiaryDetailIntent.NavigateBack -> navigateBack()
             is DiaryDetailIntent.DismissError -> dismissError()
+            is DiaryDetailIntent.DeleteEntry -> showDeleteDialog()
+            is DiaryDetailIntent.ConfirmDelete -> deleteEntry()
+            is DiaryDetailIntent.CancelDelete -> hideDeleteDialog()
         }
     }
 
@@ -91,5 +101,35 @@ internal class DiaryDetailViewModel(
 
     private fun dismissError() {
         _state.update { it.copy(isError = false, errorMessage = null) }
+    }
+
+    private fun showDeleteDialog() {
+        _state.update { it.copy(showDeleteDialog = true) }
+    }
+
+    private fun hideDeleteDialog() {
+        _state.update { it.copy(showDeleteDialog = false) }
+    }
+
+    private fun deleteEntry() {
+        viewModelScope.launch {
+            _state.update { it.copy(isDeleting = true, showDeleteDialog = false) }
+
+            deleteDiaryEntryUseCase(entryId)
+                .onSuccess {
+                    _state.update { it.copy(isDeleting = false) }
+
+                    eventBus.emit(DiaryEvent.EntryDeleted(entryId))
+
+                    _effects.emit(DiaryDetailEffect.ShowSuccess(Res.string.msg_entry_deleted))
+                    _effects.emit(DiaryDetailEffect.NavigateBack)
+                }
+                .onFailure { error ->
+                    _state.update { it.copy(isDeleting = false) }
+                    _effects.emit(
+                        DiaryDetailEffect.ShowError(Res.string.error_deleting_entry)
+                    )
+                }
+        }
     }
 }
