@@ -10,4 +10,5 @@ object ScreenName {
     const val SKIN_DIARY_DETAIL = "launch_skin_diary_detail"
     const val ROUTINE = "launch_routine"
     const val PROFILE = "launch_profile"
+    const val PROFILE_DETAILS = "launch_profile_details"
 }

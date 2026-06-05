@@ -7,9 +7,12 @@ import org.koin.dsl.module
 import ru.itis.bloom.shared.feature.profile.api.ProfileApi
 import ru.itis.bloom.shared.feature.profile.api.ProfileRepository
 import ru.itis.bloom.shared.feature.profile.impl.data.ProfileRepositoryImpl
+import ru.itis.bloom.shared.feature.profile.impl.domain.usecase.ChangePasswordUseCase
 import ru.itis.bloom.shared.feature.profile.impl.domain.usecase.GetProfileUseCase
 import ru.itis.bloom.shared.feature.profile.impl.domain.usecase.LogoutUseCase
+import ru.itis.bloom.shared.feature.profile.impl.domain.usecase.UpdateProfileUseCase
 import ru.itis.bloom.shared.feature.profile.impl.mvi.ProfileViewModel
+import ru.itis.bloom.shared.feature.profile.impl.mvi.details.ProfileDetailsViewModel
 import ru.itis.bloom.shared.feature.profile.impl.navigation.ProfileNavigationHandler
 import ru.itis.bloom.shared.feature.profile.impl.network.ProfileApiImpl
 
@@ -19,8 +22,11 @@ val profileModule = module {
 
     singleOf(::GetProfileUseCase)
     singleOf(::LogoutUseCase)
+    singleOf(::UpdateProfileUseCase)
+    singleOf(::ChangePasswordUseCase)
 
     singleOf(::ProfileNavigationHandler)
 
     viewModelOf(::ProfileViewModel)
+    viewModelOf(::ProfileDetailsViewModel)
 }
