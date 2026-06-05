@@ -16,14 +16,24 @@ import ru.itis.bloom.shared.core.data.error.BaseError
 import ru.itis.bloom.shared.core.data.error.CommonError
 import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
 import ru.itis.bloom.shared.core.ui.analytics.ScreenName
-import ru.itis.bloom.shared.feature.auth.api.AuthRepository
 import ru.itis.bloom.shared.feature.auth.api.model.request.LoginRequest
 import ru.itis.bloom.shared.feature.auth.api.model.request.RegisterRequest
+import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.ConfirmResetPasswordUseCase
+import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.LoginUseCase
+import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.RegisterUseCase
+import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.ResetPasswordUseCase
+import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.VerifyEmailUseCase
 import ru.itis.bloom.shared.feature.auth.impl.utils.AuthMessageRes
 
 private const val TAG = "BLOOM_AUTH_VM"
 
-internal class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
+internal class AuthViewModel(
+    private val loginUseCase: LoginUseCase,
+    private val registerUseCase: RegisterUseCase,
+    private val verifyEmailUseCase: VerifyEmailUseCase,
+    private val resetPasswordUseCase: ResetPasswordUseCase,
+    private val confirmResetPasswordUseCase: ConfirmResetPasswordUseCase,
+) : ViewModel() {
 
     init {
         AnalyticsHelper.logScreenOpen(ScreenName.AUTH)
@@ -99,7 +109,7 @@ internal class AuthViewModel(private val repository: AuthRepository) : ViewModel
 
         _state.update { it.copy(isLoading = true, generalError = null) }
 
-        when (val result = repository.login(LoginRequest(s.email, s.password))) {
+        when (val result = loginUseCase(LoginRequest(s.email, s.password))) {
             is Result.Success -> {
                 _effect.emit(AuthEffect.Authenticated)
                 _effect.emit(AuthEffect.NavigateToMain)
@@ -132,7 +142,7 @@ internal class AuthViewModel(private val repository: AuthRepository) : ViewModel
         _state.update { it.copy(isLoading = true, generalError = null) }
         println("[$TAG] → repository.register()")
 
-        when (val result = repository.register(RegisterRequest(s.name, s.email, s.password, s.passwordConfirmation))) {
+        when (val result = registerUseCase(RegisterRequest(s.name, s.email, s.password, s.passwordConfirmation))) {
             is Result.Success -> {
                 println("[$TAG] ← register() Success")
                 _effect.emit(AuthEffect.VerificationEmailSent(s.email))
@@ -155,7 +165,7 @@ internal class AuthViewModel(private val repository: AuthRepository) : ViewModel
 
     private suspend fun handleVerifyEmail(token: String) {
         _state.update { it.copy(isLoading = true) }
-        when (val result = repository.verifyEmail(token)) {
+        when (val result = verifyEmailUseCase(token)) {
             is Result.Success -> {
                 _state.update { it.copy(isLoading = false, isEmailVerified = true) }
                 _effect.emit(AuthEffect.EmailVerified)
@@ -183,7 +193,7 @@ internal class AuthViewModel(private val repository: AuthRepository) : ViewModel
             return
         }
         _state.update { it.copy(isLoading = true) }
-        when (val result = repository.resetPassword(
+        when (val result = resetPasswordUseCase(
             ru.itis.bloom.shared.feature.auth.api.model.request.ResetPasswordRequest(email)
         )) {
             is Result.Success -> _effect.emit(AuthEffect.ShowMessage(AuthMessageRes.Success.LinkSent))
@@ -199,7 +209,7 @@ internal class AuthViewModel(private val repository: AuthRepository) : ViewModel
             return
         }
         _state.update { it.copy(isLoading = true) }
-        when (val result = repository.confirmResetPassword(
+        when (val result = confirmResetPasswordUseCase(
             ru.itis.bloom.shared.feature.auth.api.model.request.ConfirmResetPasswordRequest(
                 token,
                 pass,

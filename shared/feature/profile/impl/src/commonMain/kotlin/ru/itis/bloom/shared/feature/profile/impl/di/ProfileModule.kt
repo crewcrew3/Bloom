@@ -8,6 +8,7 @@ import ru.itis.bloom.shared.feature.profile.api.ProfileApi
 import ru.itis.bloom.shared.feature.profile.api.ProfileRepository
 import ru.itis.bloom.shared.feature.profile.impl.data.ProfileRepositoryImpl
 import ru.itis.bloom.shared.feature.profile.impl.domain.usecase.GetProfileUseCase
+import ru.itis.bloom.shared.feature.profile.impl.domain.usecase.LogoutUseCase
 import ru.itis.bloom.shared.feature.profile.impl.mvi.ProfileViewModel
 import ru.itis.bloom.shared.feature.profile.impl.navigation.ProfileNavigationHandler
 import ru.itis.bloom.shared.feature.profile.impl.network.ProfileApiImpl
@@ -17,6 +18,7 @@ val profileModule = module {
     singleOf(::ProfileRepositoryImpl) bind ProfileRepository::class
 
     singleOf(::GetProfileUseCase)
+    singleOf(::LogoutUseCase)
 
     singleOf(::ProfileNavigationHandler)
 

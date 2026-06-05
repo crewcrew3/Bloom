@@ -12,14 +12,14 @@ import ru.itis.bloom.shared.core.data.Result
 import ru.itis.bloom.shared.core.data.error.BaseError
 import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
 import ru.itis.bloom.shared.core.ui.analytics.ScreenName
-import ru.itis.bloom.shared.feature.auth.api.AuthRepository
 import ru.itis.bloom.shared.feature.profile.impl.domain.usecase.GetProfileUseCase
+import ru.itis.bloom.shared.feature.profile.impl.domain.usecase.LogoutUseCase
 import ru.itis.bloom.shared.feature.profile.impl.utils.ProfileErrorMapper
 import ru.itis.bloom.shared.feature.profile.impl.utils.ProfileMessageRes
 
 internal class ProfileViewModel(
     private val getProfileUseCase: GetProfileUseCase,
-    private val authRepository: AuthRepository
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     init {
@@ -52,7 +52,7 @@ internal class ProfileViewModel(
 
     private suspend fun logout() {
         _state.update { it.copy(isLoading = true) }
-        when (val result = authRepository.logout()) {
+        when (val result = logoutUseCase()) {
             is Result.Success -> {
                 _state.update { it.copy(isLoading = false) }
                 _effect.emit(ProfileEffect.ShowMessage(ProfileMessageRes.Success.LoggedOut))
