@@ -75,11 +75,11 @@ val apiConfigFile = rootProject.file("api_config.properties")
 val apiConfig = Properties()
 if (apiConfigFile.exists()) {
     apiConfig.load(FileInputStream(apiConfigFile))
-//} else {
-//    // Fallback значения, если файла нет (чтобы сборка не падала)
-//    apiConfig.setProperty("BLOOM_API_URL_PROD", "https://bloom.vaihdass.ru:444/v1/")
-//    apiConfig.setProperty("BLOOM_API_URL_DEV", "http://localhost:3004/v1")
-//    apiConfig.setProperty("BLOOM_IS_DEBUG", "true")
+} else {
+    // Fallback значения, если файла нет (чтобы сборка не падала)
+    apiConfig.setProperty("BLOOM_API_URL_PROD", "https://bloom.vaihdass.ru:444/v1/")
+    apiConfig.setProperty("BLOOM_API_URL_DEV", "http://localhost:3004/v1")
+    apiConfig.setProperty("BLOOM_IS_DEBUG", "true")
 }
 
 buildkonfig {

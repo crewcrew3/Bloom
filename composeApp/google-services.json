@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "83746356973",
+    "project_id": "bloom-50040",
+    "storage_bucket": "bloom-50040.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83746356973:android:4cd626d06626a738bfd6e4",
+        "android_client_info": {
+          "package_name": "ru.itis.bloom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKWhwnK5R8B7ZOTKOASWAJXzCl-mbjFig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

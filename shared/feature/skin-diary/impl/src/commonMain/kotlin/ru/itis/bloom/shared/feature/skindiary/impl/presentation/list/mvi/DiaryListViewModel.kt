@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
+import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntriesUseCase
 
 internal class DiaryListViewModel(
@@ -28,7 +30,7 @@ internal class DiaryListViewModel(
     val effects: Flow<DiaryListEffect> = _effects.receiveAsFlow()
 
     init {
-        //analytics.logScreenOpen("diary_list")
+        AnalyticsHelper.logScreenOpen(ScreenName.SKIN_DIARY_LIST)
         onIntent(DiaryListIntent.LoadInitial)
     }
 

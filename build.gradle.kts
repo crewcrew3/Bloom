@@ -12,4 +12,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.sqldelight) apply false
     alias(libs.plugins.buildKonfig) apply false
+    alias(libs.plugins.googleService) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
 }

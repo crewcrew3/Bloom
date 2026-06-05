@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,41 +47,18 @@ fun ProductCard(
                 .padding(DimensionsCustom.productCardInnerPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Квадратное изображение-заглушка
-            Box(
+
+            AsyncImageBox(
+                model = settings.imageUrl,
+                placeholderIcon = IconsCustom.iconPlaceholderProduct(),
+                placeholderTint = MaterialTheme.colorScheme.tertiary,
+                shape = RoundedCornerShape(DimensionsCustom.productCardImageRadius),
                 modifier = Modifier
-                    .size(DimensionsCustom.productCardImageSize)
-                    .clip(RoundedCornerShape(DimensionsCustom.productCardImageRadius))
-                    .then(
-                        if (settings.imageUrl != null) {
-                            Modifier
-                        } else {
-                            Modifier.background(
-                                settings.placeholderColor ?: MaterialTheme.colorScheme.primaryContainer
-                            )
-                        }
-                    )
-            ) {
-                if (settings.imageUrl != null) {
-                    AsyncImage(
-                        model = settings.imageUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    // можно заменить на локальный ресурс позже
-                    Image(
-                        painter = IconsCustom.iconPlaceholderProduct(),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(56.dp)
+                    .size(DimensionsCustom.productCardImageSize),
+                iconModifier = Modifier.size(88.dp)
                             .padding(8.dp)
-                            .align(Alignment.Center),
-                        contentScale = ContentScale.Fit
-                    )
-                }
-            }
+                            .align(Alignment.CenterVertically),
+            )
 
             Spacer(modifier = Modifier.width(DimensionsCustom.productCardTextSpacing))
 

@@ -5,6 +5,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -74,21 +78,29 @@ internal fun ProductListScreen(
                     ) {
                         CircularProgressIndicator()
                     }
+                } else if (state.products.isEmpty() && !state.isLoading) {
+                    ProductListEmptyState(modifier = Modifier.weight(1f))
                 } else {
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(bottom = 16.dp)
+                    PullToRefreshBox(
+                        isRefreshing = state.isRefreshing,
+                        onRefresh = { onIntent(ProductListIntent.Refresh) },
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        items(
-                            items = state.products,
-                            key = { it.id }
-                        ) { product ->
-                            ProductCard(
-                                settings = product.toProductCardSettings(
-                                    onClick = { onIntent(ProductListIntent.SelectProduct(product.id)) }
-                                ),
-                                modifier = Modifier.fillMaxWidth()
-                            )
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            contentPadding = PaddingValues(bottom = 16.dp)
+                        ) {
+                            items(
+                                items = state.products,
+                                key = { it.id }
+                            ) { product ->
+                                ProductCard(
+                                    settings = product.toProductCardSettings(
+                                        onClick = { onIntent(ProductListIntent.SelectProduct(product.id)) }
+                                    ),
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
                         }
                     }
                 }
@@ -123,6 +135,38 @@ private fun CategoryChipsRow(
                 )
             )
         }
+    }
+}
+
+@Composable
+private fun ProductListEmptyState(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            painter = IconsCustom.iconProductListEmpty(),
+            contentDescription = null,
+            modifier = Modifier.size(64.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = stringResource(Res.string.product_list_empty_title),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = stringResource(Res.string.product_list_empty_subtitle),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

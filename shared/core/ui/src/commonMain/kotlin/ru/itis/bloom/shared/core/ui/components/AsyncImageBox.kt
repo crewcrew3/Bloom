@@ -23,6 +23,7 @@ import coil3.compose.AsyncImage
 fun AsyncImageBox(
     model: Any?,
     modifier: Modifier = Modifier,
+    iconModifier: Modifier? = null,
     placeholderIcon: Painter? = null,
     placeholderDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
@@ -47,7 +48,7 @@ fun AsyncImageBox(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                modifier = iconModifier?.let { iconModifier } ?: Modifier.fillMaxWidth().fillMaxHeight(),
                 painter = placeholderIcon,
                 contentDescription = placeholderDescription,
                 tint = placeholderTint?.copy(0.5f)

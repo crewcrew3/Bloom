@@ -34,6 +34,7 @@ import org.jetbrains.compose.resources.stringResource
 import ru.itis.bloom.shared.core.ui.BaseScreen
 import ru.itis.bloom.shared.core.ui.components.DateRangePickerModal
 import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
+import ru.itis.bloom.shared.core.ui.components.settings.BurgerMenuSettings
 import ru.itis.bloom.shared.core.ui.components.settings.FloatingActionButtonSettings
 import ru.itis.bloom.shared.core.ui.components.settings.IconSettings
 import ru.itis.bloom.shared.core.ui.components.settings.TopBarSettings
@@ -47,13 +48,15 @@ import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryLi
 internal fun DiaryListScreen(
     state: DiaryListState,
     onIntent: (DiaryListIntent) -> Unit,
-    bottomBarSettings: BottomBarSettings,
-    modifier: Modifier = Modifier
+    bottomBarSettings: BottomBarSettings?,
+    burgerMenuSettings: BurgerMenuSettings?,
+    topBarSettings: TopBarSettings?,
+modifier: Modifier = Modifier
 ) {
     BaseScreen(
-        topBarSettings = TopBarSettings(
-            text = stringResource(Res.string.diary_screen_title)
-        ),
+        topBarSettings = topBarSettings,
+        bottomBarSettings = bottomBarSettings,
+        burgerMenuSettings = burgerMenuSettings,
         floatActBtnSettings = FloatingActionButtonSettings(
             onClick = { onIntent(DiaryListIntent.NavigateToCreate) },
             iconSettings = IconSettings(
@@ -61,7 +64,6 @@ internal fun DiaryListScreen(
                 description = stringResource(Res.string.diary_action_add)
             )
         ),
-        bottomBarSettings = bottomBarSettings,
         content = { paddingValues ->
             DiaryListContent(
                 state = state,
@@ -203,7 +205,9 @@ private fun DiaryListScreenPreview() {
                 )
             ),
             onIntent = {},
-            bottomBarSettings = BottomBarSettings({}, {}, {}, {})
+            bottomBarSettings = BottomBarSettings({}, {}, {}, {}),
+            burgerMenuSettings = BurgerMenuSettings({},{},{},{}),
+            topBarSettings = TopBarSettings(text = stringResource(Res.string.diary_screen_title))
         )
     }
 }

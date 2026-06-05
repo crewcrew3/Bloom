@@ -55,7 +55,7 @@ internal fun ProductFormScreen(
     val imagePickerCallback = remember {
         object : ImagePickerCallback {
             override fun onImageSelected(uri: String?) {
-                onIntent(ProductFormIntent.FormPhotoSelected(uri ?: ""))
+                uri?.let { onIntent(ProductFormIntent.RequestPhotoSelection(uri)) }
             }
         }
     }
@@ -137,9 +137,13 @@ private fun ProductFormContent(
             horizontalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             ProductFormImageSection(
-                imageUrl = null,
-                onClick = onImageClick,
-                modifier = Modifier.weight(1f)
+                photoBytes = state.form.photoBytes,
+                imageUrl = state.form.photoUri,
+                isProcessing = state.isPhotoProcessing,
+                error = state.form.photoError?.let { stringResource(it) },
+                onIntent = onIntent,
+                onImageClick = onImageClick,
+                modifier = Modifier.weight(1f).height(DimensionsCustom.productFormImageSize)
             )
             ProductFormFieldsSection(
                 state = state,
@@ -155,8 +159,12 @@ private fun ProductFormContent(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             ProductFormImageSection(
-                imageUrl = null,
-                onClick = onImageClick,
+                photoBytes = state.form.photoBytes,
+                imageUrl = state.form.photoUri,
+                isProcessing = state.isPhotoProcessing,
+                error = state.form.photoError?.let { stringResource(it) },
+                onIntent = onIntent,
+                onImageClick = onImageClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(DimensionsCustom.productFormImageSize)
@@ -174,31 +182,112 @@ private fun ProductFormContent(
 
 @Composable
 private fun ProductFormImageSection(
+    photoBytes: ByteArray?,
     imageUrl: String?,
-    onClick: () -> Unit,
+    error: String?,
+    onIntent: (ProductFormIntent) -> Unit,
+    isProcessing: Boolean,
+    onImageClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(DimensionsCustom.productFormImageRadius))
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(DimensionsCustom.productFormSpacing)
     ) {
-        if (imageUrl != null) {
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+        // Ошибка обработки фото
+        error?.let { errMsg ->
+            Text(
+                text = errMsg,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(start = 4.dp)
             )
-        } else {
-            Image(
-                painter = IconsCustom.iconPlaceholderProduct(),
-                contentDescription = stringResource(Res.string.form_image_placeholder_desc),
-                modifier = Modifier.size(80.dp),
-                contentScale = ContentScale.Fit
-            )
+        }
+
+        when {
+            isProcessing -> {
+                // Индикатор загрузки
+                Surface(
+                    shape = RoundedCornerShape(DimensionsCustom.productFormImageRadius),
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(DimensionsCustom.productFormImagePlaceholderHeight)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(DimensionsCustom.productFormCircularProgressIndicatorSize),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            }
+
+            photoBytes != null || !imageUrl.isNullOrBlank() -> {
+                //показываем фото
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .clip(RoundedCornerShape(DimensionsCustom.productFormImageRadius))
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .clickable(onClick = onImageClick),
+                    contentAlignment = Alignment.Center
+                ) {
+                    AsyncImage(
+                        model = photoBytes ?: imageUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    IconButton(
+                        onClick ={ onIntent(ProductFormIntent.RemovePhoto) },
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp)
+                            .background(
+                                MaterialTheme.colorScheme.error,
+                                RoundedCornerShape(DimensionsCustom.productFormCornerRadius)
+                            )
+                    ) {
+                        Icon(
+                            painter = IconsCustom.iconClose(),
+                            contentDescription = stringResource(Res.string.form_button_remove_photo),
+                            tint = MaterialTheme.colorScheme.onError,
+                            modifier = Modifier.size(DimensionsCustom.diaryIconSizeSmall)
+                        )
+                    }
+                }
+            }
+
+            else -> {
+                // Placeholder для добавления фото
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .clip(RoundedCornerShape(DimensionsCustom.productFormImageRadius))
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                        .clickable(onClick = onImageClick),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(DimensionsCustom.productFormSpacing)
+                    ) {
+                        Icon(
+                            painter = IconsCustom.iconCamera(),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            contentDescription = stringResource(Res.string.form_image_placeholder_desc),
+                            modifier = Modifier.size(80.dp),
+                        )
+                        Text(
+                            text = stringResource(Res.string.form_button_add_photo),
+                            style = StylesCustom.diaryPhotoLabel.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        )
+                    }
+                }
+            }
         }
     }
 }

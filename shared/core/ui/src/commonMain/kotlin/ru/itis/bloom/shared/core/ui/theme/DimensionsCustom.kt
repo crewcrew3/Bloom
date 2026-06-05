@@ -21,11 +21,11 @@ object DimensionsCustom {
 
     // ProductCard
     val productCardRadius = 12.dp
-    val productCardImageSize = 96.dp
+    val productCardImageSize = 120.dp
     val productCardImageRadius = 8.dp
     val productCardInnerPadding = 12.dp
     val productCardVerticalPadding = 4.dp
-    val productCardTextSpacing = 8.dp
+    val productCardTextSpacing = 12.dp
 
     val roundShapeBtn = 80.dp
 
@@ -53,8 +53,12 @@ object DimensionsCustom {
 
     // ProductForm
     val productFormImageSize = 200.dp
+    val productFormImagePlaceholderHeight = 120.dp
     val productFormImageRadius = 16.dp
+    val productFormCornerRadius = 16.dp
     val productFormContentPadding = 16.dp
+    val productFormSpacing = 8.dp
+    val productFormCircularProgressIndicatorSize = 48.dp
 
     // Diary Create/Edit - новые значения
     val diarySectionSpacing = 24.dp

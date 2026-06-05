@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 import ru.itis.bloom.shared.core.data.Result
 import ru.itis.bloom.shared.core.data.error.BaseError
 import ru.itis.bloom.shared.core.data.error.CommonError
+import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
+import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.auth.api.AuthRepository
 import ru.itis.bloom.shared.feature.auth.api.model.request.LoginRequest
 import ru.itis.bloom.shared.feature.auth.api.model.request.RegisterRequest
@@ -22,6 +24,10 @@ import ru.itis.bloom.shared.feature.auth.impl.utils.AuthMessageRes
 private const val TAG = "BLOOM_AUTH_VM"
 
 internal class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
+
+    init {
+        AnalyticsHelper.logScreenOpen(ScreenName.AUTH)
+    }
 
     private val _state = MutableStateFlow(AuthState())
     val state: StateFlow<AuthState> = _state.asStateFlow()

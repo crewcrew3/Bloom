@@ -2,6 +2,8 @@ package ru.itis.bloom
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import bloom.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 import ru.itis.bloom.shared.core.data.di.commonDatabaseModule
@@ -23,6 +25,7 @@ fun main() {
         Window(
             onCloseRequest = ::exitApplication,
             title = "Bloom",
+            icon = painterResource(Res.drawable.ic_launcher_bloom)
         ) {
             App()
         }

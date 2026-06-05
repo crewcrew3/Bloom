@@ -104,6 +104,7 @@ fun DateRangePickerModal(
 }
 
 // Вспомогательный компонент диалога
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateRangePickerDialog(
     onDismiss: () -> Unit,

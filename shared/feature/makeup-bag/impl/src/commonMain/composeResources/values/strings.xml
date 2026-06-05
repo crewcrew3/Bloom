@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Ошибки (Error) -->
+    <string name="makeup_error_unauthorized">Вы не авторизованы</string>
+    <string name="makeup_error_forbidden">Недостаточно прав</string>
+    <string name="makeup_error_server">Ошибка сервера</string>
     <string name="makeup_error_product_linked">Продукт привязан к активной рутине</string>
     <string name="makeup_error_not_found">Продукт не найден</string>
     <string name="makeup_error_invalid_category">Некорректная категория</string>
@@ -8,6 +11,7 @@
     <string name="makeup_error_network">Ошибка сети</string>
     <string name="makeup_error_timeout">Превышено время ожидания</string>
     <string name="makeup_error_unknown">Неизвестная ошибка</string>
+    <string name="makeup_error_saving_photo">Ошибка обработки фото</string>
 
     <!-- Успешные действия (Success) -->
     <string name="makeup_success_added">Продукт успешно добавлен</string>
@@ -40,6 +44,10 @@
     <string name="makeup_chip_exfoliant">Пилинг</string>
     <string name="makeup_chip_oil">Масло</string>
     <string name="makeup_chip_other">Другое</string>
+
+    <!-- Product List -->
+    <string name="product_list_empty_title">Косметики пока нет</string>
+    <string name="product_list_empty_subtitle">Добавьте новый продукт</string>
 
     <!-- Product Detail -->
     <string name="product_detail_action_edit">Редактировать</string>
@@ -88,6 +96,8 @@
     <!-- Buttons -->
     <string name="form_button_save">Сохранить</string>
     <string name="form_button_delete">Удалить</string>
+    <string name="form_button_remove_photo">Удалить фото</string>
+    <string name="form_button_add_photo">Добавить фото</string>
 
     <!-- Rating -->
     <string name="form_rating_star_desc">Звезда %1</string>

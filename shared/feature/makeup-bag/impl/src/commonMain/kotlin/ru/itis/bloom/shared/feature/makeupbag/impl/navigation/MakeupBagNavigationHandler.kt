@@ -19,6 +19,7 @@ internal class MakeupBagNavigationHandler(
     fun handleFormEffect(effect: ProductFormEffect) {
         when (effect) {
             is ProductFormEffect.NavigateBack -> { nav.back() }
+            is ProductFormEffect.NavigateBackToRoot -> { nav.popToRoot() }
             //is ProductFormEffect.NavigateBackAndRefresh -> { /* nav.backWithRefresh() */ }
             is ProductFormEffect.ShowMessage -> { /* обрабатывается в UI Toast-ом */ }
         }

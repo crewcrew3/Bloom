@@ -14,8 +14,20 @@ internal sealed class MakeupBagMessageRes {
         data object ProductNotFound : Error() {
             override fun toResourceId(): StringResource = Res.string.makeup_error_not_found
         }
+        data object SavingPhotoError : Error() {
+            override fun toResourceId(): StringResource = Res.string.makeup_error_saving_photo
+        }
         data object InvalidCategory : Error() {
             override fun toResourceId(): StringResource = Res.string.makeup_error_invalid_category
+        }
+        data object Unauthorized : Error() {
+            override fun toResourceId(): StringResource = Res.string.makeup_error_unauthorized
+        }
+        data object Forbidden : Error() {
+            override fun toResourceId(): StringResource = Res.string.makeup_error_forbidden
+        }
+        data object ServerError : Error() {
+            override fun toResourceId(): StringResource = Res.string.makeup_error_server
         }
         data object Validation : Error() {
             override fun toResourceId(): StringResource = Res.string.makeup_error_validation
@@ -71,6 +83,7 @@ internal sealed class MakeupBagMessageRes {
                 is MakeupBagError.ProductNotFound -> Error.ProductNotFound
                 is MakeupBagError.InvalidCategory -> Error.InvalidCategory
                 is MakeupBagError.InvalidRating -> Error.Validation
+                is MakeupBagError.SavingPhotoError -> Error.SavingPhotoError
             }
         }
     }

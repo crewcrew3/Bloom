@@ -5,4 +5,5 @@ interface MakeupBagNavigator {
     fun toCreateProductScreen()
     fun toEditProductScreen(productId: String)
     fun back()
+    fun popToRoot()
 }
