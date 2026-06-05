@@ -7,6 +7,7 @@ import ru.itis.bloom.shared.feature.auth.api.AuthApi
 import ru.itis.bloom.shared.feature.auth.api.AuthRepository
 import ru.itis.bloom.shared.feature.auth.impl.data.AuthRepositoryImpl
 import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.ConfirmResetPasswordUseCase
+import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.LoadProfileAndSaveUserIdUseCase
 import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.LoginUseCase
 import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.RegisterUseCase
 import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.ResetPasswordUseCase
@@ -31,7 +32,7 @@ val authModule = module {
     single { VerifyEmailUseCase(repository = get()) }
     single { ResetPasswordUseCase(repository = get()) }
     single { ConfirmResetPasswordUseCase(repository = get()) }
-
+    single { LoadProfileAndSaveUserIdUseCase(get(), get()) }
     // Repository
     single<AuthRepository> { AuthRepositoryImpl(authApi = get()) }
 

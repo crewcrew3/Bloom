@@ -19,6 +19,7 @@ import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.auth.api.model.request.LoginRequest
 import ru.itis.bloom.shared.feature.auth.api.model.request.RegisterRequest
 import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.ConfirmResetPasswordUseCase
+import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.LoadProfileAndSaveUserIdUseCase
 import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.LoginUseCase
 import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.RegisterUseCase
 import ru.itis.bloom.shared.feature.auth.impl.domain.usecase.ResetPasswordUseCase
@@ -33,6 +34,7 @@ internal class AuthViewModel(
     private val verifyEmailUseCase: VerifyEmailUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
     private val confirmResetPasswordUseCase: ConfirmResetPasswordUseCase,
+    private val loadProfileAndSaveUserIdUseCase: LoadProfileAndSaveUserIdUseCase,
 ) : ViewModel() {
 
     init {
@@ -111,8 +113,21 @@ internal class AuthViewModel(
 
         when (val result = loginUseCase(LoginRequest(s.email, s.password))) {
             is Result.Success -> {
-                _effect.emit(AuthEffect.Authenticated)
-                _effect.emit(AuthEffect.NavigateToMain)
+                when (val profileResult = loadProfileAndSaveUserIdUseCase()) {
+                    is Result.Success -> {
+                        println("[BLOOM_AUTH_VM] Profile loaded, user_id: ${profileResult.data.id}")
+                        _effect.emit(AuthEffect.Authenticated)
+                        _effect.emit(AuthEffect.NavigateToMain)
+                    }
+                    is Result.Error -> {
+                        // Если не удалось загрузить профиль, всё равно пускаем пользователя
+                        // (профиль можно загрузить позже)
+                        println("[BLOOM_AUTH_VM] Failed to load profile: ${profileResult.error}")
+                        _effect.emit(AuthEffect.Authenticated)
+                        _effect.emit(AuthEffect.NavigateToMain)
+                    }
+                    is Result.Loading -> {}
+                }
             }
 
             is Result.Error -> {
