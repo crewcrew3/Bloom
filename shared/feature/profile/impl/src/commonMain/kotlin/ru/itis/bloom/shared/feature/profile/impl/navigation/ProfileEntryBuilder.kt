@@ -23,11 +23,16 @@ import ru.itis.bloom.shared.core.ui.components.settings.TopBarIconType
 import ru.itis.bloom.shared.core.ui.utils.provideBottomBarSettings
 import ru.itis.bloom.shared.core.ui.utils.provideBurgerMenuSettings
 import ru.itis.bloom.shared.core.ui.utils.provideTopBarSettings
+import ru.itis.bloom.shared.core.ui.utils.rememberImagePicker
 import ru.itis.bloom.shared.core.ui.utils.useNativeToast
 import ru.itis.bloom.shared.feature.profile.api.navigation.ProfileNavRoute
 import ru.itis.bloom.shared.feature.profile.impl.mvi.ProfileEffect
 import ru.itis.bloom.shared.feature.profile.impl.mvi.ProfileIntent
 import ru.itis.bloom.shared.feature.profile.impl.mvi.ProfileViewModel
+import ru.itis.bloom.shared.feature.profile.impl.mvi.details.ProfileDetailsEffect
+import ru.itis.bloom.shared.feature.profile.impl.mvi.details.ProfileDetailsIntent
+import ru.itis.bloom.shared.feature.profile.impl.mvi.details.ProfileDetailsViewModel
+import ru.itis.bloom.shared.feature.profile.impl.presentation.ProfileDetailsScreen
 import ru.itis.bloom.shared.feature.profile.impl.presentation.ProfileScreen
 
 fun EntryProviderScope<NavKey>.profileEntryBuilder() {
@@ -55,9 +60,14 @@ fun EntryProviderScope<NavKey>.profileEntryBuilder() {
         LaunchedEffect(vm) {
             vm.effect.collect { effect ->
                 when (effect) {
-                    is ProfileEffect.NavigateToLogin-> {
+                    is ProfileEffect.NavigateToLogin -> {
                         navigationHandler.handleEffect(effect)
                     }
+
+                    is ProfileEffect.NavigateToProfileDetails -> {
+                        navigationHandler.handleEffect(effect)
+                    }
+
                     is ProfileEffect.ShowMessage -> {
                         scope.launch {
                             val text = getString(effect.message.toResourceId())
@@ -98,6 +108,87 @@ fun EntryProviderScope<NavKey>.profileEntryBuilder() {
         ProfileScreen(
             state = state,
             onIntent = vm::processIntent,
+            bottomBarSettings = bottomBarSettings,
+            topBarSettings = topBarSettings,
+            burgerMenuSettings = burgerMenuSettings
+        )
+    }
+    entry<ProfileNavRoute.ProfileDetails> {
+        val vm: ProfileDetailsViewModel = koinViewModel()
+        val navigationHandler: ProfileNavigationHandler = koinInject()
+        val bottomBarNav: BottomBarNavigator = koinInject()
+        val burgerMenuNav: BurgerMenuNavigator = koinInject()
+        val useNativeToast = useNativeToast()
+
+        val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+
+        val stateToast = rememberAdvToastStates()
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.INFO,
+            paddingBottom = 50
+        )
+
+        // Image picker для аватара
+        val imagePicker = rememberImagePicker(
+            callback = object : ru.itis.bloom.shared.core.ui.utils.ImagePickerCallback {
+                override fun onImageSelected(uri: String?) {
+                    uri?.let { vm.onIntent(ProfileDetailsIntent.UpdateAvatar(it)) }
+                }
+            }
+        )
+
+        LaunchedEffect(Unit) {
+            vm.onIntent(ProfileDetailsIntent.LoadProfile)
+        }
+
+        LaunchedEffect(vm) {
+            vm.effect.collect { effect ->
+                when (effect) {
+                    is ProfileDetailsEffect.NavigateBack,
+                    is ProfileDetailsEffect.NavigateToLogin -> {
+                        navigationHandler.handleEffect(effect)
+                    }
+
+                    is ProfileDetailsEffect.ShowMessage -> {
+                        scope.launch {
+                            val text = getString(effect.message.toResourceId())
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(text, KMPNativeToastType.LONG)
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        val bottomBarSettings = provideBottomBarSettings(
+            onRoutine = bottomBarNav::toRoutineSection,
+            onSkinDiary = bottomBarNav::toSkinDiarySection,
+            onMakeupBag = bottomBarNav::toMakeupBagSection,
+            onProfile = bottomBarNav::toProfileSection
+        )
+
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.profile_details_title),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.onIntent(ProfileDetailsIntent.NavigateBack) }
+        )
+
+        val burgerMenuSettings = provideBurgerMenuSettings(
+            onRoutine = burgerMenuNav::toRoutineSection,
+            onSkinDiary = burgerMenuNav::toSkinDiarySection,
+            onMakeupBag = burgerMenuNav::toMakeupBagSection,
+            onProfile = burgerMenuNav::toProfileSection
+        )
+
+        ProfileDetailsScreen(
+            state = state,
+            onIntent = vm::onIntent,
+            onAvatarClick = { imagePicker() },
             bottomBarSettings = bottomBarSettings,
             topBarSettings = topBarSettings,
             burgerMenuSettings = burgerMenuSettings

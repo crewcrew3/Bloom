@@ -37,6 +37,9 @@ internal class ProfileViewModel(
             when (intent) {
                 is ProfileIntent.LoadProfile -> loadProfile()
                 is ProfileIntent.Logout -> logout()
+                is ProfileIntent.NavigateToProfileDetails -> {
+                    _effect.emit(ProfileEffect.NavigateToProfileDetails)
+                }
             }
         }
     }
