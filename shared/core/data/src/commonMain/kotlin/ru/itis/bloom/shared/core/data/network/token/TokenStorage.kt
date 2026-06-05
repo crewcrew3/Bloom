@@ -8,4 +8,6 @@ interface TokenStorage {
     suspend fun isAccessTokenExpired(): Boolean
     suspend fun clearTokens()
 
+    suspend fun saveUserId(userId: String)
+    suspend fun getUserId(): String?
 }

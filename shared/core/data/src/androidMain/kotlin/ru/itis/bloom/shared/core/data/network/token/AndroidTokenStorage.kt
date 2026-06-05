@@ -17,6 +17,7 @@ class AndroidTokenStorage(context: Context) : TokenStorage {
         private const val KEY_ACCESS = "access_token"
         private const val KEY_REFRESH = "refresh_token"
         private const val KEY_EXPIRES_AT = "expires_at"
+        private const val KEY_USER_ID = "user_id"
     }
 
     override suspend fun saveTokens(accessToken: String, refreshToken: String, expiresIn: Int) {
@@ -54,4 +55,13 @@ class AndroidTokenStorage(context: Context) : TokenStorage {
         }
         println("[BLOOM_TOKEN] Tokens cleared")
     }
+    override suspend fun saveUserId(userId: String) {
+        withContext(Dispatchers.IO) {
+            prefs.edit { putString(KEY_USER_ID, userId) }
+        }
+        println("[BLOOM_TOKEN] User ID saved: $userId")
+    }
+
+    override suspend fun getUserId(): String? =
+        withContext(Dispatchers.IO) { prefs.getString(KEY_USER_ID, null) }
 }

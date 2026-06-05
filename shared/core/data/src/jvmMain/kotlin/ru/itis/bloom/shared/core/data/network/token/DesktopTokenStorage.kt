@@ -44,4 +44,11 @@ class DesktopTokenStorage : TokenStorage {
         writeTokens(TokensData())
         println("[BLOOM_TOKEN] Tokens cleared")
     }
+    override suspend fun saveUserId(userId: String) {
+        val current = readTokens()
+        writeTokens(current.copy(userId = userId))
+        println("[BLOOM_TOKEN] User ID saved: $userId")
+    }
+
+    override suspend fun getUserId(): String? = readTokens().userId
 }
