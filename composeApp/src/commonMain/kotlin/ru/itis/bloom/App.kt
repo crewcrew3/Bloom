@@ -1,49 +1,107 @@
 package ru.itis.bloom
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
-
-import bloom.composeapp.generated.resources.Res
-import bloom.composeapp.generated.resources.compose_multiplatform
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.ui.NavDisplay
+import org.koin.compose.koinInject
+import ru.itis.bloom.shared.core.data.network.token.TokenStorage
+import ru.itis.bloom.shared.core.navigation.impl.BackStackHolder
+import ru.itis.bloom.shared.core.navigation.impl.navigationSavedStateConfig
+import ru.itis.bloom.shared.core.ui.theme.BloomTheme
+import ru.itis.bloom.shared.core.ui.theme.ThemePreferences
+import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
+import ru.itis.bloom.shared.feature.auth.impl.navigation.authEntryBuilder
+import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
+import ru.itis.bloom.shared.feature.makeupbag.impl.navigation.makeupBagEntryBuilder
+import ru.itis.bloom.shared.feature.profile.impl.navigation.profileEntryBuilder
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation.diaryEntryBuilder
 
 @Composable
-@Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+
+    val themeOverride by ThemePreferences.isDarkTheme.collectAsState(initial = null)
+    val systemDark = isSystemInDarkTheme()
+    val useDarkTheme = themeOverride ?: systemDark
+
+    BloomTheme(
+        darkTheme = useDarkTheme,
+    ) {
+        // Получаем все entry builders из графа Koin
+        val entryBuilders: List<EntryProviderScope<NavKey>.() -> Unit> = listOf(
+            EntryProviderScope<NavKey>::authEntryBuilder,
+            EntryProviderScope<NavKey>::makeupBagEntryBuilder,
+            EntryProviderScope<NavKey>::diaryEntryBuilder,
+            EntryProviderScope<NavKey>::profileEntryBuilder,
+        )
+        var isAuthChecked by remember { mutableStateOf(false) }
+        var initialRoute by remember { mutableStateOf<NavKey>(AuthNavRoute.Login) }
+
+        // Получаем TokenStorage для проверки
+        val tokenStorage: TokenStorage = koinInject()
+        LaunchedEffect(Unit) {
+            val accessToken = tokenStorage.getAccessToken()
+            val isExpired = tokenStorage.isAccessTokenExpired()
+
+            initialRoute = if (accessToken != null && !isExpired) {
+                println("[BLOOM_APP] User authenticated, navigating to MakeupBag")
+                MakeupBagNavRoute.ProductList  // ← Главный экран косметички
+            } else {
+                println("[BLOOM_APP] User not authenticated, showing Login")
+                AuthNavRoute.Login
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+            isAuthChecked = true
+        }
+
+        if (!isAuthChecked) {
+            // Опционально: простой сплэш-экран
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+            return@BloomTheme
+        }
+
+        // Инициализируем BackStack с конфигурацией сериализации
+        val backStack = rememberNavBackStack(
+            navigationSavedStateConfig,
+            initialRoute
+        )
+
+        val backStackHolder: BackStackHolder = koinInject()
+        backStackHolder.setBackStack(backStack)
+
+        // Основной UI
+        NavDisplay(
+            backStack = backStack,
+            onBack = { backStack.removeLastOrNull() },
+            entryDecorators = listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator()
+            ),
+            entryProvider = entryProvider {
+                // Вызываем все builder'ы, чтобы зарегистрировать экраны
+                entryBuilders.forEach { builder ->
+                    this.builder()
                 }
             }
-        }
+        )
     }
 }

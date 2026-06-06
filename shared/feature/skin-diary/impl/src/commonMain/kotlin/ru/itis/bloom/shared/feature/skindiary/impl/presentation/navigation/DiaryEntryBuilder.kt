@@ -1,0 +1,346 @@
+package ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation
+
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
+import bloom.shared.feature.skin_diary.impl.generated.resources.Res
+import bloom.shared.feature.skin_diary.impl.generated.resources.diary_detail_title
+import bloom.shared.feature.skin_diary.impl.generated.resources.diary_screen_title
+import bloom.shared.feature.skin_diary.impl.generated.resources.msg_entry_saved
+import bloom.shared.feature.skin_diary.impl.generated.resources.msg_entry_updated
+import bloom.shared.feature.skin_diary.impl.generated.resources.title_create_diary_entry
+import bloom.shared.feature.skin_diary.impl.generated.resources.title_edit_diary_entry
+import io.github.tbib.compose_toast.AdvToast
+import io.github.tbib.compose_toast.rememberAdvToastStates
+import io.github.tbib.compose_toast.toast_ui.EnumToastType
+import io.github.the_best_is_best.toast_kmp.KMPNativeShowToast
+import io.github.the_best_is_best.toast_kmp.KMPNativeToastType
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import ru.itis.bloom.shared.core.navigation.api.BottomBarNavigator
+import ru.itis.bloom.shared.core.navigation.api.BurgerMenuNavigator
+import ru.itis.bloom.shared.core.ui.components.settings.BottomBarSettings
+import ru.itis.bloom.shared.core.ui.components.settings.BurgerMenuSettings
+import ru.itis.bloom.shared.core.ui.components.settings.TopBarIconType
+import ru.itis.bloom.shared.core.ui.utils.provideBottomBarSettings
+import ru.itis.bloom.shared.core.ui.utils.provideBurgerMenuSettings
+import ru.itis.bloom.shared.core.ui.utils.provideTopBarSettings
+import ru.itis.bloom.shared.core.ui.utils.useNativeToast
+import ru.itis.bloom.shared.feature.skindiary.api.navigation.DiaryNavRoute
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.DiaryCreateEditScreen
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditIntent
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.add.mvi.DiaryCreateEditViewModel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.DiaryDetailScreen
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi.DiaryDetailEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi.DiaryDetailIntent
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.detail.mvi.DiaryDetailViewModel
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.DiaryListScreen
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryListEffect
+import ru.itis.bloom.shared.feature.skindiary.impl.presentation.list.mvi.DiaryListViewModel
+
+fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
+    entry<DiaryNavRoute.List> {
+        val vm: DiaryListViewModel = koinViewModel()
+        val navigationHandler: DiaryNavigationHandler = koinInject()
+        val bottomBarNav: BottomBarNavigator = koinInject()
+        val burgerMenuNav: BurgerMenuNavigator = koinInject()
+        val useNativeToast = useNativeToast()
+
+        val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+
+        // Toast для ошибок
+        val stateToast = rememberAdvToastStates()
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.ERROR,
+            paddingBottom = 50
+        )
+
+        LaunchedEffect(vm) {
+            vm.effects.collect { effect ->
+                when (effect) {
+                    is DiaryListEffect.NavigateToDetail,
+                    DiaryListEffect.NavigateToCreate -> {
+                        navigationHandler.handleEffect(effect)
+                    }
+
+                    is DiaryListEffect.ShowError -> {
+                        scope.launch {
+                            val text = getString(effect.messageRes)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        val bottomBarSettings = provideBottomBarSettings(
+            onRoutine = bottomBarNav::toRoutineSection,
+            onSkinDiary = bottomBarNav::toSkinDiarySection,
+            onMakeupBag = bottomBarNav::toMakeupBagSection,
+            onProfile = bottomBarNav::toProfileSection
+        )
+
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.diary_screen_title),
+            iconType = TopBarIconType.BURGER,
+            onIconClick = { /* Открывается Drawer через BaseScreen */ }
+        )
+
+        val burgerMenuSettings = provideBurgerMenuSettings(
+            onRoutine = burgerMenuNav::toRoutineSection,
+            onSkinDiary = burgerMenuNav::toSkinDiarySection,
+            onMakeupBag = burgerMenuNav::toMakeupBagSection,
+            onProfile = burgerMenuNav::toProfileSection
+        )
+
+        // UI
+        DiaryListScreen(
+            state = state,
+            onIntent = vm::onIntent,
+            bottomBarSettings = bottomBarSettings,
+            burgerMenuSettings = burgerMenuSettings,
+            topBarSettings = topBarSettings
+        )
+    }
+
+    entry<DiaryNavRoute.Detail> { route ->
+        val entryId = route.entryId
+        val vm: DiaryDetailViewModel = koinViewModel(
+            parameters = { org.koin.core.parameter.parametersOf(entryId) }
+        )
+        val navigationHandler: DiaryNavigationHandler = koinInject()
+        val useNativeToast = useNativeToast()
+
+        val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+        val stateToast = rememberAdvToastStates()
+
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.ERROR,
+            paddingBottom = 50
+        )
+        LaunchedEffect(entryId) {
+            vm.onIntent(DiaryDetailIntent.Reload)
+        }
+        LaunchedEffect(vm) {
+            vm.effects.collect { effect ->
+                when (effect) {
+                    is DiaryDetailEffect.NavigateToEdit -> {
+                        navigationHandler.handleDetailEffect(effect)
+                    }
+
+                    DiaryDetailEffect.NavigateBack -> {
+                        navigationHandler.handleDetailEffect(effect)
+                    }
+
+                    is DiaryDetailEffect.ShowError -> {
+                        scope.launch {
+                            val text = getString(effect.message)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
+
+                    is DiaryDetailEffect.ShowSuccess -> {
+                        scope.launch {
+                            val text = getString(effect.message)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(text, KMPNativeToastType.LONG)
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.diary_detail_title),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.onIntent(DiaryDetailIntent.NavigateBack) }
+        )
+
+        DiaryDetailScreen(
+            state = state,
+            onIntent = vm::onIntent,
+            topBarSettings = topBarSettings,
+            bottomBarSettings = null,
+            burgerMenuSettings = null,
+        )
+    }
+
+    entry<DiaryNavRoute.Create> {
+        val vm: DiaryCreateEditViewModel = koinViewModel()
+        val navigationHandler: DiaryNavigationHandler = koinInject()
+        val useNativeToast = useNativeToast()
+
+        val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+        val stateToast = rememberAdvToastStates()
+
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.ERROR,
+            paddingBottom = 50
+        )
+
+        LaunchedEffect(Unit) {
+            vm.init(entryId = null)
+        }
+
+        LaunchedEffect(vm) {
+            vm.effects.collect { effect ->
+                when (effect) {
+                    is DiaryCreateEditEffect.NavigateBack -> navigationHandler.handleCreateEditEffect(
+                        effect
+                    )
+
+                    is DiaryCreateEditEffect.ShowSuccess -> {
+                        scope.launch {
+                            val text = getString(Res.string.msg_entry_saved)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
+
+                    is DiaryCreateEditEffect.ShowError -> {
+                        scope.launch {
+                            val text = getString(effect.message)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.title_create_diary_entry),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.onIntent(DiaryCreateEditIntent.NavigateBack) }
+        )
+
+        DiaryCreateEditScreen(
+            state = state,
+            onIntent = vm::onIntent,
+            topBarSettings = topBarSettings
+        )
+    }
+
+    entry<DiaryNavRoute.Edit> { route ->
+        val vm: DiaryCreateEditViewModel = koinViewModel()
+        val navigationHandler: DiaryNavigationHandler = koinInject()
+        val useNativeToast = useNativeToast()
+
+        val entryId = route.entryId
+
+        val state by vm.state.collectAsState()
+        val scope = rememberCoroutineScope()
+        val stateToast = rememberAdvToastStates()
+
+        AdvToast.MakeToast(
+            state = stateToast,
+            toastType = EnumToastType.ERROR,
+            paddingBottom = 50
+        )
+
+        LaunchedEffect(entryId) {
+            entryId.let { vm.init(entryId = it) }
+        }
+
+        LaunchedEffect(vm) {
+            vm.effects.collect { effect ->
+                when (effect) {
+                    is DiaryCreateEditEffect.NavigateBack -> navigationHandler.handleCreateEditEffect(
+                        effect
+                    )
+
+                    is DiaryCreateEditEffect.NavigateBackToDetail -> {
+                        navigationHandler.handleCreateEditEffect(effect)
+                    }
+
+                    is DiaryCreateEditEffect.ShowSuccess -> {
+                        scope.launch {
+                            val text = getString(Res.string.msg_entry_updated)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
+
+                    is DiaryCreateEditEffect.ShowError -> {
+                        scope.launch {
+                            val text = getString(effect.message)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(
+                                    text,
+                                    KMPNativeToastType.LONG
+                                )
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
+        val topBarSettings = provideTopBarSettings(
+            title = stringResource(Res.string.title_edit_diary_entry),
+            iconType = TopBarIconType.BACK,
+            onIconClick = { vm.onIntent(DiaryCreateEditIntent.NavigateBack) }
+        )
+
+        DiaryCreateEditScreen(
+            state = state,
+            onIntent = vm::onIntent,
+            topBarSettings = topBarSettings
+        )
+    }
+}

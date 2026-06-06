@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.googleService)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 kotlin {
@@ -21,8 +23,34 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+            //firebase
+            implementation(libs.firebase.crashlytics)
+            implementation(libs.firebase.analytics)
+            implementation(project.dependencies.platform(libs.firebase.bom))
         }
         commonMain.dependencies {
+            //модули
+            implementation(projects.shared.core.navigation.impl)
+            implementation(projects.shared.feature.auth.api)
+            implementation(projects.shared.feature.auth.impl)
+            implementation(projects.shared.core.ui)
+            implementation(projects.shared.core.data)
+            implementation(projects.shared.feature.makeupBag.api)
+            implementation(projects.shared.feature.makeupBag.impl)
+            implementation(projects.shared.feature.skinDiary.api)
+            implementation(projects.shared.feature.skinDiary.impl)
+            implementation(projects.shared.feature.profile.api)
+            implementation(projects.shared.feature.profile.impl)
+
+            //DI
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+
+            //navigation
+            implementation(libs.compose.nav3)
+            implementation(libs.viewmodel.nav3)
+
+            //compose
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -31,9 +59,6 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-
-            //модули
-            implementation(projects.shared)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -67,6 +92,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
 }
 
 dependencies {
@@ -81,6 +107,10 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "ru.itis.bloom"
             packageVersion = "1.0.0"
+
+            windows {
+                iconFile.set(project.file("src/jvmMain/resources/ic_launcher_bloom.ico"))
+            }
         }
     }
 }

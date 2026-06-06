@@ -1,0 +1,19 @@
+package ru.itis.bloom.shared.core.navigation.impl
+
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
+
+class BackStackHolder {
+    var backStack: NavBackStack<NavKey>? = null
+        private set
+
+    fun setBackStack(backStack: NavBackStack<NavKey>) {
+        this.backStack = backStack
+    }
+
+    //для перехода по секциям в боттом баре/бургер меню
+    fun navigateToRoot(route: NavKey) {
+        backStack?.clear()
+        backStack?.add(route)
+    }
+}

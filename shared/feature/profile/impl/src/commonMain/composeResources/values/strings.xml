@@ -1,0 +1,47 @@
+<resources>
+    <!-- Profile -->
+    <string name="profile_title">Профиль</string>
+    <string name="profile_avatar_desc">Аватар пользователя</string>
+    <string name="profile_action_logout">Выйти</string>
+
+    <!-- Profile messages -->
+    <string name="profile_error_not_found">Профиль не найден</string>
+    <string name="profile_error_unauthorized">Необходима авторизация</string>
+    <string name="profile_error_network">Ошибка сети</string>
+    <string name="profile_error_server">Ошибка сервера</string>
+    <string name="profile_error_timeout">Превышено время ожидания</string>
+    <string name="profile_error_unknown">Неизвестная ошибка</string>
+    <string name="profile_success_logged_out">Выход выполнен</string>
+
+    <string name="profile_details_title">Мой профиль</string>
+    <string name="profile_edit_name_title">Изменить имя</string>
+    <string name="profile_edit_email_title">Изменить email</string>
+    <string name="profile_field_name">Имя</string>
+    <string name="profile_field_email">Email</string>
+    <string name="profile_field_value">Значение</string>
+    <string name="profile_change_password">Сменить пароль</string>
+    <string name="profile_current_password">Текущий пароль</string>
+    <string name="profile_new_password">Новый пароль</string>
+    <string name="profile_confirm_password">Подтвердите пароль</string>
+    <string name="profile_email_not_verified">Email не подтверждён</string>
+    <string name="profile_change_avatar">Изменить аватар</string>
+    <string name="profile_success_profile_updated">Профиль обновлён</string>
+    <string name="profile_success_password_changed">Пароль изменён</string>
+    <string name="profile_error_image_too_large">Файл слишком большой (макс. 5 МБ)</string>
+    <string name="profile_error_email_already_exists">Email уже используется</string>
+    <string name="profile_error_wrong_password">Неверный текущий пароль</string>
+    <string name="profile_error_unsupported_format">Неподдерживаемый формат изображения</string>
+    <string name="common_save">Сохранить</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="profile_action_my_profile">Мой профиль</string>
+
+    <string name="profile_error_empty_name">Имя не может быть пустым</string>
+    <string name="profile_error_empty_email">Email не может быть пустым</string>
+    <string name="profile_error_password_mismatch">Пароли не совпадают</string>
+    <string name="profile_error_password_too_short">Пароль должен быть не менее 8 символов</string>
+
+    <string name="profile_action_change_photo">Выбрать новое фото</string>
+    <string name="profile_action_delete_photo">Удалить фото</string>
+
+    <string name="profile_action_theme">Тема</string>
+</resources>

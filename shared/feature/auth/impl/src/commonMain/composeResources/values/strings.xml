@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Ошибки авторизации -->
+    <string name="auth_error_invalid_credentials">Неверный email или пароль</string>
+    <string name="auth_error_email_not_verified">Подтвердите email перед входом</string>
+    <string name="auth_error_email_already_exists">Этот email уже используется</string>
+    <string name="auth_error_token_invalid">Токен недействителен или истёк</string>
+    <string name="auth_error_refresh_token_invalid">Необходима повторная авторизация</string>
+    <string name="auth_error_wrong_password">Текущий пароль неверен</string>
+    <string name="auth_error_password_mismatch">Пароли не совпадают</string>
+    <string name="auth_error_validation">Ошибка валидации</string>
+    <string name="auth_error_network">Нет соединения с сервером</string>
+    <string name="auth_error_timeout">Превышено время ожидания</string>
+    <string name="auth_error_unknown">Ошибка сервера. Попробуйте позже</string>
+
+    <!-- Успешные сообщения -->
+    <string name="auth_success_check_email">Проверьте email</string>
+    <string name="auth_success_account_activated">Аккаунт активирован</string>
+    <string name="auth_success_link_sent">Ссылка отправлена</string>
+    <string name="auth_success_password_changed">Пароль изменён</string>
+
+    <!-- Валидация полей -->
+    <string name="auth_validation_email_required">Email обязателен</string>
+    <string name="auth_validation_password_min_length">Минимум 8 символов</string>
+    <string name="auth_validation_name_required">Имя обязательно</string>
+    <string name="auth_validation_passwords_mismatch">Пароли не совпадают</string>
+
+    <!-- Заголовки и кнопки -->
+    <string name="auth_title_login">Вход</string>
+    <string name="auth_title_register">Регистрация</string>
+    <string name="auth_button_login">Войти</string>
+    <string name="auth_button_register">Зарегистрироваться</string>
+    <string name="auth_link_to_register">Нет аккаунта? Зарегистрироваться</string>
+    <string name="auth_link_to_login">Уже есть аккаунт? Войти</string>
+
+    <!-- Подсказки полей -->
+    <string name="auth_label_email">Email</string>
+    <string name="auth_label_password">Пароль</string>
+    <string name="auth_label_name">Имя</string>
+    <string name="auth_label_password_confirm">Повторите пароль</string>
+</resources>
