@@ -165,6 +165,16 @@ fun EntryProviderScope<NavKey>.diaryEntryBuilder() {
                         }
                     }
 
+                    is DiaryDetailEffect.ShowSuccess -> {
+                        scope.launch {
+                            val text = getString(effect.message)
+                            if (useNativeToast) {
+                                KMPNativeShowToast.show(text, KMPNativeToastType.LONG)
+                            } else {
+                                stateToast.show(text)
+                            }
+                        }
+                    }
                 }
             }
         }

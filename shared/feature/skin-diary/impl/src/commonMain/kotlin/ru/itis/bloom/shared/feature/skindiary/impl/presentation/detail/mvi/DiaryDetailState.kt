@@ -10,5 +10,7 @@ data class DiaryDetailState(
     val isError: Boolean = false,
     val errorMessage: String? = null,
     val entry: DiaryEntry? = null,
-    val problemZonesList: ImmutableList<ProblemZone> = persistentListOf()
+    val problemZonesList: ImmutableList<ProblemZone> = persistentListOf(),
+    val showDeleteDialog: Boolean = false,
+    val isDeleting: Boolean = false
 )

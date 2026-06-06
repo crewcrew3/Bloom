@@ -18,6 +18,8 @@ import ru.itis.bloom.shared.core.domain.usecase.ImageUriToByteArrayUseCase
 import ru.itis.bloom.shared.core.ui.analytics.AnalyticsHelper
 import ru.itis.bloom.shared.core.ui.analytics.ScreenName
 import ru.itis.bloom.shared.feature.skindiary.api.model.ProblemZone
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.DiaryEvent
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.DiaryEventBus
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.model.SaveDiaryEntryCommand
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntryByIdUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.SaveDiaryEntryUseCase
@@ -25,7 +27,8 @@ import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.SaveDiaryEntry
 internal class DiaryCreateEditViewModel(
     private val saveEntryUseCase: SaveDiaryEntryUseCase,
     private val getEntryByIdUseCase: GetDiaryEntryByIdUseCase,
-    private val imageUriToByteArrayUseCase: ImageUriToByteArrayUseCase
+    private val imageUriToByteArrayUseCase: ImageUriToByteArrayUseCase,
+    private val diaryEventBus: DiaryEventBus
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DiaryCreateEditState())
@@ -176,6 +179,8 @@ internal class DiaryCreateEditViewModel(
             if (currentState.isPhotoProcessing) return@launch
             _state.update { it.copy(isLoading = true) }
 
+            val isEditing = currentState.entryId != null
+
             saveEntryUseCase(
                 SaveDiaryEntryCommand(
                     id = currentState.entryId,
@@ -189,7 +194,17 @@ internal class DiaryCreateEditViewModel(
             )
                 .onSuccess { entry ->
                     _state.update { it.copy(isLoading = false) }
+
+                    val event = if (isEditing) {
+                        DiaryEvent.EntryUpdated
+                    } else {
+                        DiaryEvent.EntryCreated
+                    }
+                    diaryEventBus.emit(event)
+
                     _effects.emit(DiaryCreateEditEffect.NavigateBack)
+
+
                 }
                 .onFailure { error ->
                     _state.update {

@@ -11,6 +11,7 @@ import ru.itis.bloom.shared.feature.skindiary.api.SkinDiaryApi
 import ru.itis.bloom.shared.feature.skindiary.api.SkinDiaryRepository
 import ru.itis.bloom.shared.feature.skindiary.impl.data.SkinDiaryRepositoryImpl
 import ru.itis.bloom.shared.feature.skindiary.impl.data.network.SkinDiaryApiImpl
+import ru.itis.bloom.shared.feature.skindiary.impl.domain.DiaryEventBus
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.DeleteDiaryEntryUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntriesUseCase
 import ru.itis.bloom.shared.feature.skindiary.impl.domain.usecase.GetDiaryEntryByIdUseCase
@@ -45,5 +46,7 @@ fun diaryModule(currentUserIdProvider: () -> String = { "demo-user-id" }): Modul
     viewModelOf(::DiaryListViewModel)
     viewModelOf(::DiaryCreateEditViewModel)
     viewModelOf(::DiaryDetailViewModel)
+
+    single { DiaryEventBus() }
 
 }

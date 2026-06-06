@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,8 +26,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +42,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import bloom.shared.feature.skin_diary.impl.generated.resources.Res
+import bloom.shared.feature.skin_diary.impl.generated.resources.btn_cancel
+import bloom.shared.feature.skin_diary.impl.generated.resources.btn_delete
+import bloom.shared.feature.skin_diary.impl.generated.resources.diary_action_delete
 import bloom.shared.feature.skin_diary.impl.generated.resources.diary_action_edit
+import bloom.shared.feature.skin_diary.impl.generated.resources.diary_delete_confirmation
+import bloom.shared.feature.skin_diary.impl.generated.resources.diary_delete_title
 import bloom.shared.feature.skin_diary.impl.generated.resources.diary_detail_title
 import bloom.shared.feature.skin_diary.impl.generated.resources.diary_hydration_label
 import bloom.shared.feature.skin_diary.impl.generated.resources.diary_notes_label
@@ -134,19 +143,64 @@ fun DiaryDetailScreen(
                 DiaryDetailContent(
                     entry = entry,
                     problemZones = state.problemZonesList,
+                    isDeleting = state.isDeleting,
                     onIntent = onIntent,
                     contentPadding = paddingValues,
                     modifier = modifier
                 )
             }
         }
+        if (state.showDeleteDialog) {
+            DeleteConfirmationDialog(
+                onConfirm = { onIntent(DiaryDetailIntent.ConfirmDelete) },
+                onDismiss = { onIntent(DiaryDetailIntent.CancelDelete) }
+            )
+        }
     }
+}
+
+@Composable
+private fun DeleteConfirmationDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(Res.string.diary_delete_title),
+                style = MaterialTheme.typography.titleLarge
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(Res.string.diary_delete_confirmation),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        confirmButton = {
+            Button(
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                )
+            ) {
+                Text(stringResource(Res.string.btn_delete))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(Res.string.btn_cancel))
+            }
+        }
+    )
 }
 
 @Composable
 private fun DiaryDetailContent(
     entry: DiaryEntry,
     problemZones: List<ProblemZone>,
+    isDeleting: Boolean,
     onIntent: (DiaryDetailIntent) -> Unit,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier
@@ -173,7 +227,7 @@ private fun DiaryDetailContent(
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
                 .padding(horizontal = DimensionsCustom.baseInsets)
-                .padding(bottom = 80.dp),
+                .padding(bottom = 64.dp),
             verticalArrangement = Arrangement.spacedBy(DimensionsCustom.diarySectionSpacing)
         ) {
             // Photo Section (top centered)
@@ -209,6 +263,39 @@ private fun DiaryDetailContent(
             entry.notes?.let { notes ->
                 if (notes.isNotBlank()) {
                     NotesSection(notes = notes)
+                }
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(
+                    horizontal = DimensionsCustom.baseInsets,
+                    vertical = 16.dp
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            if (isDeleting) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp
+                )
+            } else {
+                OutlinedButton(
+                    onClick = { onIntent(DiaryDetailIntent.DeleteEntry) },
+                    modifier = Modifier.fillMaxWidth(0.6f),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
+                ) {
+                    Icon(
+                        painter = IconsCustom.iconDelete(),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(Res.string.diary_action_delete))
                 }
             }
         }
