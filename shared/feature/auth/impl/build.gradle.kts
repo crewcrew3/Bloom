@@ -25,7 +25,7 @@ kotlin {
             implementation(projects.shared.core.data)
             implementation(projects.shared.core.ui)
             implementation(projects.shared.core.navigation.api)
-
+            implementation(projects.shared.feature.profile.api)
             //navigation
             implementation(libs.compose.nav3)
 

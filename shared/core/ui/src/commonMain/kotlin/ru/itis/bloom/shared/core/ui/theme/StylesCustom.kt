@@ -109,4 +109,9 @@ object StylesCustom {
         fontSize = 14.sp,
         fontWeight = FontWeight.Medium
     )
+
+    val profileUserName = TextStyle(
+        fontSize = 28.sp,
+        fontWeight = FontWeight.SemiBold
+    )
 }

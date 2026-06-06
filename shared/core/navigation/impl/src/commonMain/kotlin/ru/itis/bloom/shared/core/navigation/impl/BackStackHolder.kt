@@ -10,4 +10,10 @@ class BackStackHolder {
     fun setBackStack(backStack: NavBackStack<NavKey>) {
         this.backStack = backStack
     }
+
+    //для перехода по секциям в боттом баре/бургер меню
+    fun navigateToRoot(route: NavKey) {
+        backStack?.clear()
+        backStack?.add(route)
+    }
 }

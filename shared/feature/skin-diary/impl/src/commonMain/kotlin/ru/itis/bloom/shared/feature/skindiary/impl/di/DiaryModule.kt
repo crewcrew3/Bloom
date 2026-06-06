@@ -6,6 +6,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import ru.itis.bloom.shared.core.data.AppDatabase
+import ru.itis.bloom.shared.core.data.network.token.TokenStorage
 import ru.itis.bloom.shared.feature.skindiary.api.SkinDiaryApi
 import ru.itis.bloom.shared.feature.skindiary.api.SkinDiaryRepository
 import ru.itis.bloom.shared.feature.skindiary.impl.data.SkinDiaryRepositoryImpl
@@ -35,7 +36,7 @@ fun diaryModule(currentUserIdProvider: () -> String = { "demo-user-id" }): Modul
         SkinDiaryRepositoryImpl(
             api = get(),
             database = get<AppDatabase>(),
-            currentUserIdProvider = currentUserIdProvider
+            tokenStorage = get<TokenStorage>()
         )
     }
 

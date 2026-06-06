@@ -38,4 +38,6 @@ internal class AuthRepositoryImpl(
     override suspend fun confirmResetPassword(request: ConfirmResetPasswordRequest): Result<MessageResponse> {
         return authApi.confirmResetPassword(request)
     }
+
+    override suspend fun logout(): Result<MessageResponse> = authApi.logout()
 }

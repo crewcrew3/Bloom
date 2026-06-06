@@ -18,6 +18,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.shared.feature.auth.api)
             implementation(projects.shared.core.data)
 
             implementation(libs.kotlinx.serialization.json)

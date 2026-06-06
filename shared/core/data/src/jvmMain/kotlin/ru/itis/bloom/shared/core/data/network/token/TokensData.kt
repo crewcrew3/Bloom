@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class TokensData(
     val accessToken: String? = null,
     val refreshToken: String? = null,
-    val expiresAt: Long? = null
+    val expiresAt: Long? = null,
+    val userId: String? = null
 )
