@@ -2,6 +2,8 @@
 
 **Состав команды:** Дергунова Ирина, Перовская Ольга  
 **Платформы:** Android (Min SDK 28) + Desktop (JVM)
+**Ссылка на скринкаст:** https://disk.360.yandex.ru/d/6GIO1TrnTH8MsQ
+Также скринкасты можно найти в папке screencast
 
 ---
 
@@ -63,6 +65,11 @@ Bloom — кроссплатформенное приложение для ве�
 - **Firebase Analytics:** Автоматическое логирование открытия каждого экрана через `AnalyticsHelper` и `ScreenName`.
 - **Firebase Crashlytics:** Перехват и отправка крашей и non-fatal исключений для мониторинга стабильности.
 
+<div align="center">
+  <img src="images/crashlytics.png" width="500" />
+  <img src="images/analytics.jpg" width="500" />
+</div>
+
 ## 🚀 Запуск и сборка
 
 > ⚠️ **Важно:** Для работы аналитики и краш-репортов на Android необходимо добавить файл `google-services.json` в папку `composeApp/`.
@@ -89,6 +96,8 @@ Bloom — кроссплатформенное приложение для ве�
 
 ## 📸 Скриншоты
 
+**Android:**
+
 <div align="center">
   <img src="images/makeup-bag-list.png" width="250" />
   <img src="images/makeup-bag-product-adding.png" width="250" />
@@ -99,6 +108,21 @@ Bloom — кроссплатформенное приложение для ве�
   <img src="images/profile.png" width="250" />
 </div>
 
+**Desktop (JVM):**
+
+<div align="center">
+  <img src="images/makeup-bag-list_jvm.png" width="500" />
+  <img src="images/makeup-bag-product-adding_jvm.png" width="500" />
+  <img src="images/makeup-bag-product_jvm.png" width="500" />
+  <img src="images/skindiary-list_jvm.png" width="500" />
+  <img src="images/skindiary-details_jvm_1.png" width="500" />
+  <img src="images/skindiary-details_jvm_2.png" width="500" />
+  <img src="images/skindiary-adding_jvm_1.png" width="500" />
+  <img src="images/skindiary-adding_jvm_2.png" width="500" />
+  <img src="images/profile_jvm.png" width="500" />
+  <img src="images/profile-edit_jvm.png" width="500" />
+  <img src="images/burger-menu_jvm.png" width="500" />
+</div>
 ---
 ---
 

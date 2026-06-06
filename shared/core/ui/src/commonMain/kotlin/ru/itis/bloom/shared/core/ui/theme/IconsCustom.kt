@@ -90,4 +90,10 @@ object IconsCustom {
 
     @Composable
     fun iconPerson(): Painter = painterResource(Res.drawable.ic_diary_24)
+
+    @Composable
+    fun iconLightMode(): Painter = painterResource(Res.drawable.ic_light_mode)
+
+    @Composable
+    fun iconDarkMode(): Painter = painterResource(Res.drawable.ic_dark_mode)
 }

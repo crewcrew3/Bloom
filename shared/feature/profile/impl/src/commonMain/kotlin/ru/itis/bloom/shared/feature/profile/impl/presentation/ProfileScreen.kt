@@ -1,6 +1,7 @@
 package ru.itis.bloom.shared.feature.profile.impl.presentation
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,20 +12,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import bloom.shared.feature.profile.impl.generated.resources.Res
+import bloom.shared.feature.profile.impl.generated.resources.*
 import bloom.shared.feature.profile.impl.generated.resources.profile_action_logout
 import bloom.shared.feature.profile.impl.generated.resources.profile_action_my_profile
 import bloom.shared.feature.profile.impl.generated.resources.profile_title
@@ -39,6 +46,7 @@ import ru.itis.bloom.shared.core.ui.theme.BloomTheme
 import ru.itis.bloom.shared.core.ui.theme.DimensionsCustom
 import ru.itis.bloom.shared.core.ui.theme.IconsCustom
 import ru.itis.bloom.shared.core.ui.theme.StylesCustom
+import ru.itis.bloom.shared.core.ui.theme.ThemePreferences
 import ru.itis.bloom.shared.feature.auth.api.model.UserProfile
 import ru.itis.bloom.shared.feature.profile.impl.mvi.ProfileIntent
 import ru.itis.bloom.shared.feature.profile.impl.mvi.ProfileState
@@ -68,15 +76,20 @@ internal fun ProfileScreen(
                 }
             } else {
                 state.userProfile?.let { profile ->
-                    ProfileContent(
-                        profile = profile,
-                        onMyProfileClick = { onIntent(ProfileIntent.NavigateToProfileDetails) },
-                        onLogoutClick = { onIntent(ProfileIntent.Logout) },
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues)
-                            .padding(top = DimensionsCustom.profileContentPadding)
-                    )
+                    LazyColumn {
+                        item {
+                            ProfileContent(
+                                profile = profile,
+                                onMyProfileClick = { onIntent(ProfileIntent.NavigateToProfileDetails) },
+                                onLogoutClick = { onIntent(ProfileIntent.Logout) },
+                                onThemeSwitch = { ThemePreferences.toggleTheme() },
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(paddingValues)
+                                    .padding(top = DimensionsCustom.profileContentPadding)
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -88,6 +101,7 @@ private fun ProfileContent(
     profile: UserProfile,
     onMyProfileClick: () -> Unit,
     onLogoutClick: () -> Unit,
+    onThemeSwitch: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -183,6 +197,52 @@ private fun ProfileContent(
                 }
             }
         }
+
+        Surface(
+            shape = RoundedCornerShape(12.dp),
+            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            // Текущее состояние для переключателя
+            val themeOverride by ThemePreferences.isDarkTheme.collectAsState(initial = null)
+            val systemDark = isSystemInDarkTheme()
+            val isDarkActive = themeOverride ?: systemDark
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = if (isDarkActive) IconsCustom.iconDarkMode() else IconsCustom.iconLightMode(),
+                        contentDescription = stringResource(Res.string.profile_action_theme),
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                    Text(
+                        text = stringResource(Res.string.profile_action_theme),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+
+                Switch(
+                    checked = isDarkActive,
+                    onCheckedChange = { onThemeSwitch() },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = MaterialTheme.colorScheme.tertiary,
+                        checkedTrackColor = MaterialTheme.colorScheme.tertiaryContainer
+                    )
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -192,7 +252,7 @@ private fun ProfileScreenPreview() {
     BloomTheme {
         ProfileScreen(
             state = ProfileState(
-                userProfile = ru.itis.bloom.shared.feature.auth.api.model.UserProfile(
+                userProfile = UserProfile(
                     id = "1",
                     name = "Test User",
                     email = "test@example.com",

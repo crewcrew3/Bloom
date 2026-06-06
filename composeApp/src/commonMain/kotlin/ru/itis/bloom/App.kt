@@ -1,6 +1,7 @@
 package ru.itis.bloom
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -8,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
@@ -20,6 +22,7 @@ import ru.itis.bloom.shared.core.data.network.token.TokenStorage
 import ru.itis.bloom.shared.core.navigation.impl.BackStackHolder
 import ru.itis.bloom.shared.core.navigation.impl.navigationSavedStateConfig
 import ru.itis.bloom.shared.core.ui.theme.BloomTheme
+import ru.itis.bloom.shared.core.ui.theme.ThemePreferences
 import ru.itis.bloom.shared.feature.auth.api.navigation.AuthNavRoute
 import ru.itis.bloom.shared.feature.auth.impl.navigation.authEntryBuilder
 import ru.itis.bloom.shared.feature.makeupbag.api.navigation.MakeupBagNavRoute
@@ -29,7 +32,14 @@ import ru.itis.bloom.shared.feature.skindiary.impl.presentation.navigation.diary
 
 @Composable
 fun App() {
-    BloomTheme {
+
+    val themeOverride by ThemePreferences.isDarkTheme.collectAsState(initial = null)
+    val systemDark = isSystemInDarkTheme()
+    val useDarkTheme = themeOverride ?: systemDark
+
+    BloomTheme(
+        darkTheme = useDarkTheme,
+    ) {
         // Получаем все entry builders из графа Koin
         val entryBuilders: List<EntryProviderScope<NavKey>.() -> Unit> = listOf(
             EntryProviderScope<NavKey>::authEntryBuilder,
