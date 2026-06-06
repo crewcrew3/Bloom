@@ -1,8 +1,8 @@
 # 🌸 Bloom — Skincare Diary
 
 **Состав команды:** Дергунова Ирина, Перовская Ольга  
-**Платформы:** Android (Min SDK 28) + Desktop (JVM)
-**Ссылка на скринкаст:** https://disk.360.yandex.ru/d/6GIO1TrnTH8MsQ
+**Платформы:** Android (Min SDK 28) + Desktop (JVM)  
+**Ссылка на скринкаст:** https://disk.360.yandex.ru/d/6GIO1TrnTH8MsQ  
 Также скринкасты можно найти в папке screencast
 
 ---
